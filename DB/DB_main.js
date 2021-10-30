@@ -1,41 +1,41 @@
 const DB_init = require('./DB_init.js')
 
 function synchronize(){
-    sequelize.sync({force: true}).then(result=>{
+    sequelize.sync().then(result=>{
         console.log(result);
       })
       .catch(err=> console.log(err));
 }
 
-function register(data){ 
+async function register(data){ 
     synchronize()
-    let isp = DB_init.Auth.findall({where:{
+    let isp = (await DB_init.Auth.findall({where:{
         phone:data.phone
-    }}).length
+    }})).length
     if (isp != 0)
         return "Phone"
-    let ise = DB_init.Auth.findall({where:{
+    let ise = (await DB_init.Auth.findall({where:{
         email:data.email
-    }}).length
+    }})).length
     if (ise != 0)
         return "Email"
-    let stat
-    DB_init.Auth.create({
-        name: data.name,
-        surname: data.surname,
-        email: data.email,
-        phone: data.phone,
-        password: data.password
-    }).then(res=>{
-        stat = "ok"
-    }).catch(err=>{
-        stat = "error"
-    })
-    return stat
+    try{
+        const new_user = await DB_init.Auth.create({
+                name: data.name,
+                surname: data.surname,
+                email: data.email,
+                phone: data.phone,
+                password: data.password
+            })
+        await new_user.save()
+        return "OK"
+    } catch {
+        return "ERR"
+    }
 }
 
-function login(data){
-    let logins = DB_init.Auth.findall({where:{
+async function login(data){
+    let logins = await DB_init.Auth.findall({where:{
         $or:[
             {
                 email: data.email
@@ -49,4 +49,22 @@ function login(data){
         if (logins.password == data.password)
             return true
     return false
+}
+
+async function change_password(data){
+    try{
+        await DB_init.Auth.update({password: data.password}, {where:{
+            $or: [
+                {
+                    email: data.email
+                },
+                {
+                    phone: data.phone
+                }
+            ]
+        }})
+        return "OK"
+    } catch {
+        return "ERR"
+    }
 }

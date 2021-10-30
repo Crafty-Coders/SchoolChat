@@ -4,7 +4,7 @@ const { PassThrough } = require('stream');
 const sequelize = new Sequelize();
 
 
-class Auth extends Model {}
+class Auth extends Sequelize.Model {}
 Auth.init({
   id: {
     type: Sequelize.INTEGER,
@@ -28,14 +28,17 @@ Auth.init({
     type: Sequelize.STRING,
     allowNull: false
   }
+}, {
+  sequelize, 
+  modelname: "auth"
 })
 
-class Message extends Model {}
+class Message extends Sequelize.Model {}
 Message.init({
 
 })
 
-class Class extends Model {}
+class Class extends Sequelize.Model {}
 Class.init({
   id: {
     type: Sequelize.INTEGER,
@@ -49,9 +52,12 @@ Class.init({
   school_id: {
     type: Sequelize.INTEGER
   }
+}, {
+  sequelize, 
+  modelname: "classes"
 })
 
-class School extends Model {}
+class School extends Sequelize.Model {}
 School.init({
   id: {
     type: Sequelize.INTEGER,
@@ -62,9 +68,12 @@ School.init({
   name: {
     type: Sequelize.STRING
   }
+}, {
+  sequelize, 
+  modelname: "schools"
 })
 
-class User extends Model {}
+class User extends Sequelize.Model {}
 User.init({
   user_id: {
     type: Sequelize.INTEGER
@@ -75,9 +84,12 @@ User.init({
   chat_id: {
     type: Sequelize.INTEGER
   }
+}, {
+  sequelize, 
+  modelname: "users"
 })
 
-class Chat extends Model {}
+class Chat extends Sequelize.Model {}
 Chat.init({
   id: {
     type: Sequelize.INTEGER,
@@ -95,9 +107,12 @@ Chat.init({
   creation_time: {
     type: Sequelize.DATE
   }
+}, {
+  sequelize, 
+  modelname: "chats"
 })
 
-class Admin extends Model {}
+class Admin extends Sequelize.Model {}
 Admin.init({
   id: {
     type: Sequelize.INTEGER,
@@ -109,6 +124,9 @@ Admin.init({
     type: Sequelize.STRING,
     allowNull: false
   }
+}, {
+  sequelize, 
+  modelname: "admins"
 })
 
  
