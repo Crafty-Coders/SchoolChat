@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
 const sequelize = new Sequelize();
 
+
 class Auth extends Model {}
 Auth.init({
   id: {
