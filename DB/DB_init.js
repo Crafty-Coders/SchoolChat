@@ -18,6 +18,12 @@ Auth.init({
   surname: {
     type: Sequelize.STRING
   },
+  school_id: {
+    type: Sequelize.INTEGER
+  },
+  class_id: {
+    type: Sequelize.INTEGER
+  },
   email: {
     type: Sequelize.STRING
   }, 
@@ -75,10 +81,13 @@ School.init({
 
 class User extends Sequelize.Model {}
 User.init({
+  row_id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  }, 
   user_id: {
-    type: Sequelize.INTEGER
-  },
-  class_id: {
     type: Sequelize.INTEGER
   },
   chat_id: {
@@ -102,7 +111,7 @@ Chat.init({
     allowNull: false
   },
   admins: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING //user id_s
   },
   creation_time: {
     type: Sequelize.DATE
@@ -112,7 +121,7 @@ Chat.init({
   modelname: "chats"
 })
 
-class Admin extends Sequelize.Model {}
+class Admin extends Sequelize.Model {} // админы всего сайта, а не чатов
 Admin.init({
   id: {
     type: Sequelize.INTEGER,

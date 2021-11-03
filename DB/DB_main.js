@@ -1,14 +1,13 @@
 const DB_init = require('./DB_init.js')
 
-function synchronize(){
+function initialize(){
     sequelize.sync().then(result=>{
         console.log(result);
       })
       .catch(err=> console.log(err));
 }
 
-async function register(data){ 
-    synchronize()
+async function register(data, school, cls){ 
     let isp = (await DB_init.Auth.findall({where:{
         phone:data.phone
     }})).length
@@ -23,6 +22,8 @@ async function register(data){
         const new_user = await DB_init.Auth.create({
                 name: data.name,
                 surname: data.surname,
+                school_id: school,
+                class_id: cls,
                 email: data.email,
                 phone: data.phone,
                 password: data.password
@@ -37,12 +38,8 @@ async function register(data){
 async function login(data){
     let logins = await DB_init.Auth.findall({where:{
         $or:[
-            {
-                email: data.email
-            },
-            {
-                phone: data.phone
-            }
+            { email: data.email },
+            { phone: data.phone }
         ]
     }})
     for(let i = 0; i<logins.length; i++)
@@ -55,16 +52,32 @@ async function change_password(data){
     try{
         await DB_init.Auth.update({password: data.password}, {where:{
             $or: [
-                {
-                    email: data.email
-                },
-                {
-                    phone: data.phone
-                }
+                { email: data.email },
+                { phone: data.phone }
             ]
         }})
         return "OK"
     } catch {
         return "ERR"
+    }
+}
+
+async function add_user_to_chat(user_id, chat_id){
+    try{
+        const new_row = await DB_init.User.create({
+            user_id: user_id,
+            chat_id: chat_id
+        })
+        await new_row.save()
+        return "OK"
+    }
+    catch{
+        return "ERR"
+    }
+}
+
+async function get_user_chats(user_id){
+    try{
+        
     }
 }
