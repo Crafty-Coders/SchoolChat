@@ -1,8 +1,19 @@
 const { result } = require('lodash');
 const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
-const sequelize = new Sequelize();
 
+const sequelize = new Sequelize();
+const ERR = "ERR"
+const OK = "OK"
+const PH = "PHONE"
+const EM = "EMAIL"
+
+function initialize(){
+  sequelize.sync().then(result=>{
+      console.log(result);
+    })
+    .catch(err=> console.log(err));
+}
 
 class Auth extends Sequelize.Model {}
 Auth.init({
@@ -79,7 +90,7 @@ School.init({
   modelname: "schools"
 })
 
-class User extends Sequelize.Model {}
+class ChatUser extends Sequelize.Model {}
 User.init({
   row_id: {
     type: Sequelize.INTEGER,
@@ -95,7 +106,7 @@ User.init({
   }
 }, {
   sequelize, 
-  modelname: "users"
+  modelname: "chatusers"
 })
 
 class Chat extends Sequelize.Model {}
@@ -138,4 +149,6 @@ Admin.init({
   modelname: "admins"
 })
 
- 
+module.exports = {
+  Auth, Message, Class, School, ChatUser, Chat, Admin, sequelize
+}
