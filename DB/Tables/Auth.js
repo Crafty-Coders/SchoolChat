@@ -32,7 +32,7 @@ async function register(data, school, cls){
 async function login(data){
     try{
         let logins = await Auth.findall({where:{
-            $or:[
+            [sequelize.or]:[
                 { email: data.email },
                 { phone: data.phone }
             ]

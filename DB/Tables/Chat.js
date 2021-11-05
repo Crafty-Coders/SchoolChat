@@ -54,6 +54,7 @@ async function create_chat(data){
             admins: admins,
             creation_time: date.toLocaleString()
         });
+        await new_chat.save();
         return OK;
     } catch {
         return ERR;
