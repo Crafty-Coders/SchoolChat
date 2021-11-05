@@ -1,8 +1,8 @@
-import { Auth, sequelize, ERR, OK, PH, EM, initialize } from '../DB_init.js';
+import { ChatUser, Chat, sequelize, ERR, OK, PH, EM, initialize } from '../DB_init.js';
 
 async function add_user_to_chat(data){
     try{
-        const new_row = await DB_init.ChatUser.create({
+        const new_row = await ChatUser.create({
             user_id: data.user_id,
             chat_id: data.chat_id
         });
@@ -16,7 +16,7 @@ async function add_user_to_chat(data){
 
 async function get_user_chats(data){
     try{
-        let chats = await DB_init.ChatUser.findAll({
+        let chats = await ChatUser.findAll({
             attributes: ['chat_id'],
             where: {
                 user_id: data.user_id
@@ -30,7 +30,7 @@ async function get_user_chats(data){
 
 async function leave_chat(data){
     try{
-        await DB_init.ChatUser.destroy({
+        await ChatUser.destroy({
             where: {
                 user_id: data.user_id,
                 chat_id: data.chat_id
@@ -49,7 +49,7 @@ async function create_chat(data){
         else 
             let admins = data.admins;
         date = new Date();
-        const new_chat = await DB_init.Chat.create({
+        const new_chat = await Chat.create({
             creator: data.user_id,
             admins: admins,
             creation_time: date.toLocaleString()
