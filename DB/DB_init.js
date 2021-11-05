@@ -2,11 +2,11 @@ const { result } = require('lodash');
 const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
 
-const sequelize = new Sequelize();
-const ERR = "ERR"
-const OK = "OK"
-const PH = "PHONE"
-const EM = "EMAIL"
+const sequelize = new Sequelize();;
+const ERR = "ERR";
+const OK = "OK";
+const PH = "PHONE";
+const EM = "EMAIL";
 
 function initialize(){
   sequelize.sync().then(result=>{
@@ -48,12 +48,12 @@ Auth.init({
 }, {
   sequelize, 
   modelname: "auth"
-})
+});
 
 class Message extends Sequelize.Model {}
 Message.init({
 
-})
+});
 
 class Class extends Sequelize.Model {}
 Class.init({
@@ -72,7 +72,7 @@ Class.init({
 }, {
   sequelize, 
   modelname: "classes"
-})
+});
 
 class School extends Sequelize.Model {}
 School.init({
@@ -88,7 +88,7 @@ School.init({
 }, {
   sequelize, 
   modelname: "schools"
-})
+});
 
 class ChatUser extends Sequelize.Model {}
 User.init({
@@ -107,7 +107,7 @@ User.init({
 }, {
   sequelize, 
   modelname: "chatusers"
-})
+});
 
 class Chat extends Sequelize.Model {}
 Chat.init({
@@ -130,7 +130,7 @@ Chat.init({
 }, {
   sequelize, 
   modelname: "chats"
-})
+});
 
 class Admin extends Sequelize.Model {} // админы всего сайта, а не чатов
 Admin.init({
@@ -147,7 +147,7 @@ Admin.init({
 }, {
   sequelize, 
   modelname: "admins"
-})
+});
 
 module.exports = {
   Auth, Message, Class, School, ChatUser, Chat, Admin, sequelize
