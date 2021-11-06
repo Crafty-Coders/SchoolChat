@@ -45,6 +45,9 @@ Auth.init({
   password: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  picture_url: {
+    type: Sequelize.STRING
   }
 }, {
   sequelize, 
@@ -127,6 +130,10 @@ Chat.init({
   },
   creation_time: {
     type: Sequelize.DATE
+  },
+  picture_url: {
+    type: Sequelize.STRING,
+    allowNull: true
   }
 }, {
   sequelize, 

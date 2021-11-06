@@ -28,19 +28,23 @@ async function get_user_chats(user_id){
         return [];
     }
 }
-// TODO: create functions below!
-async function get_chat_name(chat_id){
 
+async function get_chat_info(chat_id){
+    /**
+     * 
+     * returns{
+     *      users: returns array of chat users
+     *      admins: returns arrray of chat admins
+     *      pic: returns 1 element array with picture url
+     *      time: returns 1 element array with creation time
+     *      creator: returns 1 element array with chat creator's id
+     * }
+     * 
+     */
+    // TODO: create function!
 }
 
-async function get_chat_users(chat_id){
-
-}
-
-async function get_chat_admins(chat_id){
-
-}
-
+// TODO: create function manage_user(user_id, chat_id) to delete and add user instead of 2 func delete(add)_user_from_chat() 
 async function delete_user_from_chat(user_id, chat_id){
     try{
         await ChatUser.destroy({
@@ -60,7 +64,6 @@ async function create_chat(user_id, admins = ""){
         date = new Date();
         const new_chat = await Chat.create({
             creator: user_id,
-            admins: admins,
             creation_time: date.toLocaleString()
         });
         await new_chat.save();
