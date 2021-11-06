@@ -7,6 +7,7 @@ const ERR = "ERR";
 const OK = "OK";
 const PH = "PHONE";
 const EM = "EMAIL";
+const PASS = "PASSWORD"
 
 function initialize(){
   sequelize.sync().then(result=>{
