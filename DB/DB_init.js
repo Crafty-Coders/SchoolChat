@@ -8,6 +8,7 @@ const OK = "OK";
 const PH = "PHONE";
 const EM = "EMAIL";
 const PASS = "PASSWORD"
+const PR = "PREMISSION"
 
 function initialize(){
   sequelize.sync().then(result=>{
@@ -122,6 +123,10 @@ Chat.init({
     primaryKey: true,
     allowNull: false
   }, 
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   creator: {
     type: Sequelize.STRING,
     allowNull: false
