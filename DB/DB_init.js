@@ -164,5 +164,5 @@ ChatAdmin.init({
 });
 
 module.exports = {
-  Auth, Message, Class, School, ChatUser, Chat, Admin, sequelize
+  Auth, Message, Class, School, ChatUser, Chat, ChatAdmin, sequelize
 }

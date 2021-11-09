@@ -81,16 +81,15 @@ async function manage_chat(name, user_id, chat_id, flag) {
             }
         case "delete":
             let premission = false;
-            const admins = (await ChatAdmin.findAll({where: {
+            const admins_len = (await ChatAdmin.findAll({where: {
                 user_id: user_id,
                 chat_id: chat_id
             }})).length;
-            const creator = (await Chat.findAll({where: {
+            const creator_len = (await Chat.findAll({where: {
                 id: chat_id,
                 creator: user_id
             }})).length;
-            premission = (creator != 0) || (admins != 0);
-            if (!premission)
+            if ((creator_len + admins_len) == 0)
                 return PR;
             try {
                 await Chat.destroy({
