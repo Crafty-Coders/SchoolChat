@@ -32,7 +32,7 @@ async function get_chat_info(chat_id) {
 }
 
 async function manage_user(user_id, chat_id, flag) {
-    switch (flag){
+    switch (flag) {
         case "add":
             try {
                 const new_row = await ChatUser.create({
@@ -60,8 +60,8 @@ async function manage_user(user_id, chat_id, flag) {
     }
 }
 
-async function manage_chat(name, user_id, chat_id, flag) {
-    switch (flag){
+async function manage_chat(name, user_id, chat_id, ph, flag) {
+    switch (flag) {
         case "create":
             if (user_id == undefined)
                 return ERR;
@@ -80,15 +80,18 @@ async function manage_chat(name, user_id, chat_id, flag) {
                 return ERR;
             }
         case "delete":
-            let premission = false;
-            const admins_len = (await ChatAdmin.findAll({where: {
-                user_id: user_id,
-                chat_id: chat_id
-            }})).length;
-            const creator_len = (await Chat.findAll({where: {
-                id: chat_id,
-                creator: user_id
-            }})).length;
+            const admins_len = (await ChatAdmin.findAll({
+                where: {
+                    user_id: user_id,
+                    chat_id: chat_id
+                }
+            })).length;
+            const creator_len = (await Chat.findAll({
+                where: {
+                    id: chat_id,
+                    creator: user_id
+                }
+            })).length;
             if ((creator_len + admins_len) == 0)
                 return PR;
             try {
@@ -110,9 +113,22 @@ async function manage_chat(name, user_id, chat_id, flag) {
             if (name == undefined)
                 return NAME;
             try {
-                await Chat.update({ name: name }, {where: {
-                    id: chat_id
-                }});
+                await Chat.update({ name: name }, {
+                    where: {
+                        id: chat_id
+                    }
+                });
+                return OK;
+            } catch {
+                return ERR;
+            }
+        case "photo":
+            try {
+                await Chat.update({ picture_url: ph }, {
+                    where: {
+                        id: chat_id
+                    }
+                });
                 return OK;
             } catch {
                 return ERR;
