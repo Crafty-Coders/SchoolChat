@@ -17,8 +17,7 @@ function initialize(){
     .catch(err=> console.log(err));
 }
 
-class Auth extends Sequelize.Model {}
-Auth.init({
+const Auth = sequelize.define("auth", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -51,13 +50,9 @@ Auth.init({
     type: Sequelize.STRING(1234),
     allowNull: true
   }
-}, {
-  sequelize, 
-  modelname: "auth"
 });
 
-class Message extends Sequelize.Model {}
-Message.init({
+const Message = sequelize.define("message", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -75,12 +70,19 @@ Message.init({
   },
   attachments: {
     type: Sequelize.JSON
+  },
+  deleted_all: {
+    type: Sequelize.BOOLEAN
+  },
+  deleted_user: {
+    type: Sequelize.BOOLEAN
+  },
+  edited: {
+    type: Sequelize.BOOLEAN
   }
-
 });
 
-class Class extends Sequelize.Model {}
-Class.init({
+const Class = sequelize.define("class", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -93,13 +95,9 @@ Class.init({
   school_id: {
     type: Sequelize.INTEGER
   }
-}, {
-  sequelize, 
-  modelname: "classes"
 });
 
-class School extends Sequelize.Model {}
-School.init({
+const School = sequelize.define("school", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -109,13 +107,9 @@ School.init({
   name: {
     type: Sequelize.STRING
   }
-}, {
-  sequelize, 
-  modelname: "schools"
 });
 
-class ChatUser extends Sequelize.Model {}
-ChatUser.init({
+const ChatUser = sequelize.define("chatuser", {
   row_id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -128,13 +122,9 @@ ChatUser.init({
   chat_id: {
     type: Sequelize.INTEGER
   }
-}, {
-  sequelize, 
-  modelname: "chatusers"
 });
 
-class Chat extends Sequelize.Model {}
-Chat.init({
+const Chat = sequelize.define("chat", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -153,13 +143,9 @@ Chat.init({
     type: Sequelize.STRING,
     allowNull: true
   }
-}, {
-  sequelize, 
-  modelname: "chats"
 });
 
-class ChatAdmin extends Sequelize.Model {}
-ChatAdmin.init({
+const ChatAdmin = sequelize.define("chatadmin", {
   id: {
     type: Sequelize.BIGINT,
     autoIncrement: true,
@@ -173,9 +159,6 @@ ChatAdmin.init({
   chat_id: {
     type: Sequelize.INTEGER
   }
-}, {
-  sequelize, 
-  modelname: "admins"
 });
 
 module.exports = {
