@@ -2,7 +2,7 @@ const { result } = require('lodash');
 const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
 
-const sequelize = new Sequelize();;
+const sequelize = new Sequelize();
 const ERR = "ERR";
 const OK = "OK";
 const PH = "PHONE";
@@ -20,7 +20,7 @@ function initialize(){
 class Auth extends Sequelize.Model {}
 Auth.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
@@ -48,7 +48,7 @@ Auth.init({
     allowNull: false
   },
   picture_url: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(1234),
     allowNull: true
   }
 }, {
@@ -58,13 +58,31 @@ Auth.init({
 
 class Message extends Sequelize.Model {}
 Message.init({
+  id: {
+    type: Sequelize.BIGINT,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  }, 
+  chat_id: {
+    type: Sequelize.INTEGER
+  },
+  user_id: {
+    type: Sequelize.INTEGER
+  },
+  text: {
+    type: Sequelize.STRING(1234)
+  },
+  attachments: {
+    type: Sequelize.JSON
+  }
 
 });
 
 class Class extends Sequelize.Model {}
 Class.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
@@ -83,7 +101,7 @@ Class.init({
 class School extends Sequelize.Model {}
 School.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
@@ -99,7 +117,7 @@ School.init({
 class ChatUser extends Sequelize.Model {}
 ChatUser.init({
   row_id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
@@ -118,7 +136,7 @@ ChatUser.init({
 class Chat extends Sequelize.Model {}
 Chat.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
@@ -130,9 +148,6 @@ Chat.init({
   creator: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  creation_time: {
-    type: Sequelize.DATE
   },
   picture_url: {
     type: Sequelize.STRING,
@@ -146,7 +161,7 @@ Chat.init({
 class ChatAdmin extends Sequelize.Model {}
 ChatAdmin.init({
   id: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false

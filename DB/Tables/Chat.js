@@ -9,7 +9,17 @@ async function get_user_chats(user_id) {
                 user_id: user_id
             }
         });
-        // TODO: Check chats, delete from array if chat doesn't exist
+        for(let i = 0; i<chats.length; i++){
+            try {
+                let ch = (await Chat.findAll({where: {
+                    id: chats.chat_id
+                }})).length
+                if (ch == 0)
+                    chats.splice(i, 1);
+            } catch {
+                continue;
+            }
+        }
         return chats;
     } catch {
         return [];
@@ -68,11 +78,9 @@ async function manage_chat(name, user_id, chat_id, ph, flag) {
             if (name == undefined)
                 return NAME;
             try {
-                date = new Date();
                 const new_chat = await Chat.create({
                     name: name,
-                    creator: user_id,
-                    creation_time: date.toLocaleString()
+                    creator: user_id
                 });
                 await new_chat.save();
                 return OK;
