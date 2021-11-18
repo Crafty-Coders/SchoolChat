@@ -75,7 +75,7 @@ async function get_chat_info(chat_id) {
             name: chat.name,
             admins: admins,
             pic: chat.picture_url,
-            time: 1,
+            time: 1, //TODO
             creator: chat.creator
         };
     } catch {
