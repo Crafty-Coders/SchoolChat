@@ -6,10 +6,7 @@ async function new_msg(chat_id, user_id, text, attachments = {}) {
             chat_id: chat_id,
             user_id: user_id,
             text: text,
-            attachments: attachments,
-            deleted_all: 0,
-            deleted_user: 0,
-            edited: 0
+            attachments: attachments
         });
         await new_message.save();
         return OK;
@@ -86,4 +83,8 @@ async function manage_msgs(msg_id, param, text, attachments) {
                 return ERR;
             }
     }
+}
+
+module.exports = {
+    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs
 }

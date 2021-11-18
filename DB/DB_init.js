@@ -72,13 +72,16 @@ const Message = sequelize.define("message", {
     type: Sequelize.JSON
   },
   deleted_all: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   },
   deleted_user: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   },
   edited: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   }
 });
 
@@ -94,6 +97,13 @@ const Class = sequelize.define("class", {
   },
   school_id: {
     type: Sequelize.INTEGER
+  },
+  description: {
+    type: Sequelize.STRING
+  },
+  deleted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   }
 });
 
@@ -106,6 +116,13 @@ const School = sequelize.define("school", {
   }, 
   name: {
     type: Sequelize.STRING
+  },
+  location: {
+    type: Sequelize.STRING
+  },
+  deleted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   }
 });
 
@@ -121,6 +138,10 @@ const ChatUser = sequelize.define("chatuser", {
   },
   chat_id: {
     type: Sequelize.INTEGER
+  }, 
+  left: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   }
 });
 
@@ -142,6 +163,10 @@ const Chat = sequelize.define("chat", {
   picture_url: {
     type: Sequelize.STRING,
     allowNull: true
+  },
+  deleted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: 0
   }
 });
 

@@ -67,3 +67,7 @@ async function change_password(email = "#empty_email#", phone = "#empty_phone#",
         return ERR;
     }
 }
+
+module.exports = {
+    register, login, change_password
+}

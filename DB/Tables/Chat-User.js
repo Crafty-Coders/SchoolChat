@@ -1,4 +1,4 @@
-import { ChatUser, Chat, ChatAdmin, sequelize, ERR, OK, PH, EM, NAME, PR, initialize } from '../DB_init.js';
+import { ChatUser, Chat, ChatAdmin, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Auth } from '../DB_init.js';
 
 
 async function get_user_chats(user_id) {
@@ -12,7 +12,8 @@ async function get_user_chats(user_id) {
         for(let i = 0; i<chats.length; i++){
             try {
                 let ch = (await Chat.findAll({where: {
-                    id: chats.chat_id
+                    id: chats.chat_id,
+                    deleted: 0
                 }})).length
                 if (ch == 0)
                     chats.splice(i, 1);
@@ -26,11 +27,24 @@ async function get_user_chats(user_id) {
     }
 }
 
+async function check_user_left_ch(chat_id, user_id) {
+    try {
+        const stat = await ChatUser.findAll({attributes: ['left'], where: {
+            user_id: user_id,
+            chat_id: chat_id
+        }});
+        return stat[0] == 0 ? false : true    
+    } catch {
+        return false;
+    }
+}
+
 async function get_chat_info(chat_id) {
     /**
      * 
      * returns{
      *      users: returns array of chat users
+     *      name: name
      *      admins: returns arrray of chat admins
      *      pic: returns picture url
      *      time: returns creation time
@@ -38,7 +52,62 @@ async function get_chat_info(chat_id) {
      * }
      * 
      */
-    // TODO: create function!
+    try {
+        const chat = (await Chat.findAll({where: {
+            id: chat_id
+        }}))[0];
+        const u = await ChatUser.findAll({attributes: ['user_id'], where: {
+            chat_id: chat_id,
+            left: 0
+        }});
+        let users = [];
+        for (let i = 0; i<u.length; i++)
+            users.push(u[i].user_id);
+        u = await ChatAdmin.findAll({attributes: ['user_id'], where: {
+            chat_id: chat_id
+        }})
+        let admins = [];
+        for (let i = 0; i<u.length; i++)
+            admins.push(u[i].user_id)
+            
+        return {
+            users: users,
+            name: chat.name,
+            admins: admins,
+            pic: chat.picture_url,
+            time: 1,
+            creator: chat.creator
+        };
+    } catch {
+        return {};
+    }
+}
+
+async function get_user_info(user_id) {
+    /**
+     * returns {
+     *      name,
+     *      surname,
+     *      school_id,
+     *      cls_id,
+     *      email,
+     *      phone,
+     *      pic
+     * }
+     */
+    const user = (await Auth.findAll({where: {
+        id: user_id
+    }}))[0]
+
+    return {
+        name: user.name,
+        surname: user.surname,
+        school_id: user.school_id,
+        class_id: user.class_id,
+        email: user.email,
+        phone: user.phone,
+        pic: user.picture_url
+    }
 }
 
 async function manage_user(user_id, chat_id, flag) {
@@ -57,12 +126,30 @@ async function manage_user(user_id, chat_id, flag) {
             }
         case "leave":
             try {
-                await ChatUser.destroy({
+                await ChatUser.update({ left: 1 }, {
                     where: {
                         user_id: user_id,
                         chat_id: chat_id
                     }
                 });
+                await ChatAdmin.destroy({where: {
+                    user_id: user_id,
+                    chat_id: chat_id
+                }});
+                return OK;
+            } catch {
+                return ERR;
+            }
+        case "delete":
+            try {
+                await ChatUser.destroy({where: {
+                    user_id: user_id,
+                    chat_id: chat_id
+                }});
+                await ChatAdmin.destroy({where: {
+                    user_id: user_id,
+                    chat_id: chat_id
+                }});
                 return OK;
             } catch {
                 return ERR;
@@ -103,7 +190,7 @@ async function manage_chat(name, user_id, chat_id, ph, flag) {
             if ((creator_len + admins_len) == 0)
                 return PR;
             try {
-                await Chat.destroy({
+                await Chat.update({deleted: 1}, {
                     where: {
                         id: chat_id
                     }
@@ -142,4 +229,8 @@ async function manage_chat(name, user_id, chat_id, ph, flag) {
                 return ERR;
             }
     }
+}
+
+module.exports = {
+    manage_chat, manage_user, get_user_info, get_chat_info, check_user_left_ch, get_user_chats
 }
