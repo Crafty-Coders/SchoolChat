@@ -1,71 +1,102 @@
-import { Auth, sequelize, ERR, OK, PH, EM, PASS, initialize } from '../DB_init.js';
+const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize } = require('../DB_init.js');
+const { data_checker } = require('../DB_functions');
 
+function propper(data, props) {
+    for (var prop in props)
+        data[props[prop]] = data[props[prop]] == undefined ? '' : data[props[prop]];
+    return data;
+}
 
-async function register(name, surname, school_id, class_id, email, phone, password) {
-    let isp = (await Auth.findall({
+function to_int(d) {
+    return d == '' ? 0 : parseInt(d);
+}
+
+async function register(data) {
+    /**
+     * data = {name, surname, school_id, class_id, email, phone, password, picture_url} email or phone!
+     */
+    if (!data_checker(data, ["name", "surname", "password"]) || (data.email == undefined && data.phone == undefined))
+        return DATA;
+
+    data = propper(data, ["name", "surname", "school_id", "class_id", "email", "phone", "password", "picture_url"]);
+
+    let isp = (await Auth.findAll({
         where: {
-            phone: phone
+            phone: data.phone
         }
     })).length;
-    if (isp != 0)
+
+    if (isp != 0 && data.phone != "")
         return PH;
-    let ise = (await Auth.findall({
+    let ise = (await Auth.findAll({
         where: {
-            email: email
+            email: data.email
         }
     })).length;
-    if (ise != 0)
+
+    if (ise != 0 && data.email != "")
         return EM;
-    try {
-        const new_user = await Auth.create({
-            name: name,
-            surname: surname,
-            school_id: school_id,
-            class_id: class_id,
-            email: email,
-            phone: phone,
-            password: password
-        });
-        await new_user.save();
-        return OK;
-    } catch {
-        return ERR;
-    }
+
+    const new_user = await Auth.create({
+        name: data.name,
+        surname: data.surname,
+        school_id: to_int(data.school_id),
+        class_id: to_int(data.class_id),
+        email: data.email,
+        phone: data.phone,
+        password: data.password,
+        picture_url: data.picture_url
+    });
+    await new_user.save();
+    return OK;
 }
 
-async function login(email = "#empty_email#", phone = "#empty_phone#", password) { // Default values are highlighted with #__#
-    try {
-        let logins = await Auth.findall({
-            where: {
-                [sequelize.or]: [
-                    { email: email },
-                    { phone: phone }
-                ]
-            }
-        });
-        for (let i = 0; i < logins.length; i++)
-            if (logins[i].password == data.password)
-                return OK;
+async function login(data) { // Default values are highlighted with #__#
+    /**
+     * data = {email, phone, password} email or phone!
+     */
+    if (!data_checker(data, ["password"]) || (data.phone == undefined && data.email == undefined))
         return PASS;
-    } catch {
-        return ERR;
+
+    data = propper(data, ["phone", "email"]);
+    let logins = await Auth.findAll({
+        raw: true,
+        attributes: ['password'],
+        where: {
+            [Sequelize.Op.or]: [
+                { phone: data.phone },
+                { email: data.email }
+            ]
+        }
+    });
+    for (let i = 0; i < logins.length; i++) {
+        console.log(logins[i])
+        if (logins[i].password == data.password)
+            return OK;
     }
+    return PASS;
 }
 
-async function change_password(email = "#empty_email#", phone = "#empty_phone#", password) {
-    try {
-        await Auth.update({ password: password }, {
-            where: {
-                [sequelize.or]: [
-                    { email: email },
-                    { phone: phone }
-                ]
-            }
-        });
-        return OK;
-    } catch {
-        return ERR;
-    }
+async function change_password(data) {
+    /**
+     * data = {email, phone, password, new_password} email or phone!
+     */
+    if (!data_checker(data, ["password", "new_password"]) || (data.email == undefined && data.phone == undefined))
+        return DATA;
+    console.log(data)
+    data = propper(data, ["phone", "email"]);
+    let login_stat = await login(data);
+    if (login_stat != OK)
+        return login_stat;
+    await Auth.update({ password: data.new_password }, {
+        where: {
+            [Sequelize.Op.or]: [
+                { phone: data.phone },
+                { email: data.email }
+            ]
+        }
+    });
+    return OK;
 }
 
 module.exports = {

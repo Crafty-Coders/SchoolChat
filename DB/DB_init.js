@@ -1,17 +1,23 @@
 const { result } = require('lodash');
 const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
+const config = require('../config.js');
 
-const sequelize = new Sequelize();
+const sequelize = new Sequelize(config.DB, config.user, config.password, {
+  dialect: "postgres",
+  host: config.host
+});
 const ERR = "ERR";
 const OK = "OK";
 const PH = "PHONE";
 const EM = "EMAIL";
 const PASS = "PASSWORD"
 const PR = "PREMISSION"
+const DATA = "DATA"
+const NAME = "NAME"
 
 function initialize(){
-  sequelize.sync().then(result=>{
+  sequelize.sync({force: true}).then(result=>{
       console.log(result);
     })
     .catch(err=> console.log(err));
@@ -31,10 +37,10 @@ const Auth = sequelize.define("auth", {
     type: Sequelize.STRING
   },
   school_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   class_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   email: {
     type: Sequelize.STRING
@@ -60,10 +66,10 @@ const Message = sequelize.define("message", {
     allowNull: false
   }, 
   chat_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   user_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   text: {
     type: Sequelize.STRING(1234)
@@ -73,15 +79,15 @@ const Message = sequelize.define("message", {
   },
   deleted_all: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   },
   deleted_user: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   },
   edited: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   }
 });
 
@@ -103,7 +109,7 @@ const Class = sequelize.define("class", {
   },
   deleted: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   }
 });
 
@@ -122,7 +128,7 @@ const School = sequelize.define("school", {
   },
   deleted: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   }
 });
 
@@ -134,14 +140,14 @@ const ChatUser = sequelize.define("chatuser", {
     allowNull: false
   }, 
   user_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   },
   chat_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
   }, 
   left: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   }
 });
 
@@ -157,7 +163,7 @@ const Chat = sequelize.define("chat", {
     allowNull: false
   },
   creator: {
-    type: Sequelize.STRING,
+    type: Sequelize.BIGINT,
     allowNull: false
   },
   picture_url: {
@@ -166,7 +172,7 @@ const Chat = sequelize.define("chat", {
   },
   deleted: {
     type: Sequelize.BOOLEAN,
-    defaultValue: 0
+    defaultValue: false
   }
 });
 
@@ -178,14 +184,17 @@ const ChatAdmin = sequelize.define("chatadmin", {
     allowNull: false
   }, 
   user_id: {
-    type: Sequelize.STRING,
+    type: Sequelize.BIGINT,
     allowNull: false
   }, 
   chat_id: {
-    type: Sequelize.INTEGER
+    type: Sequelize.BIGINT
+  },
+  creator_id: {
+    type: Sequelize.BIGINT
   }
 });
 
 module.exports = {
-  Auth, Message, Class, School, ChatUser, Chat, ChatAdmin, sequelize
+  Auth, Message, Class, School, ChatUser, Chat, ChatAdmin, sequelize, initialize, ERR, OK, PH, EM, PASS, PR, NAME, DATA, Sequelize
 }

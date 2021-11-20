@@ -1,4 +1,5 @@
-import { School, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Class } from '../DB_init.js';
+const{ School, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Class } = require('../DB_init.js');
+const { data_checker } = require('../DB_functions');
 
 async function manage_school(name, location, param, id) {
     switch (param){
@@ -15,7 +16,7 @@ async function manage_school(name, location, param, id) {
             }
         case "delete":
             try {
-                await School.update({deleted: 1}, {
+                await School.update({deleted: true}, {
                     where: {
                         id: id
                     }
@@ -44,7 +45,7 @@ async function manage_class(name, sch, desc, param, id) {
             }
         case "delete":
             try {
-                await Class.update({deleted: 1}, {where: {
+                await Class.update({deleted: true}, {where: {
                     id: id
                 }});
                 return OK;
