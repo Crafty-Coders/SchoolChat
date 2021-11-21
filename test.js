@@ -1,1 +1,2 @@
-let m =25;
+
+console.log(msg_checker("     ssaaaaaaaa"))
