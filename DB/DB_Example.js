@@ -1,5 +1,8 @@
 const { AuthDB, ChatUserDB, MessageDB, SchoolClassDB, initialize } = require('./DB_main.js')
 const chalk = require('chalk');
+
+function print_res(data) {console.log(chalk.green(data));}
+function print_err(data) {console.log(chalk.red(data));}
 // initialize() // ! once, when database is just created! 
 
 /*AuthDB.register({ name: "Miha", surname: "Froll", phone: "1111", password: "aboba"} )
@@ -49,6 +52,18 @@ const chalk = require('chalk');
     .then(res => {console.log(res)})
     .catch(err => {console.log(err)})*/
 
-ChatUserDB.manage_admin({chat_id:4, requester_id: 5, user_id: 13}, "create")
+/*ChatUserDB.manage_admin({chat_id:4, requester_id: 5, user_id: 13}, "create")
     .then(res => {console.log(res)})
-    .catch(err => {console.log(err)})
+    .catch(err => {console.log(err)})*/
+// ! chat: 4, user: 5
+/*MessageDB.new_msg({chat_id: 4, user_id: 5, text: "aboba"})
+    .then(res => {console.log(chalk.green(res))})
+    .catch(err => {console.log(chalk.red(err))})*/
+
+/*MessageDB.manage_msgs({msg_id: 2, requester_id: 5, text: "          aboba       "}, "edit")
+    .then(res => {print_res(res)})
+    .catch(err => {print_err(err)})*/
+
+MessageDB.manage_msgs({msg_id: 2, requester_id: 1}, "delete_all")
+    .then(res => {print_res(res)})
+    .catch(err => {print_err(err)})

@@ -1,11 +1,20 @@
-const { Message, sequelize, ERR, OK, PH, EM, NAME, PR, initialize } = require('../DB_init.js');
-const { data_checker } = require('../DB_functions');
+const { Message, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, DATA } = require('../DB_init.js');
+const { data_checker, propper, check_exist, is_Admin, msg_checker } = require('../DB_functions.js');
 
 async function new_msg(data) {
     /**
      * data = {chat_id, user_id, text, attachments = {}}
      */
-    const new_message = Message.create({
+    if (!data_checker(data, ["chat_id", "user_id"]) || ((data.attachments == undefined || data.attachments == {}) && data.text == undefined))
+        return DATA;
+    data = propper(data, ["text"]);
+    if (!(await check_exist({ id: data.user_id }, "user")) || !(await check_exist({ id: data.chat_id }, "chat")))
+        return DATA;
+    data.attachments = data.attachments == undefined ? {} : data.attachments;
+    data.text = msg_checker(data.text);
+    if (data.text == "" || data.text == undefined)
+        return DATA;
+    const new_message = await Message.create({
         chat_id: data.chat_id,
         user_id: data.user_id,
         text: data.text,
@@ -41,6 +50,10 @@ async function get_all_chat_msgs(data) {
     /**
     * data = {chat_id}
     */
+    if (!data_checker(data, ["chat_id"]))
+        return DATA;
+    if (!(await check_exist({ id: chat_id }, "chat")))
+        return DATA;
     let msgs = await Message.findAll({
         where: {
             chat_id: data.chat_id
@@ -51,16 +64,32 @@ async function get_all_chat_msgs(data) {
 
 async function manage_msgs(data, flag) {
     /**
-     * data = {msg_id, text, attachments}
+     * data = {msg_id, text, requester_id, attachments}
      */
+    if (!data_checker(data, ["msg_id"]))
+        return DATA;
     switch (flag) {
         case "delete_all":
-            await Message.update({ deleted_all: true }, {
-                where: {
-                    id: data.msg_id,
-                }
-            })
-            return OK;
+            if (!data_checker(data, ["requester_id"]))
+                return DATA;
+            if ((await is_Admin({ chat_id: (await Message.findAll({
+                raw: true,
+                attributes: ["chat_id"], 
+                where: { id: data.msg_id } }))[0].chat_id, user_id: data.requester_id }))
+                || (await Message.findAll({
+                    raw: true, where: {
+                        id: data.msg_id,
+                        user_id: data.requester_id
+                    }
+                })).length != 0) {
+                await Message.update({ deleted_all: true }, {
+                    where: {
+                        id: data.msg_id,
+                    }
+                })
+                return OK;
+            }
+            return PR;
         case "delete_one":
             await Message.update({ deleted_user: true }, {
                 where: {
@@ -69,6 +98,18 @@ async function manage_msgs(data, flag) {
             });
             return OK;
         case "edit":
+            if (!data_checker(data, ["requester_id"]) || ((data.attachments == undefined || data.attachments == {}) && (data.text == undefined || data.text == "")))
+                return DATA;
+            data = propper(data, ["text"]);
+            data.attachments = data.attachments == undefined ? {} : data.attachments;
+            if ((await Message.findAll({raw: true, where: {
+                id: data.msg_id,
+                user_id: data.requester_id
+            }})).length == 0)
+                return PR;
+            data.text = msg_checker(data.text);
+            if (data.text == "" || data.text == undefined)
+                return DATA;
             await Message.update({
                 text: data.text,
                 attachments: data.attachments

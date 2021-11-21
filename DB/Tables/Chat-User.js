@@ -1,5 +1,5 @@
 const { ChatUser, Chat, ChatAdmin, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Auth, DATA } = require('../DB_init.js');
-const { data_checker } = require('../DB_functions');
+const { data_checker, check_exist, is_Admin } = require('../DB_functions');
 
 async function get_user_chats(data) {
     /**
@@ -7,7 +7,7 @@ async function get_user_chats(data) {
      */
     if (!data_checker(data, ["user_id"]))
         return DATA;
-    if (!(await check_exist({id: data.user_id}, "user")))
+    if (!(await check_exist({ id: data.user_id }, "user")))
         return DATA;
 
     let chats = await ChatUser.findAll({
@@ -16,14 +16,15 @@ async function get_user_chats(data) {
             user_id: data.user_id
         }
     });
-    for(let i = 0; i<chats.length; i++){
+    for (let i = 0; i < chats.length; i++) {
         try {
             let ch = (await Chat.findAll({
                 raw: true,
                 where: {
                     id: chats.chat_id,
                     deleted: false
-            }})).length
+                }
+            })).length
             if (ch == 0)
                 chats.splice(i, 1);
         } catch { continue; }
@@ -40,17 +41,18 @@ async function check_user_left_ch(data) {
      */
     if (!data_checker(data, ["chat_id", "user_id"]))
         return DATA;
-    if (!(await check_exist({id: data.user_id}, "user")))
+    if (!(await check_exist({ id: data.user_id }, "user")))
         return DATA;
 
     const stat = await ChatUser.findAll({
-        raw: true, 
-        attributes: ['left'], 
+        raw: true,
+        attributes: ['left'],
         where: {
             user_id: data.user_id,
             chat_id: data.chat_id
-    }});
-    return stat[stat.length-1].left  
+        }
+    });
+    return stat[stat.length - 1].left
 }
 
 async function get_chat_info(data) {
@@ -71,23 +73,25 @@ async function get_chat_info(data) {
     if (!data_checker(data, ["chat_id"]))
         return DATA;
 
-    if (!(await check_exist({id: data.chat_id}, "chat")))
+    if (!(await check_exist({ id: data.chat_id }, "chat")))
         return DATA;
 
     const chat = (await Chat.findAll({
         raw: true,
         where: {
             id: data.chat_id
-    }}))[0];
+        }
+    }))[0];
     let u = await ChatUser.findAll({
         raw: true,
-        attributes: ['user_id'], 
+        attributes: ['user_id'],
         where: {
             chat_id: data.chat_id,
             left: false
-    }});
+        }
+    });
     let users = [];
-    for (let i = 0; i<u.length; i++)
+    for (let i = 0; i < u.length; i++)
         users.push(u[i].user_id);
     let admins = [];
 
@@ -96,11 +100,12 @@ async function get_chat_info(data) {
         attributes: ['user_id'],
         where: {
             chat_id: data.chat_id
-    }});
-    
-    for (let i = 0; i<u.length; i++)
+        }
+    });
+
+    for (let i = 0; i < u.length; i++)
         admins.push(u[i].user_id);
-        
+
     return {
         id: chat.id,
         users: users,
@@ -129,14 +134,15 @@ async function get_user_info(data) {
      */
     if (!data_checker(data, ["user_id"]))
         return DATA;
-    if (!(await check_exist({id: data.user_id}, "user")))
+    if (!(await check_exist({ id: data.user_id }, "user")))
         return DATA;
-    
+
     const user = (await Auth.findAll({
         raw: true,
         where: {
             id: data.user_id
-    }}))[0]
+        }
+    }))[0]
 
     return {
         id: user.id,
@@ -150,34 +156,7 @@ async function get_user_info(data) {
     }
 }
 
-async function check_exist(data, type) {
-    /** 
-     * data = {id}
-     */
-    if (data.id == undefined)
-        return false;
-    switch(type) {
-        case "chat": 
-            return !((await Chat.findAll({raw: true, where: {id: data.id}})).length == 0)
-        case "user":
-            return !((await Auth.findAll({raw: true, where: {id: data.id}})).length == 0)
-    }
-}
 
-async function is_Admin(data){
-    /**
-     * data = {chat_id, user_id}
-     */
-    if (!data_checker(data, ["user_id", "chat_id"]))
-        return false;
-    return ((await ChatAdmin.findAll({raw: true, where: {
-        chat_id: data.chat_id,
-        user_id: data.user_id
-    }})) != 0 || (await Chat.findAll({raw: true, where: {
-        id: data.chat_id,
-        creator: data.user_id
-    }})) != 0)
-}
 
 async function manage_user(data, flag) {
     /**
@@ -185,11 +164,11 @@ async function manage_user(data, flag) {
      */
     if (!data_checker(data, ["chat_id", "user_id"]))
         return DATA;
-    if (!(await check_exist({id: data.user_id}, "user")) || !(await check_exist({id: data.chat_id}, "chat")))
+    if (!(await check_exist({ id: data.user_id }, "user")) || !(await check_exist({ id: data.chat_id }, "chat")))
         return DATA;
     switch (flag) {
         case "add":
-            if ((await Chat.findAll({raw: true, where: {id: data.chat_id}}))[0].deleted)
+            if ((await Chat.findAll({ raw: true, where: { id: data.chat_id } }))[0].deleted)
                 return DATA;
 
             const new_row = await ChatUser.create({
@@ -202,16 +181,18 @@ async function manage_user(data, flag) {
         case "kick":
             if (data.requester_id == undefined)
                 return DATA;
-            if (!(await check_exist({id: data.requester_id}, "user")))
+            if (!(await check_exist({ id: data.requester_id }, "user")))
                 return DATA;
-            if (!is_Admin({chat_id: data.chat_id, user_id: data.requester_id}))
+            if (!is_Admin({ chat_id: data.chat_id, user_id: data.requester_id }))
                 return PR;
         case "leave":
-            if ((await ChatUser.findAll({raw: true, where: {
-                chat_id: data.chat_id,
-                user_id: data.user_id,
-                left: false
-                }})) == 0)
+            if ((await ChatUser.findAll({
+                raw: true, where: {
+                    chat_id: data.chat_id,
+                    user_id: data.user_id,
+                    left: false
+                }
+            })) == 0)
                 return DATA;
             await ChatUser.update({ left: true }, {
                 where: {
@@ -219,21 +200,27 @@ async function manage_user(data, flag) {
                     chat_id: data.chat_id
                 }
             });
-            await ChatAdmin.destroy({where: {
-                user_id: data.user_id,
-                chat_id: data.chat_id
-            }});
+            await ChatAdmin.destroy({
+                where: {
+                    user_id: data.user_id,
+                    chat_id: data.chat_id
+                }
+            });
             return OK;
 
         case "delete":
-            await ChatUser.destroy({where: {
-                user_id: data.user_id,
-                chat_id: data.chat_id
-            }});
-            await ChatAdmin.destroy({where: {
-                user_id: data.user_id,
-                chat_id: data.chat_id
-            }});
+            await ChatUser.destroy({
+                where: {
+                    user_id: data.user_id,
+                    chat_id: data.chat_id
+                }
+            });
+            await ChatAdmin.destroy({
+                where: {
+                    user_id: data.user_id,
+                    chat_id: data.chat_id
+                }
+            });
             return OK;
     }
 }
@@ -246,7 +233,7 @@ async function manage_chat(data, flag) {
         case "create":
             if (!data_checker(data, ["name", "user_id"]))
                 return DATA;
-            if (!(await check_exist({id: data.user_id}, "user")))
+            if (!(await check_exist({ id: data.user_id }, "user")))
                 return DATA;
             const new_chat = await Chat.create({
                 name: data.name,
@@ -259,7 +246,7 @@ async function manage_chat(data, flag) {
         case "delete":
             if (!data_checker(data, ["chat_id", "user_id"]))
                 return DATA;
-            if (!(await check_exist({id: data.user_id}, "user")) || !(await check_exist({id: data.chat_id}, "chat")))
+            if (!(await check_exist({ id: data.user_id }, "user")) || !(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
             if ((await Chat.findAll({
                 raw: true,
@@ -267,10 +254,10 @@ async function manage_chat(data, flag) {
                     id: data.chat_id,
                     creator: data.user_id
                 }
-                })).length == 0)
+            })).length == 0)
                 return PR;
 
-            await Chat.update({deleted: true}, {
+            await Chat.update({ deleted: true }, {
                 where: {
                     id: data.chat_id
                 }
@@ -285,7 +272,7 @@ async function manage_chat(data, flag) {
         case "rename":
             if (!data_checker(data, ["chat_id", "name"]))
                 return DATA;
-            if (!(await check_exist({id: data.chat_id}, "chat")))
+            if (!(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
             await Chat.update({ name: data.name }, {
                 where: {
@@ -296,7 +283,7 @@ async function manage_chat(data, flag) {
         case "photo":
             if (!data_checker(data, ["chat_id", "ph"]))
                 return DATA;
-            if (!(await check_exist({id: data.chat_id}, "chat")))
+            if (!(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
             await Chat.update({ picture_url: data.ph }, {
                 where: {
@@ -313,13 +300,13 @@ async function manage_admin(data, flag) {
      */
     if (!data_checker(data, ["chat_id", "user_id", "requester_id"]))
         return DATA;
-    if (!(await check_exist({id: data.user_id}, "user")) || !(await check_exist({id: data.chat_id}, "chat")) || !(await check_exist({id: data.requester_id}, "user")) )
+    if (!(await check_exist({ id: data.user_id }, "user")) || !(await check_exist({ id: data.chat_id }, "chat")) || !(await check_exist({ id: data.requester_id }, "user")))
         return DATA;
     switch (flag) {
         case "create":
             if (await is_Admin(data))
                 return OK;
-            if (!(await is_Admin({chat_id: data.chat_id, user_id: data.requester_id})))
+            if (!(await is_Admin({ chat_id: data.chat_id, user_id: data.requester_id })))
                 return PR;
             const new_admin = await ChatAdmin.create({
                 user_id: data.user_id,
@@ -331,16 +318,18 @@ async function manage_admin(data, flag) {
         case "delete":
             if (!(await is_Admin(data)))
                 return OK;
-            if (!(await is_Admin({chat_id: chat_id, user_id: data.requester_id})))
+            if (!(await is_Admin({ chat_id: chat_id, user_id: data.requester_id })))
                 return PR;
-            await ChatAdmin.destroy({where: {
-                chat_id: data.chat_id,
-                user_id: data.user_id
-            }})
+            await ChatAdmin.destroy({
+                where: {
+                    chat_id: data.chat_id,
+                    user_id: data.user_id
+                }
+            })
             return OK;
     }
 }
 
 module.exports = {
-    manage_chat, manage_user, get_user_info, get_chat_info, check_user_left_ch, get_user_chats, manage_admin
+    manage_chat, manage_user, get_user_info, get_chat_info, check_user_left_ch, get_user_chats, manage_admin, check_exist
 }

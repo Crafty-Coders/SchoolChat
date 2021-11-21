@@ -1,11 +1,5 @@
 const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize } = require('../DB_init.js');
-const { data_checker } = require('../DB_functions');
-
-function propper(data, props) {
-    for (var prop in props)
-        data[props[prop]] = data[props[prop]] == undefined ? '' : data[props[prop]];
-    return data;
-}
+const { data_checker, propper } = require('../DB_functions');
 
 function to_int(d) {
     return d == '' ? 0 : parseInt(d);
