@@ -10,7 +10,7 @@ async function get_users_online() {
 }
 
 io.on('connection', (socket) => {
-    console.log("new")
+    console.log(socket.handshake.query)
 
     // ! socket ~ User (AuthDB)
     // ? Getting req_data when auth(POST-GET request)
