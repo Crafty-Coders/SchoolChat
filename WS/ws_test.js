@@ -30,4 +30,4 @@ User2.on('stat', (res) => {
     console.log(chalk.red(res))
 })
 
-socket.on('new_msg', (data) => console.log(data))
+User1.on('new_msg', (data) => console.log(data))
