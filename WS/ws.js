@@ -89,7 +89,10 @@ io.on('connection', (socket) => {
                 socket.emit('online-input', ERR))
     })
 
-
+    socket.on("newMessage", (data) => {
+        io.emit('msg', {'id': parseInt(data.id),'user_id': data.user_id, 'text': data.text})
+        console.log(data)
+    })
 
 })
 module.exports = { io }

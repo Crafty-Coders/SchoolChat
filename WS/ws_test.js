@@ -11,7 +11,7 @@ let User1_data = {
     email: 7
 }
 var User1 = io.connect('http://localhost:3000', {query: User1_data})
-let User2_data = {
+/*let User2_data = {
     user_id: 2,
     name: 2,
     surname: 2,
@@ -20,14 +20,6 @@ let User2_data = {
     phone: 2,
     email: 2
 }
-var User2 = io.connect('http://localhost:3000', {query: User2_data})
+var User2 = io.connect('http://localhost:3000', {query: User2_data})*/
 
-User1.on('stat', (res) => {
-    console.log(chalk.green(res))
-})
-
-User2.on('stat', (res) => {
-    console.log(chalk.red(res))
-})
-
-User1.on('new_msg', (data) => console.log(data))
+User1.emit("newMessage", {'user_id': 45, 'id': 78, 'text': "hgvjkl", "chat_id": 567})
