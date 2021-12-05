@@ -1,6 +1,7 @@
 const { query } = require('express')
 const io = require('socket.io-client')
 const chalk = require('chalk')
+const { findLastKey } = require('lodash')
 let User1_data = {
     user_id: 1,
     name: 1,
@@ -22,4 +23,4 @@ var User1 = io.connect('http://localhost:3000', {query: User1_data})
 }
 var User2 = io.connect('http://localhost:3000', {query: User2_data})*/
 
-User1.emit("newMessage", {'user_id': 45, 'id': 78, 'text': "hgvjkl", "chat_id": 567})
+User1.emit("r", {'user_id': 7, 'id': 4, 'text': "ya pidor", "chat_id": 5, 'attachments': "", 'deleted_all': false, 'deleted_user': false, 'edited': false})

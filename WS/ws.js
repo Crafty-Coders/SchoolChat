@@ -22,6 +22,8 @@ io.on('connection', (socket) => {
     socket.phone = socket.handshake.query.phone
     socket.email = socket.handshake.query.email
     socket.picture_url = socket.handshake.query.picture_url
+    
+    socket.emit('connected')
 
     socket.on('chat-msg', (data) => {
         MessageDB.new_msg(data).then(res => {
@@ -89,8 +91,28 @@ io.on('connection', (socket) => {
                 socket.emit('online-input', ERR))
     })
 
+    socket.on("chats", (data) => {
+        //console.log(data)
+        ChatUserDB.get_user_chats({"user_id": data.user_id}).then(res =>{   
+            socket.emit('recieve-chats', {res})
+            console.log(res)
+        }).catch(err => socket.emit('recieve-chats', {err}))
+    })
+
+
+    socket.on("chat-msgs", (data) => {
+
+    })
+
     socket.on("newMessage", (data) => {
-        io.emit('msg', {'id': parseInt(data.id),'user_id': data.user_id, 'text': data.text})
+        io.emit('msg', {'id': parseInt(data.id)+1,
+            'user_id': data.user_id,
+            'text': data.text, 
+            'chat_id': data.chat_id, 
+            'attachments': data.attachments,
+            'deleted_user': data.deleted_user,
+            'deleted_all': data.deleted_all,
+            'edited': data.edited})
         console.log(data)
     })
 
