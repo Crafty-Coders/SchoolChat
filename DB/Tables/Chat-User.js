@@ -70,51 +70,64 @@ async function get_chat_info(data) {
      * }
      * 
      */
-    if (!data_checker(data, ["chat_id"]))
-        return DATA;
 
-    if (!(await check_exist({ id: data.chat_id }, "chat")))
-        return DATA;
+    try{
+        if (!data_checker(data, ["chat_id"]))
+            return DATA;
 
-    const chat = (await Chat.findAll({
-        raw: true,
-        where: {
-            id: data.chat_id
+        if (!(await check_exist({ id: data.chat_id }, "chat")))
+            return DATA;
+
+        const chat = (await Chat.findAll({
+            raw: true,
+            where: {
+                id: data.chat_id
+            }
+        }))[0];
+        let u = await ChatUser.findAll({
+            raw: true,
+            attributes: ['user_id'],
+            where: {
+                chat_id: data.chat_id,
+                left: false
+            }
+        });
+        let users = [];
+        for (let i = 0; i < u.length; i++)
+            users.push(u[i].user_id);
+        let admins = [];
+
+        console.log("before admins")
+
+        u = await ChatAdmin.findAll({
+            raw: true,
+            attributes: ['user_id'],
+            where: {
+                chat_id: data.chat_id
+            }
+        });
+
+        console.log("before for")
+
+        for (let i = 0; i < u.length; i++)
+            admins.push(u[i].user_id);
+
+        console.log("after_for")
+
+        dat = {
+            id: chat.id,
+            users: [...new Set(users)],
+            name: chat.name,
+            admins: admins,
+            pic: chat.picture_url,
+            time: chat.createdAt,
+            creator: chat.creator
         }
-    }))[0];
-    let u = await ChatUser.findAll({
-        raw: true,
-        attributes: ['user_id'],
-        where: {
-            chat_id: data.chat_id,
-            left: false
-        }
-    });
-    let users = [];
-    for (let i = 0; i < u.length; i++)
-        users.push(u[i].user_id);
-    let admins = [];
 
-    u = await ChatAdmin.findAll({
-        raw: true,
-        attributes: ['user_id'],
-        where: {
-            chat_id: data.chat_id
-        }
-    });
-
-    for (let i = 0; i < u.length; i++)
-        admins.push(u[i].user_id);
-
-    return {
-        id: chat.id,
-        users: users,
-        name: chat.name,
-        admins: admins,
-        pic: chat.picture_url,
-        time: chat.createdAt,
-        creator: chat.creator
-    };
+        return dat;
+    } catch {
+        return ERR;
+    }
 }
 
 async function get_user_info(data) {

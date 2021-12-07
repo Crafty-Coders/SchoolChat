@@ -41,10 +41,12 @@ async function get_all_showing_msgs(data) {
     /**
      * data = {chat_id}
      */
-    let msgs = get_all_chat_msgs(data.chat_id);
+    let msgs = await get_all_chat_msgs(data);
     for (let i = 0; i < msgs.length; i++)
         if (msgs[i].deleted_all == true)
             msgs.splice(i, 1);
+    console.log("all_msgs")
+    console.log(msgs)
     return msgs;
 }
 
@@ -52,20 +54,22 @@ async function get_all_chat_msgs(data) {
     /**
     * data = {chat_id}
     */
+    console.log(data)
     if (!data_checker(data, ["chat_id"]))
         return DATA;
-    if (!(await check_exist({ id: chat_id }, "chat")))
+    if (!(await check_exist({ id: data.chat_id }, "chat")))
         return DATA;
     let msgs = await Message.findAll({
+        raw: true,
         where: {
-            chat_id: data.chat_id
+            chat_id: parseInt(data.chat_id)
         }
     });
     return msgs;
 }
 
 async function get_last_message(data) {
-    let msgs = get_all_showing_msgs(data)
+    let msgs = await get_all_showing_msgs(data)
     return msgs[msgs.length - 1]
 }
 

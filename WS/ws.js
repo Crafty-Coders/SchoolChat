@@ -79,17 +79,20 @@ io.on('connection', (socket) => {
                         socket.emit('chat_info', err))
                 break
             case "chat-for-preview":
-                ChatUserDB.get_chat_info(data.data).then(res1 =>
+                console.log("aboba")
+                ChatUserDB.get_chat_info(data.data).then(res1 => {
+                    console.log("1");
                     MessageDB.get_last_message(data.data).then(res2 => {
+                        console.log(res2)
                         res = {
                             "chat": res1,
                             "last_msg": {
-                                "text": res2.text,
-                                "user_id": res2.user_id,
-                                "time": res2.updatedAt
+                                "text": res2 == undefined ? "" : res2.text,
+                                "user_id": res2 == undefined ? "" : res2.user_id,
+                                "time": res2 == undefined ? "" : res2.updatedAt
                             }
                         }
-                        socket.emit('chat_preview_info', res)}))
+                        socket.emit('chat_preview_info', res)})})
                         .catch(err =>
                         socket.emit('chat_preview_info', err))
                 break
