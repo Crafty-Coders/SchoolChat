@@ -1,3 +1,4 @@
+const { text } = require("express");
 const { OK, Chat } = require("../DB/DB_init");
 const { MessageDB, ChatUserDB } = require("../DB/DB_main");
 const io = require("socket.io")(mobile_server);
@@ -73,14 +74,29 @@ io.on('connection', (socket) => {
     socket.on('get-info', (data) => {
         switch (data.flag) {
             case "chat":
-                ChatUserDB.get_user_info(data.data).then(res =>
+                ChatUserDB.get_chat_info(data.data).then(res =>
                     socket.emit('chat_info', res)).catch(err =>
-                        socket.enit('chat_info', err))
+                        socket.emit('chat_info', err))
+                break
+            case "chat-for-preview":
+                ChatUserDB.get_chat_info(data.data).then(res1 =>
+                    MessageDB.get_last_message(data.data).then(res2 => {
+                        res = {
+                            "chat": res1,
+                            "last_msg": {
+                                "text": res2.text,
+                                "user_id": res2.user_id,
+                                "time": res2.updatedAt
+                            }
+                        }
+                        socket.emit('chat_preview_info', res)}))
+                        .catch(err =>
+                        socket.emit('chat_preview_info', err))
                 break
             case "user":
                 ChatUserDB.get_user_info(data.data).then(res =>
                     socket.emit('user_info', res)).catch(err =>
-                        socket.enit('user_info', err))
+                        socket.emit('user_info', err))
                 break
         }
     })

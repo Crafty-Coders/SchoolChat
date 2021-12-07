@@ -64,6 +64,11 @@ async function get_all_chat_msgs(data) {
     return msgs;
 }
 
+async function get_last_message(data) {
+    let msgs = get_all_showing_msgs(data)
+    return msgs[msgs.length - 1]
+}
+
 async function manage_msgs(data, flag) {
     /**
      * data = {msg_id, text, requester_id, attachments}
@@ -125,5 +130,5 @@ async function manage_msgs(data, flag) {
 }
 
 module.exports = {
-    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs
+    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message
 }
