@@ -7,8 +7,8 @@ const config = require('../config.js');
   dialect: "postgres",
   host: config.host
 });*/
-const DBURI = config.DBURI
-//const DBURI = process.env.DATABASE_URL
+//const DBURI = config.DBURI
+const DBURI = process.env.DATABASE_URL
 const sequelize = new Sequelize(DBURI, {
   dialectOptions: {
     ssl: {
