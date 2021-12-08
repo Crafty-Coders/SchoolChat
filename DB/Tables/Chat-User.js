@@ -6,8 +6,10 @@ async function get_user_chats(data) {
      * data = {user_id}
      */
     if (!data_checker(data, ["user_id"]))
+        console.log("data checker")
         return DATA;
     if (!(await check_exist({ id: data.user_id }, "user")))
+        console.log("not_exist")
         return DATA;
 
     let chats = await ChatUser.findAll({
