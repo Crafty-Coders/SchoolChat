@@ -10,4 +10,4 @@ app.get('/', (req, res) => {
 })
 
 mobile_server = app.listen("3000", () => console.log("Server is runnung")) //! ТАК СДЕЛАТЬ МИШЕ
-require('./ws')
+require('./WS/ws')

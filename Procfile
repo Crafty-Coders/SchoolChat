@@ -1,1 +1,1 @@
-web: node ./WS/app
+web: node app.js
