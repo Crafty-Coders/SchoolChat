@@ -1,14 +1,14 @@
 const { result } = require('lodash');
 const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
-const config = require('../config.js');
+//const config = require('../config.js'); // ! comment for heroku
 
 /*const sequelize = new Sequelize(config.DB, config.user, config.password, {
   dialect: "postgres",
   host: config.host
 });*/
-//const DBURI = config.DBURI
-const DBURI = process.env.DATABASE_URL
+//const DBURI = config.DBURI // ! comment for heroku
+const DBURI = process.env.DATABASE_URL // ! uncomment for heroku
 const sequelize = new Sequelize(DBURI, {
   dialectOptions: {
     ssl: {
