@@ -9,5 +9,5 @@ app.get('/', (req, res) => {
     res.render("index")
 })
 
-mobile_server = app.listen(process.env.PORT, () => console.log(`Server is runnung ${process.env.PORT}`)) //! ТАК СДЕЛАТЬ МИШЕ
+mobile_server = app.listen(process.env.PORT || 3000, () => console.log(`Server is runnung ${process.env.PORT}`)) //! ТАК СДЕЛАТЬ МИШЕ
 require('./WS/ws')

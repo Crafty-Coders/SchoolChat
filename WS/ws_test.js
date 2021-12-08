@@ -11,7 +11,7 @@ let User1_data = {
     phone: 1,
     email: 7
 }
-var User1 = io.connect('https://school-chat-server-ws.herokuapp.com:3000', {query: User1_data})
+var User1 = io.connect('ws://school-chat-server-ws.herokuapp.com', {query: User1_data})
 /*let User2_data = {
     user_id: 2,
     name: 2,
