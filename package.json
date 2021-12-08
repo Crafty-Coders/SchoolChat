@@ -1,7 +1,6 @@
 {
   "name": "schoolchat",
   "version": "1.0.0",
-  "description": "",
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +22,6 @@
     "pg": "^8.7.1",
     "sequelize": "^6.12.0-alpha.1",
     "socketio": "^1.0.0"
-  }
+  },
+  "description": ""
 }

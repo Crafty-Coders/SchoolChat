@@ -40,9 +40,8 @@ function print_err(data) {console.log(chalk.red(data));}
     .then(res => {console.log(res)})
     .catch(err => {console.log(err)})*/
 
-/*ChatUserDB.get_chat_info({chat_id: 30})
-    .then(res => {console.log(res)})
-    .catch(err => {console.log(err)})*/
+
+console.log(ChatUserDB.get_chat_info({chat_id: 4}))
 
 /*ChatUserDB.check_user_left_ch({user_id: 5, chat_id: 4})
     .then(res => {console.log(res)})
@@ -64,6 +63,6 @@ function print_err(data) {console.log(chalk.red(data));}
     .then(res => {print_res(res)})
     .catch(err => {print_err(err)})*/
 
-MessageDB.manage_msgs({msg_id: 2, requester_id: 1}, "delete_all")
+/*MessageDB.manage_msgs({msg_id: 2, requester_id: 1}, "delete_all")
     .then(res => {print_res(res)})
-    .catch(err => {print_err(err)})
+    .catch(err => {print_err(err)})*/

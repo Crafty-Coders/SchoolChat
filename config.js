@@ -1,7 +1,5 @@
-const DBHost = "localhost"
-const user = "postgres"
-const password = "lalkalol"
-const DB = "SchoolChat"
+var config = require('./config.json')
+const DBURI = config.DB_URI
 module.exports = {
-    DBHost, DB, user, password
+    DBURI
 }

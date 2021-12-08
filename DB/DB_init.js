@@ -3,10 +3,18 @@ const Sequelize = require('sequelize');
 const { PassThrough } = require('stream');
 const config = require('../config.js');
 
-const sequelize = new Sequelize(config.DB, config.user, config.password, {
+/*const sequelize = new Sequelize(config.DB, config.user, config.password, {
   dialect: "postgres",
   host: config.host
-});
+});*/
+const sequelize = new Sequelize(config.DBURI, {
+  dialectOptions: {
+    ssl: {
+        require: true,
+        rejectUnauthorized: false
+    }
+}
+})
 const ERR = "ERR";
 const OK = "OK";
 const PH = "PHONE";
@@ -48,7 +56,7 @@ const Auth = sequelize.define("auth", {
   phone: {
     type: Sequelize.STRING
   },
-  password: {
+    password: {
     type: Sequelize.STRING,
     allowNull: false
   },
