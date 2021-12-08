@@ -112,7 +112,7 @@ io.on('connection', (socket) => {
 
     socket.on("chats", (data) => {
         //console.log(data)
-        ChatUserDB.get_user_chats({"user_id": data.user_id}).then(res =>{   
+        ChatUserDB.get_user_chats({"user_id": data}).then(res =>{   
             socket.emit('recieve-chats', {res})
             console.log(res)
         }).catch(err => socket.emit('recieve-chats', {err}))
