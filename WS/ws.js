@@ -124,7 +124,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("newMessage", (data) => {
-        io.emit('msg', {'id': parseInt(data.id)+1,
+        io.emit('msg', {'id': data.id,
             'user_id': data.user_id,
             'text': data.text, 
             'chat_id': data.chat_id, 
@@ -133,6 +133,18 @@ io.on('connection', (socket) => {
             'deleted_all': data.deleted_all,
             'edited': data.edited})
         console.log(data)
+    })
+
+    socket.on("get-msgs", (data) => {
+        MessageDB.get_all_showing_msgs(data.chat_id).then(res => {
+            socket.emit("chat-message-recieve", {'data': res})
+        })
+    })
+
+    socket.on("last-msg-id", data => {
+        MessageDB.get_last_id().then(res => {
+            socket.emit("last_id", {"data": res})
+        })
     })
 
 })
