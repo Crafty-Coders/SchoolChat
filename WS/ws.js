@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("get-msgs", (data) => {
-        MessageDB.get_all_showing_msgs(data.chat_id).then(res => {
+        MessageDB.get_all_showing_msgs(data).then(res => {
             socket.emit("chat-message-recieve", {'data': res})
         })
     })

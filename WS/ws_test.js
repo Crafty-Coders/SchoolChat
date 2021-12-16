@@ -11,7 +11,7 @@ let User1_data = {
     phone: 1,
     email: 7
 }
-var User1 = io.connect('ws://school-chat-server-ws.herokuapp.com', {query: User1_data})
+var User1 = io.connect('http://localhost:3000', {query: User1_data})
 /*let User2_data = {
     user_id: 2,
     name: 2,
@@ -23,5 +23,5 @@ var User1 = io.connect('ws://school-chat-server-ws.herokuapp.com', {query: User1
 }
 var User2 = io.connect('http://localhost:3000', {query: User2_data})*/
 
-User1.emit("chats", {'user_id': 2})
-User1.on('recieve-chats', (data => console.log(data)))
+User1.emit("get-msgs", {'chat_id': 2, 'user_id': 2})
+User1.on('chat-message-recieve', (data => console.log(data)))
