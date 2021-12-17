@@ -137,8 +137,8 @@ async function get_last_id() {
     let msgs = await Message.findAll({
         raw: true,
     });
-    console.log(msgs[msgs.length - 1]["id"])
-    return msgs[msgs.length - 1]["id"]
+    console.log(msgs[msgs.length - 1].id)
+    return msgs[msgs.length - 1].id
 }
 
 module.exports = {
