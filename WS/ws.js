@@ -133,8 +133,8 @@ io.on('connection', (socket) => {
                     'attachments': data.attachments,
                     'deleted_user': data.deleted_user,
                     'deleted_all': data.deleted_all,
-                    'edited': data.edited})})
-        console.log(data)})
+                    'edited': data.edited})}).catch(err => console.log(err))
+        console.log(data)}).catch(res => console.log(res))
     })
 
     socket.on("get-msgs", (data) => {
