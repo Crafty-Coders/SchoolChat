@@ -133,6 +133,14 @@ async function manage_msgs(data, flag) {
     }
 }
 
+async function get_last_id() {
+    let msgs = await Message.findAll({
+        raw: true,
+    });
+    console.log(msgs[msgs.length - 1]["id"])
+    return msgs[msgs.length - 1]["id"]
+}
+
 module.exports = {
     new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message
 }
