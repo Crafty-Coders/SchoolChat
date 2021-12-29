@@ -45,8 +45,6 @@ async function get_all_showing_msgs(data) {
     for (let i = 0; i < msgs.length; i++)
         if (msgs[i].deleted_all == true)
             msgs.splice(i, 1);
-    console.log("all_msgs")
-    console.log(msgs)
     return msgs;
 }
 
