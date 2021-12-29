@@ -125,15 +125,17 @@ io.on('connection', (socket) => {
 
     socket.on("newMessage", (data) => {
         MessageDB.new_msg(data).then(res => {
-            MessageDB.get_last_id().then(res2 => {
-                io.emit('msg', {'id': res2,
+            MessageDB.get_last_id_with_time().then(res2 => {
+                console.log("ABOBA")
+                io.emit('msg', {'id': res2.id,
                     'user_id': data.user_id,
                     'text': data.text, 
                     'chat_id': data.chat_id, 
                     'attachments': data.attachments,
                     'deleted_user': data.deleted_user,
                     'deleted_all': data.deleted_all,
-                    'edited': data.edited})}).catch(err => console.log(err))
+                    'edited': data.edited,
+                    'time':res2.time})}).catch(err => console.log(err))
         console.log(data)}).catch(res => console.log(res))
     })
 

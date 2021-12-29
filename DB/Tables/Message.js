@@ -131,14 +131,20 @@ async function manage_msgs(data, flag) {
     }
 }
 
-async function get_last_id() {
+async function get_last_id_with_time() {
     let msgs = await Message.findAll({
         raw: true,
     });
     console.log(msgs[msgs.length - 1].id)
-    return msgs[msgs.length - 1].id
+    let id =  msgs[msgs.length - 1].id
+    let time = msgs[msgs.length - 1].updatedAt
+    console.log(time)
+    return {
+        'id' : id,
+        'time' : time
+    }
 }
 
 module.exports = {
-    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id
+    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id_with_time
 }
