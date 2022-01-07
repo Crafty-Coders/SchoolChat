@@ -53,13 +53,15 @@ io.on('connection', (socket) => {
         }).catch(err => socket.emit('stat', err))
     })
 
-    socket.on('manage-chat', (data) => {
-        ChatUserDB.manage_chat(data.data, data.flag).then(res => {
+    socket.on('add-chat', (data) => {
+        ChatUserDB.manage_chat(data, 'create').then(res => {
             if (res == OK) {
-                io.emit("chat_event", data.data)
+                io.emit('new-chat', data)
                 socket.emit('stat', OK)
-            } else { socket.emit('stat', res) }
-        }).catch(err => socket.emit('stat', err))
+            }
+        }).catch(err => {
+            socket.emit('stat', err)
+        })
     })
 
     socket.on('manage-user', (data) => {
