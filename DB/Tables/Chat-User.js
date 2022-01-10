@@ -252,7 +252,7 @@ async function manage_chat(data, flag) {
                 return DATA;
             if (!(await check_exist({ id: data.user_id }, "user")))
                 return DATA;
-            const new_chat = await Chat.create({
+            await Chat.create({
                 name: data.name,
                 creator: data.user_id,
                 ph: data.ph
@@ -261,7 +261,7 @@ async function manage_chat(data, flag) {
             console.log("doshlo")
             let chatss = await Chat.findAll({raw: true})
             let current_chat = chatss[chatss.length-1].id
-            const creator_in_chat = await ChatUser.create({
+            await ChatUser.create({
                 user_id: data.user_id,
                 chat_id: current_chat, 
                 left: false

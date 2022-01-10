@@ -96,6 +96,10 @@ const Message = sequelize.define("message", {
   edited: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  service: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 

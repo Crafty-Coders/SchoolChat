@@ -144,7 +144,8 @@ io.on('connection', (socket) => {
                     'deleted_user': data.deleted_user,
                     'deleted_all': data.deleted_all,
                     'edited': data.edited,
-                    'time':res2.time})}).catch(err => console.log(err))
+                    'time':res2.time,
+                    'service': false})}).catch(err => console.log(err))
         console.log(data)}).catch(res => console.log(res))
     })
 
