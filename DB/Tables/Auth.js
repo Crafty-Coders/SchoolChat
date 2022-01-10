@@ -94,6 +94,11 @@ async function change_password(data) {
 }
 
 async function get_name_surname(data) {
+    if (data.id == 0)
+        return {
+            name: "",
+            surname: ""
+        }
     if (!data_checker(data, ["id"]))
         return DATA;
     let res = await Auth.findAll({

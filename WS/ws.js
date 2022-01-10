@@ -86,7 +86,9 @@ io.on('connection', (socket) => {
                     console.log("1");
                     MessageDB.get_last_message(data.data).then(res2 => {
                         console.log(res2)
-                        AuthDB.get_name_surname({"id": res2.user_id}).then(res3 => {
+                        let userid = 0
+                        if (res2 != undefined) userid = res2.user_id
+                        AuthDB.get_name_surname({"id": userid}).then(res3 => {
                             let res = {
                                 "chat": res1,
                                 "last_msg": {

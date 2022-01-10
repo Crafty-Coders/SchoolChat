@@ -257,7 +257,16 @@ async function manage_chat(data, flag) {
                 creator: data.user_id,
                 ph: data.ph
             });
-            await new_chat.save();
+            //await new_chat.save();
+            console.log("doshlo")
+            let chatss = await Chat.findAll({raw: true})
+            let current_chat = chatss[chatss.length-1].id
+            const creator_in_chat = await ChatUser.create({
+                user_id: data.user_id,
+                chat_id: current_chat, 
+                left: false
+            });
+            //await creator_in_chat.save();
             return OK;
 
         case "delete":
