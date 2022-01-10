@@ -1,6 +1,6 @@
 const { text } = require("express");
 const { OK, Chat } = require("../DB/DB_init");
-const { MessageDB, ChatUserDB } = require("../DB/DB_main");
+const { MessageDB, ChatUserDB, AuthDB } = require("../DB/DB_main");
 const io = require("socket.io")(mobile_server);
 
 async function get_users_online() {
@@ -86,15 +86,20 @@ io.on('connection', (socket) => {
                     console.log("1");
                     MessageDB.get_last_message(data.data).then(res2 => {
                         console.log(res2)
-                        res = {
-                            "chat": res1,
-                            "last_msg": {
-                                "text": res2 == undefined ? "" : res2.text,
-                                "user_id": res2 == undefined ? "" : res2.user_id,
-                                "time": res2 == undefined ? "" : res2.updatedAt
+                        AuthDB.get_name_surname({"id": res2.user_id}).then(res3 => {
+                            let res = {
+                                "chat": res1,
+                                "last_msg": {
+                                    "text": res2 == undefined ? "" : res2.text,
+                                    "user_id": res2 == undefined ? "" : res2.user_id,
+                                    "time": res2 == undefined ? "" : res2.updatedAt,
+                                    "userdata": res3
+                                }
                             }
-                        }
-                        socket.emit('chat_preview_info', res)})})
+                            socket.emit('chat_preview_info', res)
+                        })
+                        
+                        })})
                         .catch(err =>
                         socket.emit('chat_preview_info', err))
                 break

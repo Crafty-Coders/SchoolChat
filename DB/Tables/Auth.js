@@ -93,6 +93,22 @@ async function change_password(data) {
     return OK;
 }
 
+async function get_name_surname(data) {
+    if (!data_checker(data, ["id"]))
+        return DATA;
+    let res = await Auth.findAll({
+        raw: true,
+        attributes: ["name", "surname"],
+        where: {
+            id: data.id
+        }
+    })
+    return {
+        name: res[res.length-1].name,
+        surname: res[res.length-1].surname
+    }
+}
+
 module.exports = {
-    register, login, change_password
+    register, login, change_password, get_name_surname
 }
