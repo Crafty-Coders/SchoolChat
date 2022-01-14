@@ -1,5 +1,7 @@
 const { ChatUser, Chat, ChatAdmin, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Auth, DATA } = require('../DB_init.js');
 const { data_checker, check_exist, is_Admin } = require('../DB_functions');
+// const { MessageDB } = require('../DB_main.js');
+const { create_service_msg } = require('./Message.js');
 
 async function get_user_chats(data) {
     /**
@@ -258,7 +260,6 @@ async function manage_chat(data, flag) {
                 ph: data.ph
             });
             //await new_chat.save();
-            console.log("doshlo")
             let chatss = await Chat.findAll({raw: true})
             let current_chat = chatss[chatss.length-1].id
             await ChatUser.create({
@@ -266,6 +267,8 @@ async function manage_chat(data, flag) {
                 chat_id: current_chat, 
                 left: false
             });
+
+            await create_service_msg("Чат создан", current_chat)
             //await creator_in_chat.save();
             return OK;
 

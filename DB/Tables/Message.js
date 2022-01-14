@@ -20,7 +20,7 @@ async function new_msg(data) {
         text: data.text,
         attachments: data.attachments
     });
-    await new_message.save();
+    await new_message.save();3
     return OK;
 }
 
@@ -35,6 +35,17 @@ async function get_msgs_for_user(data) {
         if ((msgs[i].user_id == data.user_id) && (msgs[i].deleted_user == true))
             msgs.splice(i, 1);
     return msgs;
+}
+
+async function create_service_msg(text, chat_id) {
+    console.log(`\n\n\n\n\n\n ${chat_id} ${text} \n\n\n\n`)
+    await Message.create({
+        chat_id: chat_id,
+        user_id: 0,
+        text: text,
+        attachments: {},
+        service: true,
+    })
 }
 
 async function get_all_showing_msgs(data) {
@@ -146,5 +157,5 @@ async function get_last_id_with_time() {
 }
 
 module.exports = {
-    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id_with_time
+    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id_with_time, create_service_msg
 }
