@@ -114,6 +114,28 @@ async function get_name_surname(data) {
     }
 }
 
+async function get_users_by_school(data) {
+    if (!data_checker(data, ["school_id"]))
+        return DATA
+    let res = await Auth.findAll({
+        raw: true,
+        where: {
+            school_id: data.school_id
+        }
+    })
+    let ret = []
+    for(let i = 0; i < res.length; i++){
+        ret.push({
+            'id': res[i].id,
+            'name' : res[i].name,
+            'surname': res[i].surname,
+            'school_id': data.school_id,
+            'class_id': res[i].class_id
+        })
+    }
+    return ret
+}
+
 module.exports = {
-    register, login, change_password, get_name_surname
+    register, login, change_password, get_name_surname, get_users_by_school
 }
