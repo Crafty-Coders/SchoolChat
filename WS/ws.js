@@ -156,5 +156,12 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on("get-users-by-school", (data) => {
+        AuthDB.get_users_by_school(data).then(res => {
+            socket.emit("get_users_school", {'data': res})
+            console.log("sent")
+        })
+    })
+
 })
 module.exports = { io }
