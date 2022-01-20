@@ -129,8 +129,10 @@ async function get_users_by_school(data) {
             'id': res[i].id,
             'name' : res[i].name,
             'surname': res[i].surname,
-            'school_id': data.school_id,
-            'class_id': res[i].class_id
+            'school_id': res[i].school_id,
+            'class_id': res[i].class_id,
+            'email': res[i].email,
+            'phone': res[i].phone
         })
     }
     return ret

@@ -268,6 +268,14 @@ async function manage_chat(data, flag) {
                 left: false
             });
 
+            for(var i = 0; i < data.users.length; i++) {
+                await ChatUser.create({
+                    user_id: parseInt(data.users[i], 10),
+                    chat_id: current_chat,
+                    left: false
+                })
+            }
+
             await create_service_msg("Чат создан", current_chat)
             //await creator_in_chat.save();
             return OK;
