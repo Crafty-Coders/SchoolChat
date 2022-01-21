@@ -21,10 +21,10 @@ async function check_exist(data, type) {
     if (data.id == undefined)
         return false;
     switch (type) {
-        case "chat":
-            return !((await Chat.findAll({ raw: true, where: { id: data.id } })).length == 0)
+        case "chat":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
+            return !((await Chat.findAll({ raw: true, where: { id: data.id } })).length === 0)
         case "user":
-            return !((await Auth.findAll({ raw: true, where: { id: data.id } })).length == 0)
+            return !((await Auth.findAll({ raw: true, where: { id: data.id } })).length === 0)
     }
 }
 
@@ -39,12 +39,12 @@ async function is_Admin(data) {
             chat_id: data.chat_id,
             user_id: data.user_id
         }
-    })) != 0 || (await Chat.findAll({
+    })) !== 0 || (await Chat.findAll({
         raw: true, where: {
             id: data.chat_id,
             creator: data.user_id
         }
-    })) != 0)
+    })) !== 0)
 }
 
 function msg_checker(str) {

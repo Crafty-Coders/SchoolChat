@@ -31,9 +31,9 @@ async function get_user_chats(data) {
                     deleted: false
                 }
             })).length
-            if (ch == 0)
+            if (ch === 0)
                 chats.splice(i, 1);
-        } catch { continue; }
+        } catch {  }
     }
     let res = [];
     for (var chat in chats)
@@ -211,7 +211,7 @@ async function manage_user(data, flag) {
                     user_id: data.user_id,
                     left: false
                 }
-            })) == 0)
+            })) === 0)
                 return DATA;
             await ChatUser.update({ left: true }, {
                 where: {
@@ -291,7 +291,7 @@ async function manage_chat(data, flag) {
                     id: data.chat_id,
                     creator: data.user_id
                 }
-            })).length == 0)
+            })).length === 0)
                 return PR;
 
             await Chat.update({ deleted: true }, {
