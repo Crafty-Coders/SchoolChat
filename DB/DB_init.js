@@ -207,6 +207,25 @@ const ChatAdmin = sequelize.define("chatadmin", {
   }
 });
 
+const ReadMsgs = sequelize.define("read", {
+  id: {
+    type: Sequelize.BIGINT,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false
+  }, 
+  user_id: {
+    type: Sequelize.BIGINT,
+  },
+  message_id: {
+    type: Sequelize.BIGINT
+  },
+  read: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
+  }
+})
+
 module.exports = {
   Auth, Message, Class, School, ChatUser, Chat, ChatAdmin, sequelize, initialize, ERR, OK, PH, EM, PASS, PR, NAME, DATA, Sequelize
 }
