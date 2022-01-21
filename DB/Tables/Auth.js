@@ -139,5 +139,6 @@ async function get_users_by_school(data) {
 }
 
 module.exports = {
-    register, login, change_password, get_name_surname, get_users_by_school
+    register, login, change_password, 
+    get_name_surname, get_users_by_school
 }
