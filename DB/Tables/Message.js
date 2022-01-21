@@ -58,6 +58,12 @@ async function get_all_showing_msgs(data) {
     return msgs;
 }
 
+async function has_read(data) {
+    /* 
+    data = {user_id, message_id}
+    */
+}
+
 async function get_all_chat_msgs(data) {
     /**
 * data = {chat_id, user_id} // !
