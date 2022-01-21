@@ -38,7 +38,6 @@ async function get_msgs_for_user(data) {
 }
 
 async function create_service_msg(text, chat_id) {
-    console.log(`\n\n\n\n\n\n ${chat_id} ${text} \n\n\n\n`)
     await Message.create({
         chat_id: chat_id,
         user_id: 0,
@@ -61,9 +60,8 @@ async function get_all_showing_msgs(data) {
 
 async function get_all_chat_msgs(data) {
     /**
-    * data = {chat_id}
+* data = {chat_id, user_id} // !
     */
-    console.log(data)
     if (!data_checker(data, ["chat_id"]))
         return DATA;
     if (!(await check_exist({ id: data.chat_id }, "chat")))
@@ -146,10 +144,8 @@ async function get_last_id_with_time() {
     let msgs = await Message.findAll({
         raw: true,
     });
-    console.log(msgs[msgs.length - 1].id)
     let id =  msgs[msgs.length - 1].id
     let time = msgs[msgs.length - 1].updatedAt
-    console.log(time)
     return {
         'id' : id,
         'time' : time
