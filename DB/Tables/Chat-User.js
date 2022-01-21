@@ -252,16 +252,19 @@ async function manage_chat(data, flag) {
         case "create":
             if (!data_checker(data, ["name", "user_id"]))
                 return DATA;
+
             if (!(await check_exist({ id: data.user_id }, "user")))
                 return DATA;
+
             await Chat.create({
                 name: data.name,
                 creator: data.user_id,
                 ph: data.ph
             });
-            //await new_chat.save();
+
             let chatss = await Chat.findAll({raw: true})
             let current_chat = chatss[chatss.length-1].id
+
             await ChatUser.create({
                 user_id: data.user_id,
                 chat_id: current_chat, 
@@ -277,21 +280,21 @@ async function manage_chat(data, flag) {
             }
 
             await create_service_msg("Чат создан", current_chat)
-            //await creator_in_chat.save();
             return OK;
 
         case "delete":
             if (!data_checker(data, ["chat_id", "user_id"]))
                 return DATA;
+
             if (!(await check_exist({ id: data.user_id }, "user")) || !(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
+
             if ((await Chat.findAll({
                 raw: true,
                 where: {
                     id: data.chat_id,
                     creator: data.user_id
-                }
-            })).length === 0)
+                }})).length === 0)
                 return PR;
 
             await Chat.update({ deleted: true }, {
@@ -299,6 +302,7 @@ async function manage_chat(data, flag) {
                     id: data.chat_id
                 }
             });
+
             await ChatUser.destroy({
                 where: {
                     chat_id: data.chat_id
@@ -309,19 +313,24 @@ async function manage_chat(data, flag) {
         case "rename":
             if (!data_checker(data, ["chat_id", "name"]))
                 return DATA;
+
             if (!(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
+
             await Chat.update({ name: data.name }, {
                 where: {
                     id: data.chat_id
                 }
             });
             return OK;
+
         case "photo":
             if (!data_checker(data, ["chat_id", "ph"]))
                 return DATA;
+
             if (!(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
+                
             await Chat.update({ picture_url: data.ph }, {
                 where: {
                     id: data.chat_id
