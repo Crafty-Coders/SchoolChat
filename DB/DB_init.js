@@ -227,5 +227,10 @@ const ReadMsgs = sequelize.define("read", {
 })
 
 module.exports = {
-  Auth, Message, Class, School, ChatUser, Chat, ChatAdmin, sequelize, initialize, ERR, OK, PH, EM, PASS, PR, NAME, DATA, Sequelize, ReadMsgs
+  Auth, Message, Class, 
+  School, ChatUser, Chat, 
+  ChatAdmin, sequelize, initialize, 
+  ERR, OK, PH, 
+  EM, PASS, PR, 
+  NAME, DATA, Sequelize, ReadMsgs
 }
