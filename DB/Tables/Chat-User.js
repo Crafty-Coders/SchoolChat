@@ -8,11 +8,9 @@ async function get_user_chats(data) {
      * data = {user_id}
      */
     if (!data_checker(data, ["user_id"])) {
-        console.log("data checker")
         return DATA;
     }
     if (!(await check_exist({ id: data.user_id }, "user"))) {
-        console.log("not_exist")
         return DATA;
     }
 
@@ -103,8 +101,6 @@ async function get_chat_info(data) {
             users.push(u[i].user_id);
         let admins = [];
 
-        console.log("before admins")
-
         u = await ChatAdmin.findAll({
             raw: true,
             attributes: ['user_id'],
@@ -113,12 +109,8 @@ async function get_chat_info(data) {
             }
         });
 
-        console.log("before for")
-
         for (let i = 0; i < u.length; i++)
             admins.push(u[i].user_id);
-
-        console.log("after_for")
 
         dat = {
             id: chat.id,

@@ -64,7 +64,6 @@ async function login(data) { // Default values are highlighted with #__#
         }
     });
     for (let i = 0; i < logins.length; i++) {
-        console.log(logins[i])
         if (logins[i].password == data.password)
             return OK;
     }
@@ -77,7 +76,7 @@ async function change_password(data) {
      */
     if (!data_checker(data, ["password", "new_password"]) || (data.email == undefined && data.phone == undefined))
         return DATA;
-    console.log(data)
+
     data = propper(data, ["phone", "email"]);
     let login_stat = await login(data);
     if (login_stat != OK)
