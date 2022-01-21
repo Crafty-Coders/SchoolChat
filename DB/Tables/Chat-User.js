@@ -330,7 +330,7 @@ async function manage_chat(data, flag) {
 
             if (!(await check_exist({ id: data.chat_id }, "chat")))
                 return DATA;
-                
+
             await Chat.update({ picture_url: data.ph }, {
                 where: {
                     id: data.chat_id
@@ -352,20 +352,26 @@ async function manage_admin(data, flag) {
         case "create":
             if (await is_Admin(data))
                 return OK;
+
             if (!(await is_Admin({ chat_id: data.chat_id, user_id: data.requester_id })))
                 return PR;
+
             const new_admin = await ChatAdmin.create({
                 user_id: data.user_id,
                 chat_id: data.chat_id,
                 creator_id: data.requester_id
             })
+
             await new_admin.save();
             return OK;
+
         case "delete":
             if (!(await is_Admin(data)))
                 return OK;
+
             if (!(await is_Admin({ chat_id: chat_id, user_id: data.requester_id })))
                 return PR;
+
             await ChatAdmin.destroy({
                 where: {
                     chat_id: data.chat_id,
@@ -377,5 +383,7 @@ async function manage_admin(data, flag) {
 }
 
 module.exports = {
-    manage_chat, manage_user, get_user_info, get_chat_info, check_user_left_ch, get_user_chats, manage_admin, check_exist
+    manage_chat, manage_user, get_user_info, 
+    get_chat_info, check_user_left_ch, get_user_chats, 
+    manage_admin, check_exist
 }
