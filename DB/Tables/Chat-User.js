@@ -17,22 +17,9 @@ async function get_user_chats(data) {
     let chats = await ChatUser.findAll({
         attributes: ['chat_id'],
         where: {
-            user_id: data.user_id
+            user_id: data.user_id,
         }
     });
-    for (let i = 0; i < chats.length; i++) {
-        try {
-            let ch = (await Chat.findAll({
-                raw: true,
-                where: {
-                    id: chats.chat_id,
-                    deleted: false
-                }
-            })).length
-            if (ch === 0)
-                chats.splice(i, 1);
-        } catch {  }
-    }
     let res = [];
     for (var chat in chats)
         res.push(chats[chat].chat_id)
@@ -62,7 +49,7 @@ async function check_user_left_ch(data) {
 async function get_chat_info(data) {
     /**
      * 
-     * data = {chat_id}
+     * data = {chat_id, user_id}
      * 
      * returns{
      *      users: returns array of chat users
@@ -109,6 +96,18 @@ async function get_chat_info(data) {
             }
         });
 
+        let userLeft = false
+        
+        if (data.user_id) {
+            userLeft = (await ChatUser.findAll({
+                raw: true,
+                where: {
+                    chat_id: data.chat_id,
+                    user_id: data.user_id
+                }
+            }))[0].left
+        }
+
         for (let i = 0; i < u.length; i++)
             admins.push(u[i].user_id);
 
@@ -119,7 +118,8 @@ async function get_chat_info(data) {
             admins: admins,
             pic: chat.picture_url,
             time: chat.createdAt,
-            creator: chat.creator
+            creator: chat.creator,
+            left: userLeft
         }
 
         return dat;
