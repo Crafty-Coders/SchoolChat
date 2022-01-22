@@ -21,7 +21,7 @@ async function check_exist(data, type) {
     if (data.id == undefined)
         return false;
     switch (type) {
-        case "chat":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
+        case "chat":
             return !((await Chat.findAll({ raw: true, where: { id: data.id } })).length === 0)
         case "user":
             return !((await Auth.findAll({ raw: true, where: { id: data.id } })).length === 0)
