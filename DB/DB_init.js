@@ -100,9 +100,6 @@ const Message = sequelize.define("message", {
   service: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  },
-  read: {
-    type: Sequelize.STRING(1234)
   }
 });
 
