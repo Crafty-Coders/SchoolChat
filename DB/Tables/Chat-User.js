@@ -49,7 +49,7 @@ async function check_user_left_ch(data) {
 async function get_chat_info(data) {
     /**
      * 
-     * data = {chat_id, user_id}
+     * data = {chat_id, user_id(optional)}
      * 
      * returns{
      *      users: returns array of chat users
@@ -97,6 +97,7 @@ async function get_chat_info(data) {
         });
 
         let userLeft = false
+        let read = true
         
         if (data.user_id) {
             userLeft = (await ChatUser.findAll({
@@ -106,6 +107,7 @@ async function get_chat_info(data) {
                     user_id: data.user_id
                 }
             }))[0].left
+            
         }
 
         for (let i = 0; i < u.length; i++)
