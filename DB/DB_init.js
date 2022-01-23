@@ -160,6 +160,10 @@ const ChatUser = sequelize.define("chatuser", {
   left: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  showBefore: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 });
 
