@@ -1,7 +1,9 @@
 const { ChatUser, Chat, ChatAdmin, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Auth, DATA } = require('../DB_init.js');
 const { data_checker, check_exist, is_Admin } = require('../DB_functions');
-// const { MessageDB } = require('../DB_main.js');
+const { MessageDB, AuthDB } = require('../DB_main.js');
 const { create_service_msg } = require('./Message.js');
+// const { MessageDB, AuthDB } = require('../DB_main.js');
+const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
 
 async function get_user_chats(data) {
     /**
@@ -15,14 +17,30 @@ async function get_user_chats(data) {
     }
 
     let chats = await ChatUser.findAll({
+        raw: true,
         attributes: ['chat_id'],
         where: {
             user_id: data.user_id,
         }
     });
     let res = [];
-    for (var chat in chats)
-        res.push(chats[chat].chat_id)
+    for (let i = 0; i < chats.length; i++) {
+        let res2 = await MessageDB.get_last_message({"chat_id": chats[i].chat_id})
+        // console.log("last msg")
+        // console.log(res2.user_id)
+        let res3 = await AuthDB.get_name_surname({"id": res2.user_id})
+        console.log(res3)
+        res.push({
+            "chat": await get_chat_info({"user_id": data.user_id, "chat_id": chats[i].chat_id}),
+            "last_msg": {
+                "text": res2 == undefined ? "" : res2.text,
+                "user_id": res2 == undefined ? "" : res2.user_id,
+                "time": res2 == undefined ? "" : res2.updatedAt,
+                "userdata": res3.name
+            }
+        })
+    }
+    // console.log(res)
     return [...new Set(res)];
 }
 
@@ -63,6 +81,7 @@ async function get_chat_info(data) {
      */
 
     try{
+        console.log(data)
         if (!data_checker(data, ["chat_id"]))
             return DATA;
 

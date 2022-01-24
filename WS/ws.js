@@ -1,6 +1,7 @@
 const { text } = require("express");
 const { OK, Chat } = require("../DB/DB_init");
-const { MessageDB, ChatUserDB, AuthDB } = require("../DB/DB_main");
+const { MessageDB, AuthDB } = require("../DB/DB_main");
+const ChatUserDB = require('../DB/Tables/Chat-User')
 const io = require("socket.io")(mobile_server);
 
 async function get_users_online() {
@@ -54,6 +55,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('add-chat', (data) => {
+        // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
+        // name - название чата
+        // user_id - ID создателя чата
         ChatUserDB.manage_chat(data, 'create').then(res => {
             if (res == OK) {
                 io.emit('new-chat', data)
