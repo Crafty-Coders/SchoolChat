@@ -36,7 +36,7 @@ async function get_user_chats(data) {
                 "text": res2 == undefined ? "" : res2.text,
                 "user_id": res2 == undefined ? "" : res2.user_id,
                 "time": res2 == undefined ? "" : res2.updatedAt,
-                "userdata": res3.name
+                "userdata": res3
             }
         })
     }
