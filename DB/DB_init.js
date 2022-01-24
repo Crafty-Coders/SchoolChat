@@ -105,7 +105,7 @@ const Message = sequelize.define("message", {
     type: Sequelize.STRING,
     defaultValue: ""
   }
-});
+}); 
 
 const Class = sequelize.define("class", {
   id: {
