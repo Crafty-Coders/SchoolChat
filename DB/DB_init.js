@@ -167,6 +167,7 @@ const ChatUser = sequelize.define("chatuser", {
   }
 });
 
+
 const Chat = sequelize.define("chat", {
   id: {
     type: Sequelize.BIGINT,

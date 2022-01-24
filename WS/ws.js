@@ -81,6 +81,7 @@ io.on('connection', (socket) => {
                         socket.emit('chat_info', err))
                 break
             case "chat-for-preview":
+                // Получение данных о чатах (не только для превью, название сокетов врет)
                 console.log("aboba")
                 ChatUserDB.get_chat_info(data.data).then(res1 => {
                     console.log("1");
@@ -113,14 +114,8 @@ io.on('connection', (socket) => {
         }
     })
 
-    socket.on('get-online', (data) => {
-        get_users_online().then(res => 
-            socket.emit('online-incoming', res)).catch(err => 
-                socket.emit('online-input', ERR))
-    })
-
     socket.on("chats", (data) => {
-        //console.log(data)
+        // Получает ID всех чатов, в которых состоит пользователь
         ChatUserDB.get_user_chats({"user_id": data.user_id}).then(res =>{   
             socket.emit('recieve-chats', {res})
             console.log(res)
@@ -133,6 +128,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("newMessage", (data) => {
+        /*
+        New massage handler
+        */
         MessageDB.new_msg(data).then(res => {
             MessageDB.get_last_id_with_time().then(res2 => {
                 console.log("ABOBA")
@@ -150,6 +148,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("get-msgs", (data) => {
+        /*
+        Получение сообщений чата
+        */
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
             socket.emit("chat-message-recieve", {'data': res})
@@ -157,6 +158,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("get-users-by-school", (data) => {
+        /*
+        Получение списка пользователей из определенной школы
+        */
         AuthDB.get_users_by_school(data).then(res => {
             socket.emit("get_users_school", {'data': res})
             console.log("sent")
