@@ -1,6 +1,4 @@
-config.json
 *.ipynb
-
 node_modules/
 test.js
 config.js
