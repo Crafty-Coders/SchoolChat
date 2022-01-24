@@ -147,7 +147,7 @@ io.on('connection', (socket) => {
                     'deleted_user': data.deleted_user,
                     'deleted_all': data.deleted_all,
                     'edited': data.edited,
-                    'time':res2.time,
+                    'updatedAt':res2.time,
                     'service': false,
                     'user_name': res3})
                     })
