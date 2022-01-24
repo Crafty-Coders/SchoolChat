@@ -100,6 +100,10 @@ const Message = sequelize.define("message", {
   service: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  user_name: {
+    type: Sequelize.STRING,
+    defaultValue: ""
   }
 });
 

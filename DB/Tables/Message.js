@@ -1,5 +1,6 @@
 const { Message, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, DATA } = require('../DB_init.js');
 const { data_checker, propper, check_exist, is_Admin, msg_checker } = require('../DB_functions.js');
+const AuthDB = require('../Tables/Auth');
 
 async function new_msg(data) {
     /**
@@ -14,13 +15,16 @@ async function new_msg(data) {
     data.text = msg_checker(data.text);
     if (data.text == "" || data.text == undefined)
         return DATA;
+    let user = await AuthDB.get_name_surname({"id": data.user_id})
+    let user_name = `${user.name} ${user.surname}`
     const new_message = await Message.create({
         chat_id: data.chat_id,
         user_id: data.user_id,
         text: data.text,
-        attachments: data.attachments
+        attachments: data.attachments,
+        user_name: user_name
     });
-    await new_message.save();3
+    await new_message.save();
     return OK;
 }
 
