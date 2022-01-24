@@ -140,16 +140,16 @@ io.on('connection', (socket) => {
                 AuthDB.get_name_surname({"id": data.user_id}).then(res3 => {
                 console.log("ABOBA")
                 io.emit('msg', {'id': res2.id,
-                    'user_id': data.user_id,
-                    'text': data.text, 
-                    'chat_id': data.chat_id, 
-                    'attachments': data.attachments,
-                    'deleted_user': data.deleted_user,
-                    'deleted_all': data.deleted_all,
-                    'edited': data.edited,
-                    'updatedAt':res2.time,
-                    'service': false,
-                    'user_name': res3})
+                    "user_id": data.user_id,
+                    "text": data.text, 
+                    "chat_id": data.chat_id, 
+                    "attachments": data.attachments,
+                    "deleted_user": data.deleted_user,
+                    "deleted_all": data.deleted_all,
+                    "edited": data.edited,
+                    "updatedAt":res2.time,
+                    "service": false,
+                    "user_name": res3})
                     })
                 }).catch(err => console.log(err))
         console.log(data)}).catch(res => console.log(res))
