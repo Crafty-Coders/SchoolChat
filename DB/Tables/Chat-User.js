@@ -25,23 +25,9 @@ async function get_user_chats(data) {
     });
     let res = [];
     for (let i = 0; i < chats.length; i++) {
-        let res2 = await MessageDB.get_last_message({"chat_id": chats[i].chat_id})
-        // console.log("last msg")
-        // console.log(res2.user_id)
-        let res3 = await AuthDB.get_name_surname({"id": res2.user_id})
-        console.log(res3)
-        res.push({
-            "chat": await get_chat_info({"user_id": data.user_id, "chat_id": chats[i].chat_id}),
-            "last_msg": {
-                "text": res2 == undefined ? "" : `${res2.text}`,
-                "user_id": res2 == undefined ? "" : res2.user_id,
-                "time": res2 == undefined ? "" : res2.updatedAt,
-                "userdata": res3
-            }
-        })
+        res.push(chats[i].chat_id)
     }
-    // console.log(res)
-    return [...new Set(res)];
+    return res
 }
 
 async function check_user_left_ch(data) {
@@ -94,17 +80,7 @@ async function get_chat_info(data) {
                 id: data.chat_id
             }
         }))[0];
-        let u = await ChatUser.findAll({
-            raw: true,
-            attributes: ['user_id'],
-            where: {
-                chat_id: data.chat_id,
-                left: false
-            }
-        });
-        let users = [];
-        for (let i = 0; i < u.length; i++)
-            users.push(u[i].user_id);
+
         let admins = [];
 
         u = await ChatAdmin.findAll({
@@ -125,16 +101,15 @@ async function get_chat_info(data) {
                     chat_id: data.chat_id,
                     user_id: data.user_id
                 }
-            }))[0].left
-            
+            }))[0].left 
         }
+
 
         for (let i = 0; i < u.length; i++)
             admins.push(u[i].user_id);
         let name = chat.name
         dat = {
             id: chat.id,
-            users: [...new Set(users)],
             name: name,
             admins: admins,
             pic: chat.picture_url,
