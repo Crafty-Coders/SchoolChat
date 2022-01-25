@@ -1,9 +1,5 @@
 const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize } = require('../DB_init.js');
-const { data_checker, propper } = require('../DB_functions');
-
-function to_int(d) {
-    return d == '' ? 0 : parseInt(d);
-}
+const { data_checker, propper, to_int } = require('../DB_functions');
 
 async function register(data) {
     /**
@@ -140,5 +136,5 @@ async function get_users_by_school(data) {
 
 module.exports = {
     register, login, change_password, 
-    get_name_surname, get_users_by_school
+    get_name_surname, get_users_by_school,
 }
