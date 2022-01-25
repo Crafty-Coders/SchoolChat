@@ -131,11 +131,11 @@ async function get_chat_info(data) {
 
         for (let i = 0; i < u.length; i++)
             admins.push(u[i].user_id);
-
+        let name = chat.name
         dat = {
             id: chat.id,
             users: [...new Set(users)],
-            name: utf8.encode(chat.name),
+            name: name,
             admins: admins,
             pic: chat.picture_url,
             time: chat.createdAt,
