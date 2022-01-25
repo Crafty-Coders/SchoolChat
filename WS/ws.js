@@ -27,33 +27,6 @@ io.on('connection', (socket) => {
     
     socket.emit('connected')
 
-    socket.on('chat-msg', (data) => {
-        MessageDB.new_msg(data).then(res => {
-            if (res == OK) {
-                io.emit("new_msg", data)
-                socket.emit('stat', OK)
-            } else { socket.emit('stat', res) }
-        }).catch(err => socket.emit('stat', err))
-    })
-
-    socket.on('delete-msg-for-all', (data) => {
-        MessageDB.manage_msgs(data, "delete_all").then(res => {
-            if (res == OK) {
-                io.emit("d_a_msg", data)
-                socket.emit('stat', OK)
-            } else { socket.emit('stat', res) }
-        }).catch(err => socket.emit('stat', err))
-    })
-
-    socket.on('delete-msg-for-user', (data) => {
-        MessageDB.manage_msgs(data, "delete_one").then(res => {
-            if (res == OK) {
-                socket.emit("d_u_msg", data)
-                socket.emit('stat', OK)
-            } else { socket.emit('stat', res) }
-        }).catch(err => socket.emit('stat', err))
-    })
-
     socket.on('add-chat', (data) => {
         // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
         // name - название чата
@@ -124,11 +97,6 @@ io.on('connection', (socket) => {
             socket.emit('recieve-chats', {res})
             console.log(res)
         }).catch(err => socket.emit('recieve-chats', {err}))
-    })
-
-
-    socket.on("chat-msgs", (data) => {
-
     })
 
     socket.on("newMessage", (data) => {
