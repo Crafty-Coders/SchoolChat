@@ -33,7 +33,7 @@ async function get_user_chats(data) {
         res.push({
             "chat": await get_chat_info({"user_id": data.user_id, "chat_id": chats[i].chat_id}),
             "last_msg": {
-                "text": res2 == undefined ? "" : res2.text,
+                "text": res2 == undefined ? "" : `${res2.text}`,
                 "user_id": res2 == undefined ? "" : res2.user_id,
                 "time": res2 == undefined ? "" : res2.updatedAt,
                 "userdata": res3
@@ -131,11 +131,11 @@ async function get_chat_info(data) {
 
         for (let i = 0; i < u.length; i++)
             admins.push(u[i].user_id);
-
+        let name = chat.name
         dat = {
             id: chat.id,
             users: [...new Set(users)],
-            name: chat.name,
+            name: name,
             admins: admins,
             pic: chat.picture_url,
             time: chat.createdAt,

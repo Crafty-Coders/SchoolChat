@@ -8,6 +8,10 @@ const { PassThrough } = require('stream');
 });*/
 const DBURI = process.env.DATABASE_URL || require('../config.js').DBURI
 const sequelize = new Sequelize(DBURI, {
+  define: {
+    charset: 'utf8',
+    collate: 'utf8_general_ci'
+  },
   dialectOptions: {
     ssl: {
         require: true,
@@ -63,7 +67,10 @@ const Auth = sequelize.define("auth", {
   picture_url: {
     type: Sequelize.STRING(1234),
     allowNull: true
-  }
+  },
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 const Message = sequelize.define("message", {
@@ -105,7 +112,10 @@ const Message = sequelize.define("message", {
     type: Sequelize.STRING,
     defaultValue: ""
   }
-}); 
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
+});
 
 const Class = sequelize.define("class", {
   id: {
@@ -127,6 +137,9 @@ const Class = sequelize.define("class", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 const School = sequelize.define("school", {
@@ -146,6 +159,9 @@ const School = sequelize.define("school", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 const ChatUser = sequelize.define("chatuser", {
@@ -169,6 +185,9 @@ const ChatUser = sequelize.define("chatuser", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 
@@ -195,6 +214,9 @@ const Chat = sequelize.define("chat", {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 const ChatAdmin = sequelize.define("chatadmin", {
@@ -214,6 +236,9 @@ const ChatAdmin = sequelize.define("chatadmin", {
   creator_id: {
     type: Sequelize.BIGINT
   }
+}, {
+  charset: 'utf8',
+  collate: 'utf8_general_ci'
 });
 
 module.exports = {
