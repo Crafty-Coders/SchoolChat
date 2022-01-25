@@ -154,7 +154,9 @@ io.on('connection', (socket) => {
         */
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
-            socket.emit("chat-message-recieve", {'data': res})
+            for(let i = 0; i < res.length; i++) {
+                socket.emit("chat-message-recieve", {'data': res[i]})
+            }
         })
     })
 
