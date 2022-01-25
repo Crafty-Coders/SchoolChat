@@ -135,7 +135,7 @@ async function get_chat_info(data) {
         dat = {
             id: chat.id,
             users: [...new Set(users)],
-            name: [name],
+            name: name,
             admins: admins,
             pic: chat.picture_url,
             time: chat.createdAt,
