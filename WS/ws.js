@@ -27,6 +27,10 @@ io.on('connection', (socket) => {
     
     socket.emit('connected')
 
+    socket.on('connection-test', (data) => {
+        socket.emit('connection-stat', {"stat": 200})
+    })
+
     socket.on('add-chat', (data) => {
         // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
         // name - название чата
