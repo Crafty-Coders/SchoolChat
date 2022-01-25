@@ -80,6 +80,7 @@ io.on('connection', (socket) => {
                                     "userdata": res3
                                 }
                             }
+                            socket.emit('chat_preview_info', {})
                             socket.emit('chat_preview_info', res)
                         })
                         
