@@ -105,6 +105,7 @@ async function get_name_surname(data) {
         }
     })
     return {
+        id: data.id,
         name: res[res.length-1].name,
         surname: res[res.length-1].surname
     }

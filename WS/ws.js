@@ -56,11 +56,9 @@ io.on('connection', (socket) => {
 
     socket.on('get-info', (data) => {
         switch (data.flag) {
-            case "chat":
-                ChatUserDB.get_chat_info(data.data).then(res =>
-                    socket.emit('chat_info', res)).catch(err =>
-                        socket.emit('chat_info', err))
+            case "chat-users":
                 break
+                socket.emit('recieve-chat-users', {})
             case "chat-for-preview":
                 // Получение данных о чатах (не только для превью, название сокетов врет)
                 console.log("aboba")
@@ -98,7 +96,29 @@ io.on('connection', (socket) => {
     socket.on("chats", (data) => {
         // Получает ID всех чатов, в которых состоит пользователь
         ChatUserDB.get_user_chats({"user_id": data.user_id}).then(res =>{   
-            socket.emit('recieve-chats', {res})
+            for(let i = 0; i < res.length; i++) {
+                ChatUserDB.get_chat_info({"chat_id": res[i], "user_id": data.user_id}).then(res1 => {
+                    console.log("1");
+                    MessageDB.get_last_message({"chat_id": res[i], "user_id": data.user_id}).then(res2 => {
+                        console.log(res2)
+                        let userid = 0
+                        if (res2 != undefined) userid = res2.user_id
+                        AuthDB.get_name_surname({"id": userid}).then(res3 => {
+                            let ress = {
+                                "chat": res1,
+                                "last_msg": {
+                                    "text": res2 == undefined ? "" : res2.text,
+                                    "user_id": res2 == undefined ? "" : res2.user_id,
+                                    "time": res2 == undefined ? "" : res2.updatedAt,
+                                    "userdata": res3
+                                }
+                            }
+                            socket.emit('chat_preview_info', ress)
+                        })
+                        
+                        })})
+                // socket.emit('recieve-chats', {res})
+            }
             console.log(res)
         }).catch(err => socket.emit('recieve-chats', {err}))
     })
