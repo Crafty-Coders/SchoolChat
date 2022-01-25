@@ -1,5 +1,8 @@
 const { Chat, Auth, ChatAdmin } = require('./DB_init.js');
 
+function to_int(d) {
+    return d == '' ? 0 : parseInt(d);
+}
 
 function data_checker(data, props) {
     for (var prop in props)
@@ -61,5 +64,5 @@ function msg_checker(str) {
 }
 
 module.exports = {
-    data_checker, propper, check_exist, is_Admin, msg_checker
+    data_checker, propper, check_exist, is_Admin, msg_checker, to_int
 }
