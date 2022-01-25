@@ -23,5 +23,5 @@ var User1 = io.connect('ws://school-chat-server-ws.herokuapp.com/', {query: User
 }
 var User2 = io.connect('http://localhost:3000', {query: User2_data})*/
 
-User1.emit("newMessage", {'chat_id': 2, 'user_id': 1, 'text': 'dfgdsddsdsdsdf', 'attachments': {}, 'deleted_user':false, 'deleted_all': false, 'edited': false})
+User1.emit("newMessage", {'chat_id': 2, 'user_id': 1, 'text': 'Жесткий петушара', 'attachments': {}, 'deleted_user':false, 'deleted_all': false, 'edited': false})
 User1.on('chat-message-recieve', (data => console.log(data)))
