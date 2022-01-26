@@ -67,6 +67,10 @@ const Auth = sequelize.define("auth", {
   picture_url: {
     type: Sequelize.STRING(1234),
     allowNull: true
+  },
+  token: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 }, {
   charset: 'utf8',
@@ -109,6 +113,10 @@ const Message = sequelize.define("message", {
     defaultValue: false
   },
   user_name: {
+    type: Sequelize.STRING,
+    defaultValue: ""
+  },
+  user_pic_url: {
     type: Sequelize.STRING,
     defaultValue: ""
   }

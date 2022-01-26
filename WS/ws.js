@@ -24,11 +24,11 @@ io.on('connection', (socket) => {
     socket.phone = socket.handshake.query.phone
     socket.email = socket.handshake.query.email
     socket.picture_url = socket.handshake.query.picture_url
-    
+
     socket.emit('connected')
 
     socket.on('connection-test', (data) => {
-        socket.emit('connection-stat', {"stat": 200})
+        socket.emit('connection-stat', { "stat": 200 })
     })
 
     socket.on('add-chat', (data) => {
@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
                         console.log(res2)
                         let userid = 0
                         if (res2 != undefined) userid = res2.user_id
-                        AuthDB.get_name_surname({"id": userid}).then(res3 => {
+                        AuthDB.get_name_surname({ "id": userid }).then(res3 => {
                             let res = {
                                 "chat": res1,
                                 "last_msg": {
@@ -80,9 +80,10 @@ io.on('connection', (socket) => {
                             }
                             socket.emit('chat_preview_info', res)
                         })
-                        
-                        })})
-                        .catch(err =>
+
+                    })
+                })
+                    .catch(err =>
                         socket.emit('chat_preview_info', err))
                 break
             case "user":
@@ -95,15 +96,15 @@ io.on('connection', (socket) => {
 
     socket.on("chats", (data) => {
         // Получает ID всех чатов, в которых состоит пользователь
-        ChatUserDB.get_user_chats({"user_id": data.user_id}).then(res =>{   
-            for(let i = 0; i < res.length; i++) {
-                ChatUserDB.get_chat_info({"chat_id": res[i], "user_id": data.user_id}).then(res1 => {
+        ChatUserDB.get_user_chats({ "user_id": data.user_id }).then(res => {
+            for (let i = 0; i < res.length; i++) {
+                ChatUserDB.get_chat_info({ "chat_id": res[i], "user_id": data.user_id }).then(res1 => {
                     console.log("1");
-                    MessageDB.get_last_message({"chat_id": res[i], "user_id": data.user_id}).then(res2 => {
+                    MessageDB.get_last_message({ "chat_id": res[i], "user_id": data.user_id }).then(res2 => {
                         console.log(res2)
                         let userid = 0
                         if (res2 != undefined) userid = res2.user_id
-                        AuthDB.get_name_surname({"id": userid}).then(res3 => {
+                        AuthDB.get_name_surname({ "id": userid }).then(res3 => {
                             let ress = {
                                 "chat": res1,
                                 "last_msg": {
@@ -116,36 +117,41 @@ io.on('connection', (socket) => {
                             socket.emit('chat_preview_info', ress)
                             socket.emit('chat_preview_info', ress)
                         })
-                        
-                        })})
+
+                    })
+                })
                 // socket.emit('recieve-chats', {res})
             }
             console.log(res)
-        }).catch(err => socket.emit('recieve-chats', {err}))
+        }).catch(err => socket.emit('recieve-chats', { err }))
     })
 
     socket.on("newMessage", (data) => {
         /*
         New massage handler
         */
-        MessageDB.new_msg(data).then(res => {
-            MessageDB.get_last_id_with_time().then(res2 => {
-                AuthDB.get_name_surname({"id": data.user_id}).then(res3 => {
+
+        MessageDB.get_last_id_with_time().then(res2 => {
+            AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
                 console.log("ABOBA")
-                io.emit('msg', {'id': res2.id,
+                io.emit('msg', {
+                    'id': res2.id,
                     'user_id': data.user_id,
-                    'text': data.text, 
-                    'chat_id': data.chat_id, 
+                    'text': data.text,
+                    'chat_id': data.chat_id,
                     'attachments': data.attachments,
                     'deleted_user': data.deleted_user,
                     'deleted_all': data.deleted_all,
                     'edited': data.edited,
-                    'updatedAt':res2.time,
+                    'updatedAt': res2.time,
                     'service': false,
-                    'user_name': res3})
-                    })
-                }).catch(err => console.log(err))
-        console.log(data)}).catch(res => console.log(res))
+                    'userdata': res3
+                })
+            })
+        }).catch(err => console.log(err))
+        MessageDB.new_msg(data).then(res => {
+
+         })
     })
 
     socket.on("get-msgs", (data) => {
@@ -154,7 +160,11 @@ io.on('connection', (socket) => {
         */
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
-            socket.emit("chat-message-recieve", {'data': res})
+            for (let i = 0; i < res.length; i++) {
+                AuthDB.get_name_surname({"id": data.user_id}).then(res2 => {
+                    socket.emit("chat-message-recieve", { 'data': res[i], 'userdata': res2})
+                })
+            }
         })
     })
 
@@ -163,7 +173,7 @@ io.on('connection', (socket) => {
         Получение списка пользователей из определенной школы
         */
         AuthDB.get_users_by_school(data).then(res => {
-            socket.emit("get_users_school", {'data': res})
+            socket.emit("get_users_school", { 'data': res })
             console.log("sent")
         })
     })

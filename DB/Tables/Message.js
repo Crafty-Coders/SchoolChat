@@ -22,7 +22,8 @@ async function new_msg(data) {
         user_id: data.user_id,
         text: data.text,
         attachments: data.attachments,
-        user_name: user_name
+        user_name: user_name,
+        user_pic_url: user.pic_url
     });
     await new_message.save();
     return OK;
