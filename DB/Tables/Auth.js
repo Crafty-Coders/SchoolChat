@@ -50,6 +50,24 @@ async function auth(data) {
      * data = {token}
      * returns {USER}
      */
+    let user = await Auth.findAll({
+        raw: true,
+        where: {
+            token: data.token
+        }
+    })
+    if (user.length == 0) {
+        return {}
+    }
+    return {
+        'id': user[0].id,
+        'name' : user[0].name,
+        'surname': user[0].surname,
+        'school_id': user[0].school_id,
+        'class_id': user[0].class_id,
+        'email': user[0].email,
+        'phone': user[0].phone
+    }
 }
 
 async function login(data) { // Default values are highlighted with #__#
@@ -151,5 +169,5 @@ async function get_users_by_school(data) {
 
 module.exports = {
     register, login, change_password, 
-    get_name_surname, get_users_by_school,
+    get_name_surname, get_users_by_school, auth
 }
