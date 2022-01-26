@@ -161,7 +161,9 @@ io.on('connection', (socket) => {
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
             for (let i = 0; i < res.length; i++) {
-                socket.emit("chat-message-recieve", { 'data': res[i] })
+                AuthDB.get_name_surname({"id": data.user_id}).then(res2 => {
+                    socket.emit("chat-message-recieve", { 'data': res[i], 'userdata': res2})
+                })
             }
         })
     })
