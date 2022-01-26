@@ -139,7 +139,8 @@ async function get_name_surname(data) {
     return {
         id: data.id,
         name: res[res.length-1].name,
-        surname: res[res.length-1].surname
+        surname: res[res.length-1].surname,
+        pic_url: res[res.length-1].picture_url
     }
 }
 

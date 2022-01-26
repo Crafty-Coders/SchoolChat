@@ -115,6 +115,10 @@ const Message = sequelize.define("message", {
   user_name: {
     type: Sequelize.STRING,
     defaultValue: ""
+  },
+  user_pic_url: {
+    type: Sequelize.STRING,
+    defaultValue: ""
   }
 }, {
   charset: 'utf8',
