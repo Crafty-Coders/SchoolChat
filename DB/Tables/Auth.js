@@ -1,4 +1,4 @@
-const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize } = require('../DB_init.js');
+const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize, Message } = require('../DB_init.js');
 const { data_checker, propper, to_int, generate_token } = require('../DB_functions');
 
 
@@ -167,7 +167,43 @@ async function get_users_by_school(data) {
     return ret
 }
 
+async function change_name_surname(data) {
+    /**
+     * data = {id, name or surname}
+     */
+
+    if (data.surname != undefined && data.name != undefined) {
+        await Auth.update({ name: data.name, surname: data.surname }, {
+            where: {
+                id: data.id
+            }
+        });
+    }
+    else if (data.name != undefined){
+        await Auth.update({ name: data.name }, {
+            where: {
+                id: data.id
+            }
+        });
+    }
+    else if (data.surname != undefined) {
+        await Auth.update({ surname: data.surname }, {
+            where: {
+                id: data.id
+            }
+        });
+    }
+
+    let user = await get_name_surname({"id": data.id})
+
+    await Message.update({ user_name: `${user.name} ${user.surname}`, user_pic_url: user.pic_url }, {
+        where: {
+            user_id: data.id
+        }
+    })
+}
+
 module.exports = {
     register, login, change_password, 
-    get_name_surname, get_users_by_school, auth
+    get_name_surname, get_users_by_school, auth, change_name_surname
 }

@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
                                 "last_msg": {
                                     "text": res2 == undefined ? "" : res2.text,
                                     "user_id": res2 == undefined ? "" : res2.user_id,
-                                    "time": res2 == undefined ? "" : res2.updatedAt,
+                                    "time": res2 == undefined ? "" : res2.createdAt,
                                     "userdata": res3
                                 }
                             }
@@ -131,26 +131,27 @@ io.on('connection', (socket) => {
         New massage handler
         */
 
-        MessageDB.get_last_id_with_time().then(res2 => {
-            AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
-                console.log("ABOBA")
-                io.emit('msg', {
-                    'id': res2.id,
-                    'user_id': data.user_id,
-                    'text': data.text,
-                    'chat_id': data.chat_id,
-                    'attachments': data.attachments,
-                    'deleted_user': data.deleted_user,
-                    'deleted_all': data.deleted_all,
-                    'edited': data.edited,
-                    'updatedAt': res2.time,
-                    'service': false,
-                    'userdata': res3
-                })
-            })
-        }).catch(err => console.log(err))
+        
         MessageDB.new_msg(data).then(res => {
-
+            MessageDB.get_last_id_with_time().then(res2 => {
+                AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
+                    console.log("ABOBA")
+                    io.emit('msg', {
+                        'id': res2.id,
+                        'user_id': data.user_id,
+                        'text': data.text,
+                        'chat_id': data.chat_id,
+                        'attachments': data.attachments,
+                        'deleted_user': data.deleted_user,
+                        'deleted_all': data.deleted_all,
+                        'edited': data.edited,
+                        'createdAt': res2.time,
+                        'service': false,
+                        'user_name': `${res3.name} ${res3.surname}`,
+                        'user_pic_url': res3.pic_url
+                    })
+                })
+            }).catch(err => console.log(err))
          })
     })
 
@@ -162,7 +163,7 @@ io.on('connection', (socket) => {
         MessageDB.get_all_showing_msgs(data).then(res => {
             for (let i = 0; i < res.length; i++) {
                 AuthDB.get_name_surname({"id": data.user_id}).then(res2 => {
-                    socket.emit("chat-message-recieve", { 'data': res[i], 'userdata': res2})
+                    socket.emit("chat-message-recieve", { 'data': res[i] })
                 })
             }
         })

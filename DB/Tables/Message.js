@@ -81,7 +81,10 @@ async function get_all_chat_msgs(data) {
         raw: true,
         where: {
             chat_id: parseInt(data.chat_id)
-        }
+        },
+        order: [
+            ['id', 'ASC']
+        ]
     });
     return msgs;
 }
