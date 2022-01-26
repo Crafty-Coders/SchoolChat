@@ -48,7 +48,7 @@ async function register(data) {
 async function auth(data) {
     /**
      * data = {token}
-     * returns {id}
+     * returns {USER}
      */
 }
 
@@ -72,7 +72,7 @@ async function login(data) { // Default values are highlighted with #__#
     for (let i = 0; i < logins.length; i++) {
         if (logins[i].password == data.password)
             return {
-                'id': logins[i].id,
+                'user': await auth({'token': logins[i].token}),
                 'token': logins[i].token
             };
     }
