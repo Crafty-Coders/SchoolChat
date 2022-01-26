@@ -136,6 +136,7 @@ io.on('connection', (socket) => {
             MessageDB.get_last_id_with_time().then(res2 => {
                 AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
                     console.log("ABOBA")
+                    console.log(res2)
                     io.emit('msg', {
                         'id': res2.id,
                         'user_id': data.user_id,
