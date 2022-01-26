@@ -1,4 +1,5 @@
 const { Chat, Auth, ChatAdmin } = require('./DB_init.js');
+const crypto = require('crypto')
 
 function to_int(d) {
     return d == '' ? 0 : parseInt(d);
@@ -9,6 +10,20 @@ function data_checker(data, props) {
         if (data[props[prop]] == undefined)
             return false;
     return true;
+}
+
+async function generate_token() {
+    let tokens = await Auth.findAll({
+        raw: true,
+        attributes: ['token']
+    })
+    let token = crypto.randomBytes(20).toString('hex');
+    for (let i = 0; i < tokens.length; i++) {
+        if (tokens[i].token == token) {
+            return (await generate_token())
+        }
+    }
+    return token
 }
 
 function propper(data, props) {
@@ -64,5 +79,5 @@ function msg_checker(str) {
 }
 
 module.exports = {
-    data_checker, propper, check_exist, is_Admin, msg_checker, to_int
+    data_checker, propper, check_exist, is_Admin, msg_checker, to_int, generate_token
 }

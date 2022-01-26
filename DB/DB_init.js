@@ -67,6 +67,10 @@ const Auth = sequelize.define("auth", {
   picture_url: {
     type: Sequelize.STRING(1234),
     allowNull: true
+  },
+  token: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 }, {
   charset: 'utf8',

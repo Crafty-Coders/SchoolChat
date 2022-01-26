@@ -1,5 +1,6 @@
 const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize } = require('../DB_init.js');
-const { data_checker, propper, to_int } = require('../DB_functions');
+const { data_checker, propper, to_int, generate_token } = require('../DB_functions');
+
 
 async function register(data) {
     /**
@@ -27,6 +28,8 @@ async function register(data) {
     if (ise != 0 && data.email != "")
         return EM;
 
+    let token = await generate_token()
+
     const new_user = await Auth.create({
         name: data.name,
         surname: data.surname,
@@ -35,10 +38,18 @@ async function register(data) {
         email: data.email,
         phone: data.phone,
         password: data.password,
-        picture_url: data.picture_url
+        picture_url: data.picture_url,
+        token: token
     });
     await new_user.save();
     return OK;
+} 
+
+async function auth(data) {
+    /**
+     * data = {token}
+     * returns {id}
+     */
 }
 
 async function login(data) { // Default values are highlighted with #__#
@@ -51,7 +62,6 @@ async function login(data) { // Default values are highlighted with #__#
     data = propper(data, ["phone", "email"]);
     let logins = await Auth.findAll({
         raw: true,
-        attributes: ['password'],
         where: {
             [Sequelize.Op.or]: [
                 { phone: data.phone },
@@ -61,7 +71,10 @@ async function login(data) { // Default values are highlighted with #__#
     });
     for (let i = 0; i < logins.length; i++) {
         if (logins[i].password == data.password)
-            return OK;
+            return {
+                'id': logins[i].id,
+                'token': logins[i].token
+            };
     }
     return PASS;
 }
@@ -77,7 +90,8 @@ async function change_password(data) {
     let login_stat = await login(data);
     if (login_stat != OK)
         return login_stat;
-    await Auth.update({ password: data.new_password }, {
+    let new_token = await generate_token()
+    await Auth.update({ password: data.new_password, token: new_token }, {
         where: {
             [Sequelize.Op.or]: [
                 { phone: data.phone },
