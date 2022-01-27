@@ -180,5 +180,11 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on("chat-users", (data) => {
+        ChatUserDB.get_chat_users(data).then(res => {
+            socket.emit("recieve-chat-users", {'data': res})
+        })
+    })
+
 })
 module.exports = { io }
