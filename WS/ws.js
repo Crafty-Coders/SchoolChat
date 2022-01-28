@@ -115,7 +115,6 @@ io.on('connection', (socket) => {
                                 }
                             }
                             socket.emit('chat_preview_info', ress)
-                            socket.emit('chat_preview_info', ress)
                         })
 
                     })
