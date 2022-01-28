@@ -131,7 +131,6 @@ io.on('connection', (socket) => {
         New massage handler
         */
 
-        
         MessageDB.new_msg(data).then(res => {
             MessageDB.get_last_id_with_time().then(res2 => {
                 AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
