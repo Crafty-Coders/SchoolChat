@@ -4,6 +4,7 @@ const { MessageDB, AuthDB } = require('../DB_main.js');
 const { create_service_msg } = require('./Message.js');
 // const { MessageDB, AuthDB } = require('../DB_main.js');
 const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
+const { password } = require('pg/lib/defaults');
 
 async function get_user_chats(data) {
     /**
@@ -55,8 +56,7 @@ async function get_chat_info(data) {
      * 
      * data = {chat_id, user_id(optional)}
      * 
-     * returns{
-     *      users: returns array of chat users
+     * returns {
      *      name: name
      *      admins: returns arrray of chat admins
      *      pic: returns picture url
@@ -122,6 +122,40 @@ async function get_chat_info(data) {
     } catch {
         return ERR;
     }
+}
+
+async function get_chat_users(data) {
+    /**
+     * data = {chat_id}
+     */
+
+    let users = await ChatUser.findAll({
+        raw: true,
+        attributes: ['user_id'],
+        where: {
+            chat_id: data.chat_id
+        }
+    })
+    var done = []
+    var res = []
+    for (let i = 0; i < users.length; i++) {
+        if (done.includes(users[i].users_id)) {
+            continue
+        }
+        let u = await Auth.findAll({
+            raw: true,
+            attributes: ['class_id', 'createdAt', 'email', 'id', 'name', 'surname', 'phone', 'picture_url', 'school_id'],
+            where: {
+                id: users[i].user_id
+            }
+        })
+        delete u.token
+        delete u.password
+        res.push(u)
+        done.push(users[i].user_id)
+    }
+    
+    return res
 }
 
 async function get_user_info(data) {
@@ -373,5 +407,5 @@ async function manage_admin(data, flag) {
 module.exports = {
     manage_chat, manage_user, get_user_info, 
     get_chat_info, check_user_left_ch, get_user_chats, 
-    manage_admin, check_exist
+    manage_admin, check_exist, get_chat_users
 }

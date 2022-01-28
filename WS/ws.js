@@ -115,7 +115,6 @@ io.on('connection', (socket) => {
                                 }
                             }
                             socket.emit('chat_preview_info', ress)
-                            socket.emit('chat_preview_info', ress)
                         })
 
                     })
@@ -177,6 +176,12 @@ io.on('connection', (socket) => {
         AuthDB.get_users_by_school(data).then(res => {
             socket.emit("get_users_school", { 'data': res })
             console.log("sent")
+        })
+    })
+
+    socket.on("chat-users", (data) => {
+        ChatUserDB.get_chat_users(data).then(res => {
+            socket.emit("recieve-chat-users", {'data': res})
         })
     })
 
