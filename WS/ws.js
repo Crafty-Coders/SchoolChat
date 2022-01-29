@@ -12,18 +12,6 @@ async function get_users_online() {
 }
 
 io.on('connection', (socket) => {
-    console.log(socket.handshake.query)
-
-    // ! socket ~ User (AuthDB)
-    // ? Getting req_data when auth(POST-GET request)
-    socket.user_id = socket.handshake.query.user_id
-    socket.name = socket.handshake.query.name
-    socket.surname = socket.handshake.query.surname
-    socket.school_id = socket.handshake.query.school_id
-    socket.class_id = socket.handshake.query.class_id
-    socket.phone = socket.handshake.query.phone
-    socket.email = socket.handshake.query.email
-    socket.picture_url = socket.handshake.query.picture_url
 
     socket.emit('connected')
 
