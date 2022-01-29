@@ -19,6 +19,12 @@ io.on('connection', (socket) => {
         socket.emit('connection-stat', { "stat": 200 })
     })
 
+    socket.on('auth-data', (data) => {
+        AuthDB.getAuthData(data).then(res => {
+            socket.emit('auth-recieve', res)
+        })
+    })
+
     socket.on('add-chat', (data) => {
         // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
         // name - название чата
@@ -42,44 +48,32 @@ io.on('connection', (socket) => {
         }).catch(err => socket.emit('stat', err))
     })
 
-    socket.on('get-info', (data) => {
-        switch (data.flag) {
-            case "chat-users":
-                break
-                socket.emit('recieve-chat-users', {})
-            case "chat-for-preview":
-                // Получение данных о чатах (не только для превью, название сокетов врет)
-                console.log("aboba")
-                ChatUserDB.get_chat_info(data.data).then(res1 => {
-                    console.log("1");
-                    MessageDB.get_last_message(data.data).then(res2 => {
-                        console.log(res2)
-                        let userid = 0
-                        if (res2 != undefined) userid = res2.user_id
-                        AuthDB.get_name_surname({ "id": userid }).then(res3 => {
-                            let res = {
-                                "chat": res1,
-                                "last_msg": {
-                                    "text": res2 == undefined ? "" : res2.text,
-                                    "user_id": res2 == undefined ? "" : res2.user_id,
-                                    "time": res2 == undefined ? "" : res2.updatedAt,
-                                    "userdata": res3
-                                }
-                            }
-                            socket.emit('chat_preview_info', res)
-                        })
-
-                    })
+    socket.on('chat-for-preview', (data) => {
+        // Получение данных о чатах (не только для превью, название сокетов врет)
+        console.log("aboba")
+        ChatUserDB.get_chat_info(data).then(res1 => {
+            console.log("1");
+            MessageDB.get_last_message(data).then(res2 => {
+                console.log(res2)
+                let userid = 0
+                if (res2 != undefined) userid = res2.user_id
+                AuthDB.get_name_surname({ "id": userid }).then(res3 => {
+                    let res = {
+                        "chat": res1,
+                        "last_msg": {
+                            "text": res2 == undefined ? "" : res2.text,
+                            "user_id": res2 == undefined ? "" : res2.user_id,
+                            "time": res2 == undefined ? "" : res2.updatedAt,
+                            "userdata": res3
+                        }
+                    }
+                    socket.emit('chat_preview_info', res)
                 })
-                    .catch(err =>
-                        socket.emit('chat_preview_info', err))
-                break
-            case "user":
-                ChatUserDB.get_user_info(data.data).then(res =>
-                    socket.emit('user_info', res)).catch(err =>
-                        socket.emit('user_info', err))
-                break
-        }
+
+            })
+        })
+            .catch(err =>
+                socket.emit('chat_preview_info', err))
     })
 
     socket.on("chats", (data) => {

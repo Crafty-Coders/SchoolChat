@@ -97,6 +97,28 @@ async function login(data) { // Default values are highlighted with #__#
     return PASS;
 }
 
+async function getAuthData(data) {
+    let users = await Auth.findAll({
+        raw: true,
+        where: {
+            [Sequelize.Op.or]: [
+                { phone: data.data },
+                { email: data.data }
+            ]
+        }
+    })
+    if (users.length != 0) {
+        return {
+            'stat': 200,
+            'data': users[0]
+        }
+    } else {
+        return {
+            'stat': 404
+        }
+    }
+}
+
 async function change_password(data) {
     /**
      * data = {email, phone, password, new_password} email or phone!
@@ -206,5 +228,5 @@ async function change_name_surname(data) {
 
 module.exports = {
     register, login, change_password, 
-    get_name_surname, get_users_by_school, auth, change_name_surname
+    get_name_surname, get_users_by_school, auth, change_name_surname, getAuthData
 }
