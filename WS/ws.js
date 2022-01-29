@@ -14,6 +14,7 @@ async function get_users_online() {
 io.on('connection', (socket) => {
 
     socket.emit('connected')
+    console.log("connected")
 
     socket.on('connection-test', (data) => {
         socket.emit('connection-stat', { "stat": 200 })
