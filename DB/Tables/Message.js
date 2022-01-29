@@ -157,12 +157,13 @@ async function manage_msgs(data, flag) {
 async function get_last_id_with_time() {
     let msgs = await Message.findAll({
         raw: true,
+        limit: 1,
         order: [
-            ['id', 'ASC']
+            ['id', 'DESC']
         ]
     });
-    let id =  msgs[msgs.length - 1].id
-    let time = msgs[msgs.length - 1].updatedAt
+    let id =  msgs[0].id
+    let time = msgs[0].updatedAt
     return {
         'id' : id,
         'time' : time

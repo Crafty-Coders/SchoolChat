@@ -131,15 +131,16 @@ async function get_name_surname(data) {
         return DATA;
     let res = await Auth.findAll({
         raw: true,
+        limit: 1,
         where: {
             id: data.id
         }
     })
     return {
         id: data.id,
-        name: res[res.length-1].name,
-        surname: res[res.length-1].surname,
-        pic_url: res[res.length-1].picture_url == undefined ? "" : res[res.length-1].picture_url
+        name: res[0].name,
+        surname: res[0].surname,
+        pic_url: res[0].picture_url == undefined ? "" : res[res.length-1].picture_url
     }
 }
 

@@ -129,29 +129,27 @@ io.on('connection', (socket) => {
         /*
         New massage handler
         */
-
-        MessageDB.new_msg(data).then(res => {
-            MessageDB.get_last_id_with_time().then(res2 => {
-                AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
-                    console.log("ABOBA")
-                    console.log(res2)
-                    io.emit('msg', {
-                        'id': res2.id,
-                        'user_id': data.user_id,
-                        'text': data.text,
-                        'chat_id': data.chat_id,
-                        'attachments': data.attachments,
-                        'deleted_user': false,
-                        'deleted_all': false,
-                        'edited': false,
-                        'createdAt': res2.time,
-                        'service': false,
-                        'user_name': `${res3.name} ${res3.surname}`,
-                        'user_pic_url': res3.pic_url
-                    })
+        MessageDB.get_last_id_with_time().then(res2 => {
+            AuthDB.get_name_surname({ "id": data.user_id }).then(res3 => {
+                console.log("ABOBA")
+                console.log(res2)
+                io.emit('msg', {
+                    'id': res2.id,
+                    'user_id': data.user_id,
+                    'text': data.text,
+                    'chat_id': data.chat_id,
+                    'attachments': data.attachments,
+                    'deleted_user': false,
+                    'deleted_all': false,
+                    'edited': false,
+                    'createdAt': res2.time,
+                    'service': false,
+                    'user_name': `${res3.name} ${res3.surname}`,
+                    'user_pic_url': res3.pic_url
                 })
-            }).catch(err => console.log(err))
-         })
+            })
+        }).catch(err => console.log(err))
+        MessageDB.new_msg(data).then(res => { })
     })
 
     socket.on("get-msgs", (data) => {
@@ -161,7 +159,7 @@ io.on('connection', (socket) => {
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
             for (let i = 0; i < res.length; i++) {
-                AuthDB.get_name_surname({"id": data.user_id}).then(res2 => {
+                AuthDB.get_name_surname({ "id": data.user_id }).then(res2 => {
                     socket.emit("chat-message-recieve", { 'data': res[i] })
                 })
             }
@@ -180,7 +178,7 @@ io.on('connection', (socket) => {
 
     socket.on("chat-users", (data) => {
         ChatUserDB.get_chat_users(data).then(res => {
-            socket.emit("recieve-chat-users", {'data': res})
+            socket.emit("recieve-chat-users", { 'data': res })
         })
     })
 
