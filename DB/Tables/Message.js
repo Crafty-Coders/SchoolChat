@@ -56,10 +56,16 @@ async function get_all_showing_msgs(data) {
     /**
      * data = {chat_id}
      */
-    let msgs = await get_all_chat_msgs(data);
-    for (let i = 0; i < msgs.length; i++)
-        if (msgs[i].deleted_all == true)
-            msgs.splice(i, 1);
+     let msgs = await Message.findAll({
+        raw: true,
+        where: {
+            chat_id: parseInt(data.chat_id),
+            deleted_all: false
+        },
+        order: [
+            ['id', 'ASC']
+        ]
+    });
     return msgs;
 }
 
@@ -90,8 +96,18 @@ async function get_all_chat_msgs(data) {
 }
 
 async function get_last_message(data) {
-    let msgs = await get_all_showing_msgs(data)
-    return msgs[msgs.length - 1]
+    let msgs = await Message.findAll({
+        raw: true,
+        limit: 1,
+        where: {
+            chat_id: parseInt(data.chat_id),
+            deleted_all: false
+        },
+        order: [
+            ['id', 'DESC']
+        ]
+    });
+    return msgs[0]
 }
 
 async function manage_msgs(data, flag) {

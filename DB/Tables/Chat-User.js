@@ -136,12 +136,9 @@ async function get_chat_users(data) {
             chat_id: data.chat_id
         }
     })
-    var done = []
     var res = []
+    users = [...new Set(users)]
     for (let i = 0; i < users.length; i++) {
-        if (done.includes(users[i].users_id)) {
-            continue
-        }
         let u = await Auth.findAll({
             raw: true,
             attributes: ['class_id', 'createdAt', 'email', 'id', 'name', 'surname', 'phone', 'picture_url', 'school_id'],
@@ -149,10 +146,7 @@ async function get_chat_users(data) {
                 id: users[i].user_id
             }
         })
-        delete u.token
-        delete u.password
         res.push(u)
-        done.push(users[i].user_id)
     }
     
     return res
