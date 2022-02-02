@@ -1,5 +1,5 @@
 const{ School, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Class } = require('../DB_init.js');
-const { data_checker } = require('../DB_functions');
+const { data_checker, generate_invite_code } = require('../DB_functions');
 
 async function manage_school(name, location, param, id) {
     switch (param){
@@ -64,6 +64,19 @@ async function get_sch_cls_info(id, param) {
     }
 }
 
+async function create_class(data) {
+
+    const new_row = await Class.create({
+        name: data.name,
+        school_id: data.school_id,
+        description: data.description,
+        invite_code: generate_invite_code()
+    })
+
+    await new_row.save()
+
+}
+
 module.exports = {
-    get_sch_cls_info, manage_class, manage_school
+    get_sch_cls_info, manage_class, manage_school, create_class
 }

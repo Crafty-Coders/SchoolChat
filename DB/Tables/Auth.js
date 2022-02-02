@@ -1,4 +1,4 @@
-const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize, Message } = require('../DB_init.js');
+const { Auth, sequelize, ERR, OK, PH, EM, PASS, DATA, initialize, Sequelize, Message, Chat, Class, ChatUser } = require('../DB_init.js');
 const { data_checker, propper, to_int, generate_token } = require('../DB_functions');
 
 
@@ -6,10 +6,6 @@ async function register(data) {
     /**
      * data = {name, surname, school_id, class_id, email, phone, password, picture_url} email or phone!
      */
-    if (!data_checker(data, ["name", "surname", "password"]) || (data.email == undefined && data.phone == undefined))
-        return DATA;
-
-    data = propper(data, ["name", "surname", "school_id", "class_id", "email", "phone", "password", "picture_url"]);
 
     let isp = (await Auth.findAll({
         where: {
@@ -17,32 +13,76 @@ async function register(data) {
         }
     })).length;
 
-    if (isp != 0 && data.phone != "")
-        return PH;
     let ise = (await Auth.findAll({
         where: {
             email: data.email
         }
     })).length;
 
-    if (ise != 0 && data.email != "")
-        return EM;
+    let ClassData = await Class.findAll({
+        raw: true,
+        limit: 1,
+        where: {
+            invite_code: data.invite_code
+        }
+    })
+
+    if (ClassData.length == 0) {
+        return {'stat': "CODE"}
+    }
+
+    let class_id = ClassData[0].id
+    let school_id = ClassData[0].school_id
 
     let token = await generate_token()
 
-    const new_user = await Auth.create({
+    await Auth.create({
         name: data.name,
         surname: data.surname,
-        school_id: to_int(data.school_id),
-        class_id: to_int(data.class_id),
+        school_id: school_id,
+        class_id: class_id,
         email: data.email,
         phone: data.phone,
         password: data.password,
-        picture_url: data.picture_url,
         token: token
     });
-    await new_user.save();
-    return OK;
+
+    const class_chats = await Chat.findAll({
+        raw: true,
+        where: {
+            class_id: class_id
+        }
+    })
+
+    const new_user_id = (await Auth.findAll({
+        raw: true, 
+        limit: 1,
+        where: {
+            name: data.name,
+            surname: data.surname,
+        },
+        order: [
+            ['id', 'DESC']
+        ]
+    }))[0].id
+
+    for(let i = 0; i < class_chats.length; i++) {
+        await ChatUser.create({
+            user_id: new_user_id,
+            chat_id: class_chats[i].id,
+            left: false
+        })
+    }
+
+    let user = (await Auth.findAll({
+        where: {
+            id: new_user_id
+        },
+        attributes: ['id', 'name', 'surname', 'school_id', 'class_id', 'email', 'phone', 'picture_url', 'token'],
+        limit: 1
+    }))[0]
+
+    return {'stat': 'OK', 'data': user};
 } 
 
 async function auth(data) {
@@ -109,12 +149,12 @@ async function getAuthData(data) {
     })
     if (users.length != 0) {
         return {
-            'stat': 200,
+            'stat': 'OK',
             'data': users[0]
         }
     } else {
         return {
-            'stat': 404
+            'stat': 'ERR'
         }
     }
 }
@@ -167,8 +207,6 @@ async function get_name_surname(data) {
 }
 
 async function get_users_by_school(data) {
-    if (!data_checker(data, ["school_id"]))
-        return DATA
     let res = await Auth.findAll({
         raw: true,
         where: {
@@ -187,7 +225,7 @@ async function get_users_by_school(data) {
             'phone': res[i].phone
         })
     }
-    return ret
+    return {'stat': 'OK', 'data': ret}
 }
 
 async function change_name_surname(data) {

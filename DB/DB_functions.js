@@ -1,4 +1,4 @@
-const { Chat, Auth, ChatAdmin } = require('./DB_init.js');
+const { Chat, Auth, ChatAdmin, Class } = require('./DB_init.js');
 const crypto = require('crypto')
 
 function to_int(d) {
@@ -24,6 +24,22 @@ async function generate_token() {
         }
     }
     return token
+}
+
+async function generate_invite_code() {
+
+    let codes = await Class.findAll({
+        raw: true,
+        attributes: ['invite_code']
+    })
+
+    let generated = crypto.randomBytes(4).toString('hex')
+    for(let i = 0; i < codes.length; i++) {
+        if (codes[i].invite_code == generated) {
+            return (await generate_invite_code() )
+        }
+    }
+    return generated
 }
 
 function propper(data, props) {
@@ -79,5 +95,5 @@ function msg_checker(str) {
 }
 
 module.exports = {
-    data_checker, propper, check_exist, is_Admin, msg_checker, to_int, generate_token
+    data_checker, propper, check_exist, is_Admin, msg_checker, to_int, generate_token, generate_invite_code
 }

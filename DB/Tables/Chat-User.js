@@ -149,7 +149,7 @@ async function get_chat_users(data) {
         res.push(u)
     }
     
-    return res
+    return {'stat': 'OK', 'data': res}
 }
 
 async function get_user_info(data) {
@@ -266,16 +266,17 @@ async function manage_chat(data, flag) {
      */
     switch (flag) {
         case "create":
-            if (!data_checker(data, ["name", "user_id"]))
-                return DATA;
+            var class_id = data.class_id
 
-            if (!(await check_exist({ id: data.user_id }, "user")))
-                return DATA;
+            if (!data.class_id) {
+                class_id = 0
+            } 
 
             await Chat.create({
                 name: data.name,
                 creator: data.user_id,
-                ph: data.ph
+                picture_url: data.ph,
+                class_id: class_id
             });
 
             let chatss = await Chat.findAll({raw: true})

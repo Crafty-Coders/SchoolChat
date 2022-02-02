@@ -16,6 +16,12 @@ io.on('connection', (socket) => {
     socket.emit('connected')
     console.log("connected")
 
+    socket.on("register", (data) => {
+        AuthDB.register(data).then(res => {
+            socket.emit('register_ans', res)
+        })
+    })
+
     socket.on('connection-test', (data) => {
         socket.emit('connection-stat', { "stat": 200 })
     })
@@ -68,13 +74,13 @@ io.on('connection', (socket) => {
                             "userdata": res3
                         }
                     }
-                    socket.emit('chat_preview_info', res)
+                    socket.emit('chat_preview_info', { 'stat': 'OK', 'data': res })
                 })
 
             })
         })
             .catch(err =>
-                socket.emit('chat_preview_info', err))
+                socket.emit('chat_preview_info', { 'stat': 'ERR' }))
     })
 
     socket.on("chats", (data) => {
@@ -97,7 +103,7 @@ io.on('connection', (socket) => {
                                     "userdata": res3
                                 }
                             }
-                            socket.emit('chat_preview_info', ress)
+                            socket.emit('chat_preview_info', { 'stat': 'OK', 'data': ress })
                         })
 
                     })
@@ -105,7 +111,7 @@ io.on('connection', (socket) => {
                 // socket.emit('recieve-chats', {res})
             }
             console.log(res)
-        }).catch(err => socket.emit('recieve-chats', { err }))
+        }).catch(err => socket.emit('chat_preview_info', { 'stat': 'ERR' }))
     })
 
     socket.on("newMessage", (data) => {
@@ -117,18 +123,21 @@ io.on('connection', (socket) => {
                 console.log("ABOBA")
                 console.log(res2)
                 io.emit('msg', {
-                    'id': res2.id,
-                    'user_id': data.user_id,
-                    'text': data.text,
-                    'chat_id': data.chat_id,
-                    'attachments': data.attachments,
-                    'deleted_user': false,
-                    'deleted_all': false,
-                    'edited': false,
-                    'createdAt': res2.time,
-                    'service': false,
-                    'user_name': `${res3.name} ${res3.surname}`,
-                    'user_pic_url': res3.pic_url
+                    'stat': 'OK',
+                    'data': {
+                        'id': res2.id,
+                        'user_id': data.user_id,
+                        'text': data.text,
+                        'chat_id': data.chat_id,
+                        'attachments': data.attachments,
+                        'deleted_user': false,
+                        'deleted_all': false,
+                        'edited': false,
+                        'createdAt': res2.time,
+                        'service': false,
+                        'user_name': `${res3.name} ${res3.surname}`,
+                        'user_pic_url': res3.pic_url
+                    }
                 })
             })
         }).catch(err => console.log(err))
@@ -142,9 +151,7 @@ io.on('connection', (socket) => {
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
             for (let i = 0; i < res.length; i++) {
-                AuthDB.get_name_surname({ "id": data.user_id }).then(res2 => {
-                    socket.emit("chat-message-recieve", { 'data': res[i] })
-                })
+                socket.emit("chat-message-recieve", {'stat': 'OK', 'data': res[i] })
             }
         })
     })
@@ -154,14 +161,14 @@ io.on('connection', (socket) => {
         Получение списка пользователей из определенной школы
         */
         AuthDB.get_users_by_school(data).then(res => {
-            socket.emit("get_users_school", { 'data': res })
+            socket.emit("get_users_school", res)
             console.log("sent")
         })
     })
 
     socket.on("chat-users", (data) => {
         ChatUserDB.get_chat_users(data).then(res => {
-            socket.emit("recieve-chat-users", { 'data': res })
+            socket.emit("recieve-chat-users", res)
         })
     })
 
