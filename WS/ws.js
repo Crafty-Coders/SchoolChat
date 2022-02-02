@@ -87,6 +87,7 @@ io.on('connection', (socket) => {
         // Получает ID всех чатов, в которых состоит пользователь
         ChatUserDB.get_user_chats({ "user_id": data.user_id }).then(res => {
             for (let i = 0; i < res.length; i++) {
+                setTimeout(() => {
                 ChatUserDB.get_chat_info({ "chat_id": res[i], "user_id": data.user_id }).then(res1 => {
                     console.log("1");
                     MessageDB.get_last_message({ "chat_id": res[i], "user_id": data.user_id }).then(res2 => {
@@ -108,6 +109,7 @@ io.on('connection', (socket) => {
 
                     })
                 })
+            }, 200)
                 // socket.emit('recieve-chats', {res})
             }
             console.log(res)
