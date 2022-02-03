@@ -125,7 +125,7 @@ io.on('connection', (socket) => {
                 io.emit('msg', {
                     'stat': 'OK',
                     'data': {
-                        'id': res2.id,
+                        'id': res2.id + 1,
                         'user_id': data.user_id,
                         'text': data.text,
                         'chat_id': data.chat_id,
