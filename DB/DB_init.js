@@ -139,11 +139,15 @@ const Class = sequelize.define("class", {
     type: Sequelize.INTEGER
   },
   description: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: ""
   },
   deleted: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  invite_code: {
+    type: Sequelize.STRING
   }
 }, {
   charset: 'utf8',
@@ -221,6 +225,10 @@ const Chat = sequelize.define("chat", {
   deleted: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  class_id: {
+    type: Sequelize.BIGINT,
+    defaultValue: 0
   }
 }, {
   charset: 'utf8',
