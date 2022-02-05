@@ -15,7 +15,7 @@ async function new_msg(data) {
     data.text = msg_checker(data.text);
     if (data.text == "" || data.text == undefined)
         return DATA;
-    let user = await AuthDB.get_name_surname({"id": data.user_id})
+    let user = await AuthDB.get_name_surname({ "id": data.user_id })
     let user_name = `${user.name} ${user.surname}`
     const new_message = await Message.create({
         chat_id: data.chat_id,
@@ -56,7 +56,7 @@ async function get_all_showing_msgs(data) {
     /**
      * data = {chat_id}
      */
-     let msgs = await Message.findAll({
+    let msgs = await Message.findAll({
         raw: true,
         where: {
             chat_id: parseInt(data.chat_id),
@@ -135,10 +135,13 @@ async function manage_msgs(data, flag) {
         case "delete_all":
             if (!data_checker(data, ["requester_id"]))
                 return DATA;
-            if ((await is_Admin({ chat_id: (await Message.findAll({
-                raw: true,
-                attributes: ["chat_id"], 
-                where: { id: data.msg_id } }))[0].chat_id, user_id: data.requester_id }))
+            if ((await is_Admin({
+                chat_id: (await Message.findAll({
+                    raw: true,
+                    attributes: ["chat_id"],
+                    where: { id: data.msg_id }
+                }))[0].chat_id, user_id: data.requester_id
+            }))
                 || (await Message.findAll({
                     raw: true, where: {
                         id: data.msg_id,
@@ -165,10 +168,12 @@ async function manage_msgs(data, flag) {
                 return DATA;
             data = propper(data, ["text"]);
             data.attachments = data.attachments == undefined ? {} : data.attachments;
-            if ((await Message.findAll({raw: true, where: {
-                id: data.msg_id,
-                user_id: data.requester_id
-            }})).length == 0)
+            if ((await Message.findAll({
+                raw: true, where: {
+                    id: data.msg_id,
+                    user_id: data.requester_id
+                }
+            })).length == 0)
                 return PR;
             data.text = msg_checker(data.text);
             if (data.text == "" || data.text == undefined)
@@ -193,11 +198,11 @@ async function get_last_id_with_time() {
             ['id', 'DESC']
         ]
     });
-    let id =  msgs[0].id
+    let id = msgs[0].id
     let time = msgs[0].updatedAt
     return {
-        'id' : id,
-        'time' : time
+        'id': id,
+        'time': time
     }
 }
 

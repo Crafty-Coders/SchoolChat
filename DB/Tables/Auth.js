@@ -28,7 +28,7 @@ async function register(data) {
     })
 
     if (ClassData.length == 0) {
-        return {'stat': "CODE"}
+        return { 'stat': "CODE" }
     }
 
     let class_id = ClassData[0].id
@@ -55,7 +55,7 @@ async function register(data) {
     })
 
     const new_user_id = (await Auth.findAll({
-        raw: true, 
+        raw: true,
         limit: 1,
         where: {
             name: data.name,
@@ -66,7 +66,7 @@ async function register(data) {
         ]
     }))[0].id
 
-    for(let i = 0; i < class_chats.length; i++) {
+    for (let i = 0; i < class_chats.length; i++) {
         await ChatUser.create({
             user_id: new_user_id,
             chat_id: class_chats[i].id,
@@ -82,8 +82,8 @@ async function register(data) {
         limit: 1
     }))[0]
 
-    return {'stat': 'OK', 'data': user};
-} 
+    return { 'stat': 'OK', 'data': user };
+}
 
 async function auth(data) {
     /**
@@ -101,7 +101,7 @@ async function auth(data) {
     }
     return {
         'id': user[0].id,
-        'name' : user[0].name,
+        'name': user[0].name,
         'surname': user[0].surname,
         'school_id': user[0].school_id,
         'class_id': user[0].class_id,
@@ -130,7 +130,7 @@ async function login(data) { // Default values are highlighted with #__#
     for (let i = 0; i < logins.length; i++) {
         if (logins[i].password == data.password)
             return {
-                'user': await auth({'token': logins[i].token}),
+                'user': await auth({ 'token': logins[i].token }),
                 'token': logins[i].token
             };
     }
@@ -215,7 +215,7 @@ async function get_name_surname(data) {
         id: data.id,
         name: res[0].name,
         surname: res[0].surname,
-        pic_url: res[0].picture_url == undefined ? "" : res[res.length-1].picture_url
+        pic_url: res[0].picture_url == undefined ? "" : res[res.length - 1].picture_url
     }
 }
 
@@ -227,10 +227,10 @@ async function get_users_by_school(data) {
         }
     })
     let ret = []
-    for(let i = 0; i < res.length; i++){
+    for (let i = 0; i < res.length; i++) {
         ret.push({
             'id': res[i].id,
-            'name' : res[i].name,
+            'name': res[i].name,
             'surname': res[i].surname,
             'school_id': res[i].school_id,
             'class_id': res[i].class_id,
@@ -238,7 +238,7 @@ async function get_users_by_school(data) {
             'phone': res[i].phone
         })
     }
-    return {'stat': 'OK', 'data': ret}
+    return { 'stat': 'OK', 'data': ret }
 }
 
 async function change_name_surname(data) {
@@ -253,7 +253,7 @@ async function change_name_surname(data) {
             }
         });
     }
-    else if (data.name != undefined){
+    else if (data.name != undefined) {
         await Auth.update({ name: data.name }, {
             where: {
                 id: data.id
@@ -268,7 +268,7 @@ async function change_name_surname(data) {
         });
     }
 
-    let user = await get_name_surname({"id": data.id})
+    let user = await get_name_surname({ "id": data.id })
 
     await Message.update({ user_name: `${user.name} ${user.surname}`, user_pic_url: user.pic_url }, {
         where: {
@@ -278,6 +278,6 @@ async function change_name_surname(data) {
 }
 
 module.exports = {
-    register, login, change_password, 
+    register, login, change_password,
     get_name_surname, get_users_by_school, auth, change_name_surname, getAuthData, getAuthDataId
 }

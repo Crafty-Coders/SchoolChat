@@ -14,10 +14,10 @@ const sequelize = new Sequelize(DBURI, {
   },
   dialectOptions: {
     ssl: {
-        require: true,
-        rejectUnauthorized: false
+      require: true,
+      rejectUnauthorized: false
     }
-}
+  }
 })
 const ERR = "ERR";
 const OK = "OK";
@@ -28,11 +28,11 @@ const PR = "PREMISSION"
 const DATA = "DATA"
 const NAME = "NAME"
 
-function initialize(){
-  sequelize.sync({force: true}).then(result=>{
-      console.log(result);
-    })
-    .catch(err=> console.log(err));
+function initialize() {
+  sequelize.sync({ force: true }).then(result => {
+    console.log(result);
+  })
+    .catch(err => console.log(err));
 }
 
 const Auth = sequelize.define("auth", {
@@ -41,7 +41,7 @@ const Auth = sequelize.define("auth", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   name: {
     type: Sequelize.STRING
   },
@@ -56,11 +56,11 @@ const Auth = sequelize.define("auth", {
   },
   email: {
     type: Sequelize.STRING
-  }, 
+  },
   phone: {
     type: Sequelize.STRING
   },
-    password: {
+  password: {
     type: Sequelize.STRING,
     allowNull: false
   },
@@ -83,7 +83,7 @@ const Message = sequelize.define("message", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   chat_id: {
     type: Sequelize.BIGINT
   },
@@ -131,8 +131,8 @@ const Class = sequelize.define("class", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
-  name: { 
+  },
+  name: {
     type: Sequelize.STRING
   },
   school_id: {
@@ -160,7 +160,7 @@ const School = sequelize.define("school", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   name: {
     type: Sequelize.STRING
   },
@@ -182,13 +182,13 @@ const ChatUser = sequelize.define("chatuser", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   user_id: {
     type: Sequelize.BIGINT
   },
   chat_id: {
     type: Sequelize.BIGINT
-  }, 
+  },
   left: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -209,7 +209,7 @@ const Chat = sequelize.define("chat", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -241,11 +241,11 @@ const ChatAdmin = sequelize.define("chatadmin", {
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
-  }, 
+  },
   user_id: {
     type: Sequelize.BIGINT,
     allowNull: false
-  }, 
+  },
   chat_id: {
     type: Sequelize.BIGINT
   },
@@ -258,10 +258,10 @@ const ChatAdmin = sequelize.define("chatadmin", {
 });
 
 module.exports = {
-  Auth, Message, Class, 
-  School, ChatUser, Chat, 
-  ChatAdmin, sequelize, initialize, 
-  ERR, OK, PH, 
-  EM, PASS, PR, 
+  Auth, Message, Class,
+  School, ChatUser, Chat,
+  ChatAdmin, sequelize, initialize,
+  ERR, OK, PH,
+  EM, PASS, PR,
   NAME, DATA, Sequelize
 }

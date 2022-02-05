@@ -1,8 +1,8 @@
-const{ School, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Class } = require('../DB_init.js');
+const { School, sequelize, ERR, OK, PH, EM, NAME, PR, initialize, Class } = require('../DB_init.js');
 const { data_checker, generate_invite_code } = require('../DB_functions');
 
 async function manage_school(name, location, param, id) {
-    switch (param){
+    switch (param) {
         case "create":
             try {
                 const sch = await School.create({
@@ -10,13 +10,13 @@ async function manage_school(name, location, param, id) {
                     location: location == undefined ? "" : location
                 });
                 await sch.save();
-                return OK;     
+                return OK;
             } catch {
                 return ERR;
             }
         case "delete":
             try {
-                await School.update({deleted: true}, {
+                await School.update({ deleted: true }, {
                     where: {
                         id: id
                     }
@@ -45,9 +45,11 @@ async function manage_class(name, sch, desc, param, id) {
             }
         case "delete":
             try {
-                await Class.update({deleted: true}, {where: {
-                    id: id
-                }});
+                await Class.update({ deleted: true }, {
+                    where: {
+                        id: id
+                    }
+                });
                 return OK;
             } catch {
                 return ERR;

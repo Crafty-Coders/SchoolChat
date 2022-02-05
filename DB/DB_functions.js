@@ -34,9 +34,9 @@ async function generate_invite_code() {
     })
 
     let generated = crypto.randomBytes(4).toString('hex')
-    for(let i = 0; i < codes.length; i++) {
+    for (let i = 0; i < codes.length; i++) {
         if (codes[i].invite_code == generated) {
-            return (await generate_invite_code() )
+            return (await generate_invite_code())
         }
     }
     return generated
@@ -84,13 +84,13 @@ async function is_Admin(data) {
 
 function msg_checker(str) {
     function ltrim(str) {
-        if(!str) return str;
+        if (!str) return str;
         return str.replace(/^\s+/g, '');
-      }
+    }
     function rtrim(str) {
-        if(!str) return str;
+        if (!str) return str;
         return str.replace(/\s+$/g, '');
-      }
+    }
     return rtrim(ltrim(str));
 }
 
