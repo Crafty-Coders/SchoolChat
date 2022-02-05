@@ -166,7 +166,7 @@ async function getAuthDataId(id) {
             id: id
         }
     })
-    if (users.length != 0) {
+    if (users.length == 0) {
         return null
     }
     return users[0]

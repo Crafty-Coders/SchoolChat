@@ -7,6 +7,7 @@ const session = require('express-session');
 const methodOverride = require('method-override');
 const ChatUserDB = require('./DB/Tables/Chat-User')
 const { AuthDB } = require('./DB/DB_main')
+const chalk = require('chalk')
 
 
 const initializePassport = require('./passport-config');
@@ -44,16 +45,17 @@ let array = [{
 }];
 
 /* /////////////////// Router ///////////////////// */
-app.get('/', checkAuthenticated, (req, res) => {
-    console.log(req.id)
+app.get('/', checkAuthenticated, async (req, res) => {
+    let user = await req.user
+    console.log(chalk.red(user.name))
     // функция, которая будет добывать массив чатов
-    let chatsArr =  GetChats(req.id)
+    let chatsArr =  await GetChats(user.id)
     res.render('index.ejs', {
-        name: req.user.name,
+        name: user.name,
         title: "registration",
-        greeting: "Добро пожаловать, " + req.user.name,
+        greeting: "Добро пожаловать, " + user.name,
         chats: chatsArr,
-        id: req.id,
+        id: user.id,
         //messages: messages
     })
 });
@@ -121,6 +123,7 @@ async function FindUserEmail(data) {
     if (res["stat"] == 'ERR') {
         return null
     }
+    console.log(res)
     return res["data"]
 }
 
