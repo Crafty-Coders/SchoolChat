@@ -45,16 +45,16 @@ let array = [{
 
 /* /////////////////// Router ///////////////////// */
 app.get('/', checkAuthenticated, (req, res) => {
-    let id=req.user.id
+    console.log(req.id)
     // функция, которая будет добывать массив чатов
-    let chatsArr = GetChats(id)
+    let chatsArr =  GetChats(req.id)
     res.render('index.ejs', {
         name: req.user.name,
         title: "registration",
         greeting: "Добро пожаловать, " + req.user.name,
         chats: chatsArr,
-        id: id,
-        messages: messages
+        id: req.id,
+        //messages: messages
     })
 });
 
@@ -125,6 +125,7 @@ async function FindUserEmail(data) {
 }
 
 async function GetChats(user_id) {
+    console.log(user_id)
     let chats = []
     let userchats = await ChatUserDB.get_user_chats({"user_id" : user_id})
     for (let i = 0; i < userchats.length; i++) {
