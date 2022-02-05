@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('connection-test', (data) => {
-        socket.emit('connection-stat', { "stat": 200 })
+        socket.emit('connection-stat', { "stat": 'OK' })
     })
 
     socket.on('auth-data', (data) => {

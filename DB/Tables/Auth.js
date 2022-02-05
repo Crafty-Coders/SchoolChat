@@ -35,7 +35,7 @@ async function register(data) {
     let school_id = ClassData[0].school_id
 
     let token = await generate_token()
-
+    console.log("TOKEN GENERATED");
     await Auth.create({
         name: data.name,
         surname: data.surname,
@@ -159,6 +159,19 @@ async function getAuthData(data) {
     }
 }
 
+async function getAuthDataId(id) {
+    let users = await Auth.findAll({
+        raw: true,
+        where: {
+            id: id
+        }
+    })
+    if (users.length != 0) {
+        return null
+    }
+    return users[0]
+}
+
 async function change_password(data) {
     /**
      * data = {email, phone, password, new_password} email or phone!
@@ -266,5 +279,5 @@ async function change_name_surname(data) {
 
 module.exports = {
     register, login, change_password, 
-    get_name_surname, get_users_by_school, auth, change_name_surname, getAuthData
+    get_name_surname, get_users_by_school, auth, change_name_surname, getAuthData, getAuthDataId
 }
