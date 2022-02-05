@@ -5,12 +5,14 @@ window.onload = () => {
     const socket = io();
 
 
-    socket.on('msg', (newmessagefromserver) => {
+    socket.on('msg', (data) => {
+        messages.scrollTop = messages.scrollHeight;
+        let newmessagefromserver = data["data"]
         console.log(newmessagefromserver);
         messages.innerHTML +=
-            `<div class="chat-message-${user_id == newmessagefromserver.user_id ? 'right' : 'left'} pb-4" id='${newmessagefromserver.id_msg}'>
+            `<div class="chat-message-${user_id == newmessagefromserver.user_id ? 'right' : 'left'} pb-4" id='${newmessagefromserver.id}'>
         <div>
-          <div class="text-muted small text-nowrap mt-2">${newmessagefromserver.data}</div>
+          <div class="text-muted small text-nowrap mt-2">${newmessagefromserver.createdAt}</div>
         </div>
         <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
           <div class="font-weight-bold mb-1" id='${newmessagefromserver.user_id}'>${user_id == newmessagefromserver.user_id ? 'Вы' : newmessagefromserver.user_name}</div>

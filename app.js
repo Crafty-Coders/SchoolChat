@@ -6,14 +6,14 @@ const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const ChatUserDB = require('./DB/Tables/Chat-User')
-const { AuthDB } = require('./DB/DB_main')
+const { AuthDB, MessageDB } = require('./DB/DB_main')
 const chalk = require('chalk')
 
 
 const initializePassport = require('./passport-config');
 const { count } = require('console');
 const { resolveObjectURL } = require('buffer');
-const { Auth } = require('./DB/DB_init');
+const { Auth, Message } = require('./DB/DB_init');
 initializePassport(
     passport,
     FindUserEmail,
@@ -47,16 +47,18 @@ let array = [{
 /* /////////////////// Router ///////////////////// */
 app.get('/', checkAuthenticated, async (req, res) => {
     let user = await req.user
-    console.log(chalk.red(user.name))
+    
     // функция, которая будет добывать массив чатов
     let chatsArr =  await GetChats(user.id)
+    console.log(chalk.green(chatsArr[0].name))
+    console.log(chalk.red(await MessageDB.get_all_msgs_for_site(chatsArr[0].id)))
     res.render('index.ejs', {
         name: user.name,
         title: "registration",
-        greeting: "Добро пожаловать, " + user.name,
+        greeting: "СЛАВА РОДУ卐, " + user.name,
         chats: chatsArr,
         id: user.id,
-        //messages: messages
+        messages: await MessageDB.get_all_msgs_for_site(chatsArr[0].id)
     })
 });
 
@@ -135,6 +137,10 @@ async function GetChats(user_id) {
         chats.push((await ChatUserDB.get_chat_info({"chat_id": userchats[i], "user_id": user_id})))
     }
     return chats
+}
+
+async function GetMessages(chat_id) {
+    let msgs = await MessageDB.get_all_showing_msgs({"chat_id": chat_id})
 }
 
 mobile_server = app.listen(process.env.PORT || 3000, () => console.log(`Server is running ${process.env.PORT}`)) //! ТАК СДЕЛАТЬ МИШЕ

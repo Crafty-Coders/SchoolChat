@@ -69,6 +69,21 @@ async function get_all_showing_msgs(data) {
     return msgs;
 }
 
+async function get_all_msgs_for_site(chat_id) {
+    let msgs = await Message.findAll({
+        raw: true,
+        attributes: [['id', 'id_msg'], ['chat_id', 'id_chat'], 'user_id', 'user_name', 'text', 'service', 'attachments', 'deleted_all', 'deleted_user', 'edited', ['updatedAt', 'data']],
+        where: {
+            chat_id: chat_id,
+            deleted_all: false
+        },
+        order: [
+            ['id', 'ASC']
+        ]
+    })
+    return msgs
+}
+
 async function has_read(data) {
     /* 
     data = {user_id, message_id}
@@ -187,5 +202,5 @@ async function get_last_id_with_time() {
 }
 
 module.exports = {
-    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id_with_time, create_service_msg
+    new_msg, get_msgs_for_user, get_all_showing_msgs, get_all_chat_msgs, manage_msgs, get_last_message, get_last_id_with_time, create_service_msg, get_all_msgs_for_site
 }
