@@ -1,93 +1,96 @@
 /* basics */
 
-*{
+* {
     padding: 0;
     margin: 0;
     font-family: 'Montserrat', sans-serif;
 }
+
 /* /basics */
-.page{
+.page {
     display: flex;
     flex-direction: column;
 }
 
 /* navbar */
-.logo_container{
+.logo_container {
     padding-top: 10px;
 }
 
-.logo{
+.logo {
     float: center;
     padding-left: 80px;
-    line-height:60px;
+    line-height: 60px;
 }
-.logo a{
-    color: rgba(255,255,255,0.85);
-    font-size:50px;
+
+.logo a {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 50px;
     text-decoration: none;
 }
 
-.navbar{
+.navbar {
     width: 100%;
     height: 100%;
     background-color: #7952b3;
-    background: linear-gradient(to right,#cb11ab 0,#4e1777 100%) no-repeat;
+    background: linear-gradient(to right, #cb11ab 0, #4e1777 100%) no-repeat;
     margin-bottom: 0;
 }
-.widther{
+
+.widther {
     width: 100%;
 }
 
-.navb{
+.navb {
     padding-top: 15px;
     margin-left: 30px;
     float: right;
-    margin-right:25px;
+    margin-right: 25px;
 }
 
-.navb_ul li{
+.navb_ul li {
     display: inline;
     margin-right: 10px;
-    margin-bottom: 50px; 
+    margin-bottom: 50px;
 }
 
-.link_global,.link_local{
+.link_global, .link_local {
     text-decoration: none;
 }
 
-.link_global{
-    color: rgba(255,255,255,0.85);
+.link_global {
+    color: rgba(255, 255, 255, 0.85);
     font-size: 20px;
 }
 
-.link_local{
+.link_local {
     color: #ffe484;
     font-size: 27px;
     border: 1px solid #ffe484;
     border-radius: 0.25rem;
-    padding:7px;
+    padding: 7px;
 }
 
-.link_global:hover{
+.link_global:hover {
     border-bottom: 2px solid black;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
 }
 
-.link_local:hover{
+.link_local:hover {
     border: 1px solid #ffe484;
     border-radius: 0.25rem;
 }
 
 /* /navbar */
 
-.mainblock{
+.mainblock {
     width: 100%;
     height: 800px;
     background-color: wheat;
 }
 
 /*******************************************************************************/
-.container{}
+.container {}
 
 
 .chat-online {
@@ -119,40 +122,48 @@
     flex-direction: row-reverse;
     margin-left: auto
 }
+
 .py-3 {
-    padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
 }
+
 .px-4 {
-    padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
 }
+
 .flex-grow-0 {
-    flex-grow: 0!important;
+    flex-grow: 0 !important;
 }
+
 .border-top {
-    border-top: 1px solid #dee2e6!important;
+    border-top: 1px solid #dee2e6 !important;
 }
-.font-weight-bold{
+
+.font-weight-bold {
     font-weight: bold;
 }
-.deleted_user{
+
+.deleted_user {
     display: none;
 }
-.message{
+
+.message {
     max-width: 600px;
 }
+
 /***********************************************************************************/
 
-.register_page{
+.register_page {
     margin-top: 0;
     width: 100%;
     height: 1000px;
-    background: linear-gradient(215deg,rgba(128,0,128,0.2)30%,rgba(255,255,0,0.7) 100%) no-repeat;
+    background: linear-gradient(215deg, rgba(128, 0, 128, 0.2)30%, rgba(255, 255, 0, 0.7) 100%) no-repeat;
 }
 
-.register_form{
-    width:440px;
+.register_form {
+    width: 440px;
     height: 550px;
     margin-left: auto;
     margin-right: auto;
@@ -162,62 +173,72 @@
     border-radius: 8px;
     box-shadow: 0 0 20px rgb(0 0 0 / 10%);
 }
-.register_form-title{
+
+.register_form-title {
     font-size: 28px;
     margin-bottom: 32px;
     line-height: 36px;
     text-align: center;
     font-weight: bold;
 }
-.input-form{
+
+.input-form {
     border-radius: 5px;
-    border:1px solid #d5d5d5;
+    border: 1px solid #d5d5d5;
 }
-.register_form-part{
+
+.register_form-part {
     display: flex;
     flex-direction: column;
-    margin-bottom:10px;
-    
+    margin-bottom: 10px;
+
 }
+
 .btn-open-line {
     border: none;
     transition: 0.3s;
 }
 
-.btn-ghost{
-    
+.btn-ghost {
+
     background: 0 0;
     transition: .3s;
     background-color: #4e1777;
 }
-.register_form-btn{
+
+.register_form-btn {
     margin-left: 21%;
     margin-right: 25%;
     height: 60px;
     width: 60%;
 }
-.login_form-part{
+
+.login_form-part {
     display: flex;
     flex-direction: column;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
-.login_form-messages{
+
+.login_form-messages {
     width: 1200px;
     height: 600px;
     border-radius: 8px;
     background-color: white;
 }
-.login_form-register{
+
+.login_form-register {
     color: black;
     cursor: pointer;
     text-align: center;
     padding-top: 40%;
 }
-.login_form-register-link{
+
+.login_form-register-link {
     text-decoration: none;
     color: black;
     font-size: 30px;
 }
-.login_form-register-link:hover{
+
+.login_form-register-link:hover {
     border-bottom: 1px solid black;
 }
