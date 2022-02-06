@@ -4,5 +4,5 @@ const MessageDB = require('./Tables/Message.js')
 const SchoolClassDB = require('./Tables/School-Class.js')
 const initialize = require('./DB_init').initialize
 module.exports = {
-    AuthDB,  MessageDB, SchoolClassDB, initialize
+    AuthDB, MessageDB, SchoolClassDB, initialize
 }

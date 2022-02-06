@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('connection-test', (data) => {
-        socket.emit('connection-stat', { "stat": 200 })
+        socket.emit('connection-stat', { "stat": 'OK' })
     })
 
     socket.on('auth-data', (data) => {
@@ -151,7 +151,7 @@ io.on('connection', (socket) => {
         console.log("Messages requested")
         MessageDB.get_all_showing_msgs(data).then(res => {
             for (let i = 0; i < res.length; i++) {
-                socket.emit("chat-message-recieve", {'stat': 'OK', 'data': res[i] })
+                socket.emit("chat-message-recieve", { 'stat': 'OK', 'data': res[i] })
             }
         })
     })

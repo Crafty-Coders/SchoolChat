@@ -66,7 +66,7 @@ async function get_chat_info(data) {
      * 
      */
 
-    try{
+    try {
         console.log(data)
         if (!data_checker(data, ["chat_id"]))
             return DATA;
@@ -93,7 +93,7 @@ async function get_chat_info(data) {
 
         let userLeft = false
         let read = true
-        
+
         if (data.user_id) {
             userLeft = (await ChatUser.findAll({
                 raw: true,
@@ -101,7 +101,7 @@ async function get_chat_info(data) {
                     chat_id: data.chat_id,
                     user_id: data.user_id
                 }
-            }))[0].left 
+            }))[0].left
         }
 
 
@@ -148,8 +148,8 @@ async function get_chat_users(data) {
         })
         res.push(u)
     }
-    
-    return {'stat': 'OK', 'data': res}
+
+    return { 'stat': 'OK', 'data': res }
 }
 
 async function get_user_info(data) {
@@ -270,7 +270,7 @@ async function manage_chat(data, flag) {
 
             if (!data.class_id) {
                 class_id = 0
-            } 
+            }
 
             await Chat.create({
                 name: data.name,
@@ -279,16 +279,16 @@ async function manage_chat(data, flag) {
                 class_id: class_id
             });
 
-            let chatss = await Chat.findAll({raw: true})
-            let current_chat = chatss[chatss.length-1].id
+            let chatss = await Chat.findAll({ raw: true })
+            let current_chat = chatss[chatss.length - 1].id
 
             await ChatUser.create({
                 user_id: data.user_id,
-                chat_id: current_chat, 
+                chat_id: current_chat,
                 left: false
             });
 
-            for(var i = 0; i < data.users.length; i++) {
+            for (var i = 0; i < data.users.length; i++) {
                 await ChatUser.create({
                     user_id: parseInt(data.users[i], 10),
                     chat_id: current_chat,
@@ -311,7 +311,8 @@ async function manage_chat(data, flag) {
                 where: {
                     id: data.chat_id,
                     creator: data.user_id
-                }})).length === 0)
+                }
+            })).length === 0)
                 return PR;
 
             await Chat.update({ deleted: true }, {
@@ -400,7 +401,7 @@ async function manage_admin(data, flag) {
 }
 
 module.exports = {
-    manage_chat, manage_user, get_user_info, 
-    get_chat_info, check_user_left_ch, get_user_chats, 
+    manage_chat, manage_user, get_user_info,
+    get_chat_info, check_user_left_ch, get_user_chats,
     manage_admin, check_exist, get_chat_users
 }
