@@ -32,6 +32,18 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on('delete-msg-all', (data) => {
+        MessageDB.manage_msgs(data, "delete_all").then(res => {
+            io.emit('message-deleted', res)
+        })
+    })
+
+    socket.on('delete-msg-user', (data) => {
+        MessageDB.manage_msgs(data, "delete_one").then(res => {
+            socket.emit('message-deleted', res)
+        })
+    })
+
     socket.on('add-chat', (data) => {
         // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
         // name - название чата
