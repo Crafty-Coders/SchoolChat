@@ -188,11 +188,16 @@ async function manage_msgs(data, flag) {
                     id: data.msg_id
                 }
             });
+            let new_message = (await Message.findAll({
+                raw: true,
+                where: {
+                    id: data.msg_id
+                },
+                limit: 1
+            }))[0]
             return {
                 'stat': 'OK',
-                'data': {
-                    id: data.msg_id
-                }
+                'data': new_message
             }
     }
 }

@@ -44,6 +44,12 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on('edit-msg', (data) => {
+        MessageDB.manage_msgs(data, 'edit').then(res => {
+            io.emit('message-edited', res)
+        })
+    })
+
     socket.on('add-chat', (data) => {
         // Создание нового чата аргументы: users - Пользователи, добавленные при создании(ID),
         // name - название чата
