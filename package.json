@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/120-Ghz/SchoolChat#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "chalk": "^4.1.2",
     "cors": "^2.8.5",

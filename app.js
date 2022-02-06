@@ -55,10 +55,10 @@ app.get('/', checkAuthenticated, async (req, res) => {
     res.render('index.ejs', {
         name: user.name,
         title: "registration",
-        greeting: "СЛАВА РОДУ卐, " + user.name,
+        greeting: "Здравствуйте, " + user.name,
         chats: chatsArr,
         id: user.id,
-        messages: await MessageDB.get_all_msgs_for_site(chatsArr[0].id)
+        messages: await GetMessages(chatsArr[0].id)
     })
 });
 
@@ -140,7 +140,8 @@ async function GetChats(user_id) {
 }
 
 async function GetMessages(chat_id) {
-    let msgs = await MessageDB.get_all_showing_msgs({ "chat_id": chat_id })
+    let msgs = await MessageDB.get_all_msgs_for_site(chat_id)
+    return msgs
 }
 
 mobile_server = app.listen(process.env.PORT || 3000, () => console.log(`Server is running ${process.env.PORT}`)) //! ТАК СДЕЛАТЬ МИШЕ
