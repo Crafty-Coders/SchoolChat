@@ -19,6 +19,18 @@ async function register(data) {
         }
     })).length;
 
+    if (isp != 0) {
+        return {
+            'stat' : "PHONE"
+        }
+    } 
+
+    if (ise != 0) {
+        return {
+            'stat' : "EMAIL"
+        }
+    }
+
     let ClassData = await Class.findAll({
         raw: true,
         limit: 1,
