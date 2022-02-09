@@ -2,6 +2,9 @@ window.onload = () => {
     const user_id = document.getElementById('id_user').textContent;
     const chat_id = document.getElementById('id_chat').textContent;
     const messages = document.getElementById('messages_container');
+    const chat_active=document.getElementById('chat-active');
+    const autoscroller=document.getElementById('scrollblock');
+    autoscroller.scrollIntoView()
     const socket = io();
 
 
@@ -19,6 +22,8 @@ window.onload = () => {
             ${newmessagefromserver.text}
         </div>
       </div>`
+      autoscroller.scrollIntoView();
+
     })
 
 
@@ -30,7 +35,7 @@ window.onload = () => {
 
     for (let i = 0; i < checker.length; i++) {
         let chat = checker[i];
-        chat.addEventListener('click', counter);
+        chat.addEventListener('click', chatlink);
     }
 
     let butsend = document.getElementById('send_button');
@@ -44,10 +49,9 @@ window.onload = () => {
 
 
     let counterr = 0;
-    function counter() {
-        counterr += 1;
-        console.log(counterr);
-
+    function chatlink(){
+        let bbb=chat_active.textContent
+        
     }
 
     function messageleave() {

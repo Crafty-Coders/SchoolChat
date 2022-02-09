@@ -6,6 +6,7 @@ async function register(data) {
     /**
      * data = {name, surname, school_id, class_id, email, phone, password, picture_url} email or phone!
      */
+    console.log("called")
 
     let isp = (await Auth.findAll({
         where: {
