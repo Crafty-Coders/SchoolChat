@@ -29,8 +29,6 @@ async function new_msg(data) {
     return OK;
 }
 
-
-
 async function get_msgs_for_user(data) {
     /**
      * data = {chat_id, user_id}
@@ -130,11 +128,11 @@ async function manage_msgs(data, flag) {
      * data = {msg_id, text, requester_id, attachments}
      */
     if (!data_checker(data, ["msg_id"]))
-        return DATA;
+        return { 'stat': 'ERR' }
     switch (flag) {
         case "delete_all":
             if (!data_checker(data, ["requester_id"]))
-                return DATA;
+                return { 'stat': 'ERR' }
             if ((await is_Admin({
                 chat_id: (await Message.findAll({
                     raw: true,
@@ -153,19 +151,23 @@ async function manage_msgs(data, flag) {
                         id: data.msg_id,
                     }
                 })
-                return OK;
+                return { 'stat': 'OK', 'data': {
+                    id: data.msg_id
+                }}
             }
-            return PR;
+            return { 'stat': 'ERR' }
         case "delete_one":
             await Message.update({ deleted_user: true }, {
                 where: {
                     id: data.msg_id,
                 }
             });
-            return OK;
+            return { 'stat': 'OK', 'data': {
+                id: data.msg_id
+            }}
         case "edit":
             if (!data_checker(data, ["requester_id"]) || ((data.attachments == undefined || data.attachments == {}) && (data.text == undefined || data.text == "")))
-                return DATA;
+                return { 'stat': 'ERR' }
             data = propper(data, ["text"]);
             data.attachments = data.attachments == undefined ? {} : data.attachments;
             if ((await Message.findAll({
@@ -174,10 +176,10 @@ async function manage_msgs(data, flag) {
                     user_id: data.requester_id
                 }
             })).length == 0)
-                return PR;
+                return { 'stat': 'ERR' }
             data.text = msg_checker(data.text);
             if (data.text == "" || data.text == undefined)
-                return DATA;
+                return { 'stat': 'ERR' }
             await Message.update({
                 text: data.text,
                 attachments: data.attachments
@@ -186,7 +188,17 @@ async function manage_msgs(data, flag) {
                     id: data.msg_id
                 }
             });
-            return OK;
+            let new_message = (await Message.findAll({
+                raw: true,
+                where: {
+                    id: data.msg_id
+                },
+                limit: 1
+            }))[0]
+            return {
+                'stat': 'OK',
+                'data': new_message
+            }
     }
 }
 

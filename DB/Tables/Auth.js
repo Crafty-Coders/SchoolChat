@@ -19,6 +19,18 @@ async function register(data) {
         }
     })).length;
 
+    if (isp != 0) {
+        return {
+            'stat' : "PHONE"
+        }
+    } 
+
+    if (ise != 0) {
+        return {
+            'stat' : "EMAIL"
+        }
+    }
+
     let ClassData = await Class.findAll({
         raw: true,
         limit: 1,
@@ -204,17 +216,26 @@ async function get_name_surname(data) {
         }
     if (!data_checker(data, ["id"]))
         return DATA;
+    console.log(data)
     let res = await Auth.findAll({
         raw: true,
-        limit: 1,
         where: {
-            id: data.id
+            id: parseInt(data.id)
         }
     })
+    console.log(res)
+    if (res.length == 0) {
+        return {
+            id: 0,
+            name: "",
+            surname: "",
+            pic_url: ""
+        }
+    } 
     return {
-        id: data.id,
-        name: res[0].name,
-        surname: res[0].surname,
+        id: data.id || 0,
+        name: res[0].name || "",
+        surname: res[0].surname || "",
         pic_url: res[0].picture_url == undefined ? "" : res[res.length - 1].picture_url
     }
 }
