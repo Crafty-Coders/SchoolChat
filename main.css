@@ -242,3 +242,14 @@
 .login_form-register-link:hover {
     border-bottom: 1px solid black;
 }
+#scrollblock{
+    opacity: 0;
+    height: 20px;
+}
+.chat-message-center{
+    margin-left: 40%;
+    margin-right: 40%;
+}
+#messages_container{
+    height: 600px;
+}
