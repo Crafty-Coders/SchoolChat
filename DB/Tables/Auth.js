@@ -21,6 +21,7 @@ async function register(data) {
 
     if (isp != 0) {
         return {
+<<<<<<< HEAD
             'stat': "PHONE"
         }
     }
@@ -28,6 +29,15 @@ async function register(data) {
     if (ise != 0) {
         return {
             'stat': "EMAIL"
+=======
+            'stat' : "PHONE"
+        }
+    } 
+
+    if (ise != 0) {
+        return {
+            'stat' : "EMAIL"
+>>>>>>> e7f03f672a7e25968ef5a2a4ec2ea1e295041118
         }
     }
 
@@ -231,7 +241,11 @@ async function get_name_surname(data) {
             surname: "",
             pic_url: ""
         }
+<<<<<<< HEAD
     }
+=======
+    } 
+>>>>>>> e7f03f672a7e25968ef5a2a4ec2ea1e295041118
     return {
         id: data.id || 0,
         name: res[0].name || "",
