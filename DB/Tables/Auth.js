@@ -21,13 +21,13 @@ async function register(data) {
 
     if (isp != 0) {
         return {
-            'stat' : "PHONE"
+            'stat': "PHONE"
         }
-    } 
+    }
 
     if (ise != 0) {
         return {
-            'stat' : "EMAIL"
+            'stat': "EMAIL"
         }
     }
 
@@ -231,7 +231,7 @@ async function get_name_surname(data) {
             surname: "",
             pic_url: ""
         }
-    } 
+    }
     return {
         id: data.id || 0,
         name: res[0].name || "",
@@ -241,25 +241,31 @@ async function get_name_surname(data) {
 }
 
 async function get_users_by_school(data) {
-    let res = await Auth.findAll({
-        raw: true,
-        where: {
-            school_id: data.school_id
-        }
-    })
-    let ret = []
-    for (let i = 0; i < res.length; i++) {
-        ret.push({
-            'id': res[i].id,
-            'name': res[i].name,
-            'surname': res[i].surname,
-            'school_id': res[i].school_id,
-            'class_id': res[i].class_id,
-            'email': res[i].email,
-            'phone': res[i].phone
+    try {
+        let res = await Auth.findAll({
+            raw: true,
+            where: {
+                school_id: data.school_id
+            }
         })
+        let ret = []
+        for (let i = 0; i < res.length; i++) {
+            ret.push({
+                'id': res[i].id,
+                'name': res[i].name,
+                'surname': res[i].surname,
+                'school_id': res[i].school_id,
+                'class_id': res[i].class_id,
+                'email': res[i].email,
+                'phone': res[i].phone
+            })
+        }
+        return { 'stat': 'OK', 'data': ret }
+    } catch (e) {
+        return {
+            'stat': 'ERR'
+        }
     }
-    return { 'stat': 'OK', 'data': ret }
 }
 
 async function change_name_surname(data) {

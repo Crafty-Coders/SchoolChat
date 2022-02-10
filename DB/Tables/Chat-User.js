@@ -128,28 +128,33 @@ async function get_chat_users(data) {
     /**
      * data = {chat_id}
      */
-
-    let users = await ChatUser.findAll({
-        raw: true,
-        attributes: ['user_id'],
-        where: {
-            chat_id: data.chat_id
-        }
-    })
-    var res = []
-    users = [...new Set(users)]
-    for (let i = 0; i < users.length; i++) {
-        let u = await Auth.findAll({
+    try {
+        let users = await ChatUser.findAll({
             raw: true,
-            attributes: ['class_id', 'createdAt', 'email', 'id', 'name', 'surname', 'phone', 'picture_url', 'school_id'],
+            attributes: ['user_id'],
             where: {
-                id: users[i].user_id
+                chat_id: data.chat_id
             }
         })
-        res.push(u)
-    }
+        var res = []
+        users = [...new Set(users)]
+        for (let i = 0; i < users.length; i++) {
+            let u = await Auth.findAll({
+                raw: true,
+                attributes: ['class_id', 'createdAt', 'email', 'id', 'name', 'surname', 'phone', 'picture_url', 'school_id'],
+                where: {
+                    id: users[i].user_id
+                }
+            })
+            res.push(u)
+        }
 
-    return { 'stat': 'OK', 'data': res }
+        return { 'stat': 'OK', 'data': res }
+    } catch (e) {
+        return {
+            'stat': 'ERR'
+        }
+    }
 }
 
 async function get_user_info(data) {
