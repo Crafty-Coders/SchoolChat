@@ -210,7 +210,7 @@ async function change_password(data) {
 async function get_name_surname(data) {
     console.log(data)
     if (data.id == 0)
-        return {
+        return { 
             name: "",
             surname: ""
         }
