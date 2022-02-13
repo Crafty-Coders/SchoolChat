@@ -1,0 +1,36 @@
+<%- include('./head'); %>
+  <%- include('./navbar'); %>
+    <div class="register_page">
+      <div class="register_form">
+        <h2 class="register_form-title">Регистрация в чате</h2>
+        <form action="/register" method="POST">
+          <div class="register_form-part">
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" class="input-form" required>
+          </div>
+          <div class="register_form-part">
+            <label for="surname">Фамилия</label>
+            <input type="text" id="surname" name="surname" class="input-form" required>
+          </div>
+          <div class="register_form-part">
+            <label for="code">Код Верификации</label>
+            <input type="text" id="code" name="code" class="input-form" required>
+          </div>
+          <div class="register_form-part">
+            <label for="phone_number">Телефон</label>
+            <input type="text" id="phone_number" name="phone_number" class="input-form" required>
+          </div>
+          <div class="register_form-part">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="input-form" required>
+          </div>
+          <div class="register_form-part">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" class="input-form" required>
+          </div>
+          <button type="submit"
+            class="btn btn-primary btn-ghost btn-open-line register_form-btn">Зарегистрироваться</button>
+        </form>
+      </div>
+    </div>
+    </div>

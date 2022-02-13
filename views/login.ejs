@@ -1,0 +1,26 @@
+<%- include('./head'); %>
+  <%- include('./navbar'); %>
+    <% if (messages.error) { %>
+      <%= messages.error %>
+        <% } %>
+          <div class="register_page">
+            <div class="register_form">
+              <h2 class="register_form-title">логинься</h2>
+              <form action="/login" method="POST">
+                <div class="login_form-part">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" class="input-form" required>
+                </div>
+                <div class="login_form-part">
+                  <label for="password">Пароль</label>
+                  <input type="password" id="password" name="password" class="input-form" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-ghost btn-open-line register_form-btn">Войдите в
+                  систему)</button>
+              </form>
+              <div class='login_form-register'>
+                <a href="/register" class="login_form-register-link">Регистрация</a>
+              </div>
+            </div>
+          </div>
+          </div>

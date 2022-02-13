@@ -51,20 +51,25 @@ async function create_service_msg(text, chat_id) {
 }
 
 async function get_all_showing_msgs(data) {
+
     /**
      * data = {chat_id}
      */
-    let msgs = await Message.findAll({
-        raw: true,
-        where: {
-            chat_id: parseInt(data.chat_id),
-            deleted_all: false
-        },
-        order: [
-            ['id', 'ASC']
-        ]
-    });
-    return msgs;
+    try {
+        let msgs = await Message.findAll({
+            raw: true,
+            where: {
+                chat_id: parseInt(data.chat_id),
+                deleted_all: false
+            },
+            order: [
+                ['id', 'ASC']
+            ]
+        });
+        return msgs;
+    } catch (e) {
+        return [];
+    }
 }
 
 async function get_all_msgs_for_site(chat_id) {
@@ -151,9 +156,11 @@ async function manage_msgs(data, flag) {
                         id: data.msg_id,
                     }
                 })
-                return { 'stat': 'OK', 'data': {
-                    id: data.msg_id
-                }}
+                return {
+                    'stat': 'OK', 'data': {
+                        id: data.msg_id
+                    }
+                }
             }
             return { 'stat': 'ERR' }
         case "delete_one":
@@ -162,9 +169,11 @@ async function manage_msgs(data, flag) {
                     id: data.msg_id,
                 }
             });
-            return { 'stat': 'OK', 'data': {
-                id: data.msg_id
-            }}
+            return {
+                'stat': 'OK', 'data': {
+                    id: data.msg_id
+                }
+            }
         case "edit":
             if (!data_checker(data, ["requester_id"]) || ((data.attachments == undefined || data.attachments == {}) && (data.text == undefined || data.text == "")))
                 return { 'stat': 'ERR' }
