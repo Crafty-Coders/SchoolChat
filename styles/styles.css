@@ -477,17 +477,29 @@ Ensure the default browser behavior of the `hidden` attribute.
 .flex {
   display: flex;
 }
+.h-screen {
+  height: 100vh;
+}
+.h-full {
+  height: 100%;
+}
+.h-auto {
+  height: auto;
+}
+.h-12 {
+  height: 3rem;
+}
 .h-72 {
   height: 18rem;
 }
 .min-h-screen {
   min-height: 100vh;
 }
-.w-128 {
-  width: 32rem;
-}
 .w-full {
   width: 100%;
+}
+.w-128 {
+  width: 32rem;
 }
 .w-auto {
   width: auto;
@@ -530,6 +542,12 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-scroll {
+  overflow: scroll;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 .rounded-xl {
   border-radius: 0.75rem;
@@ -702,8 +720,6 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
 
 .hover\:border-fuchsia-700:hover {
