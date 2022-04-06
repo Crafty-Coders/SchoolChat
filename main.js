@@ -4,7 +4,7 @@ window.onload = () => {
     const messages = document.getElementById('messages_container');
     const chat_active=document.getElementById('chat-active');
     const autoscroller=document.getElementById('scrollblock');
-    autoscroller.scrollIntoView()
+    // autoscroller.scrollIntoView()
     const socket = io();
 
 
@@ -12,17 +12,24 @@ window.onload = () => {
         messages.scrollTop = messages.scrollHeight;
         let newmessagefromserver = data["data"]
         console.log(newmessagefromserver);
-        messages.innerHTML +=
-            `<div class="chat-message-${user_id == newmessagefromserver.user_id ? 'right' : 'left'} pb-4" id='${newmessagefromserver.id}'>
-        <div>
-          <div class="text-muted small text-nowrap mt-2">${newmessagefromserver.createdAt}</div>
-        </div>
-        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
-          <div class="font-weight-bold mb-1" id='${newmessagefromserver.user_id}'>${user_id == newmessagefromserver.user_id ? 'Вы' : newmessagefromserver.user_name}</div>
-            ${newmessagefromserver.text}
-        </div>
-      </div>`
-      autoscroller.scrollIntoView();
+        if (user_id === newmessagefromserver.user_id) {
+            messages.innerHTML += 
+            `<div id='${newmessagefromserver.id}' class="flex flex-row items-center">
+            <div class="flex-1"></div>
+            <div class="bg-violet-600 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                ${newmessagefromserver.text}
+            </div>
+            </div>`
+        } else {
+            messages.innerHTML += 
+            `<div id='${newmessagefromserver.id}' class="flex flex-row items-center">
+            <div class="bg-violet-400 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                ${newmessagefromserver.text}
+            </div>
+            <div class="flex-1"></div>
+            </div>`
+        }
+    //   autoscroller.scrollIntoView();
 
     })
 

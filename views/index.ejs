@@ -1,176 +1,80 @@
 <%- include('./head'); %>
-    <%- include('./navbar'); %>
-        <div style="display: none;">
-            <p id="id_user">
-                <%= id %>
-            </p>
-            <p id="id_chat">
-                <%= chats[0].id %>
-            </p>
-        </div>
-
-        <div class="container">
-            <main class="content">
-                <div class="container p-0">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-12 col-lg-5 col-xl-3 border-right">
-                                <% for(let i=0;i < chats.length; i++) {%>
-                                    <a href="#" class="list-group-item list-group-item-action border-0 checkclick"
-                                        id="<%= chats[i].id%>">
-                                        <div class="d-flex align-items-start">
-
-                                            <div class="flex-grow-1 ml-3 testair" id="test">
-                                                <% if(chats[i]) { %>
-                                                    <%= chats[i].name %>
-                                                        <% } %>
-                                                            <div class="small"><span
-                                                                    class="fas fa-circle chat-online"></span> Online
-                                                            </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <% } %>
-
-
-
-                                        <hr class="d-block d-lg-none mt-1 mb-0">
-                            </div>
-                            <div class="col-12 col-lg-7 col-xl-9">
-                                <div class="py-2 px-4 border-bottom d-none d-lg-block">
-                                    <div class="d-flex align-items-center py-1">
-                                        <div class="position-relative"></div>
-                                        <div class="flex-grow-1 pl-3">
-                                            <strong>11"Б"</strong>
-                                            <div class="text-muted small"><em>тестовая фигня</em></div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="position-relative">
-                                    <div class="chat-messages p-4" >
-                                    <div id="messages_container">
-                                        <% for(let i=0; i < messages.length; i++) { %>
-
-                                            <% if(messages[i].user_id==id) { %>
-                                                <% if(messages[i].deleted_user) { %>
-                                                    <div class="chat-message-right pb-4 deleted_user"
-                                                        id=' <%= messages[i].id_msg %> ''>
-                                                <div>
-                                                    <div class="text-muted small text-nowrap mt-2" ><%= messages[i].data %></div>
-                                                </div>
-                                                <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
-                                                    <div class="font-weight-bold mb-1" id=' <%=messages[i].user_id %>
-                                                        '>вы</div>
-                                                    <%= messages[i].text%>
-                                    </div>
-                                </div>
-                                <% } else { %>
-                                    <div class="chat-message-right pb-4" id=' <%= messages[i].id_msg %> '>
-                                        <div>
-                                            <div class="text-muted small text-nowrap mt-2">
-                                                <%= messages[i].data %>
-                                            </div>
-                                        </div>
-                                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
-                                            <div class="font-weight-bold mb-1" id=' <%= messages[i].user_id %>'>вы</div>
-                                            <%= messages[i].text%>
-                                        </div>
-                                    </div>
-                                    <% } %>
-
-
-                                        <% } else { %>
-                                            <% if(messages[i].deleted_user) { %>
-                                                <div class="chat-message-left pb-4 deleted_user">
-                                                    <div>
-                                                        <div class="text-muted small text-nowrap mt-2">
-                                                            <%= messages[i].data %>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
-                                                        <div class="font-weight-bold mb-1"
-                                                            id=' <%= messages[i].user_id %>'>
-                                                            <%= messages[i].user_name%>
-                                                        </div>
-                                                        <%= messages[i].text%>
-                                                    </div>
-                                                </div>
-                                                <% } else { %>
-                                                    <div class="chat-message-left pb-4 msg_container">
-                                                        <div>
-                                                            <div class="text-muted small text-nowrap mt-2">
-                                                                <%= messages[i].data %>
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3 message">
-                                                            <div class="font-weight-bold mb-1"
-                                                                id=' <%= messages[i].user_id %>'>
-                                                                <%= messages[i].user_name%>
-                                                            </div>
-                                                            <%= messages[i].text%>
-                                                        </div>
-                                                    </div>
-                                                    <% } %>
-
-                                                        <% } %>
-
-                                                            <% } %>
-
-
-                            </div>
-                            <div id="scrollblock">
-
-                            </div>
-                            </div>
+    <%- include('./navbar', {auth: true}); %>
+    <div style="display: none;">
+        <p id="id_user">
+            <%= id %>
+        </p>
+        <p id="id_chat">
+            <%= chats[0].id %>
+        </p>
+    </div>
+        <div class="bg-purple-200 grow flex flex-col">
+            <div class="flex flex-row grow">
+                <div class="flex flex-col items-start w-128 border-0 shadow-2xl">
+                    <div class="w-128 border-0 bg-fuchsia-300 shadow" >
+                        <div class="flex flex-row items-center my-4">
+                            <div class="px-2 text-lg font-bold italic">Чаты</div> 
                         </div>
-
-                        <div class="flex-grow-0 py-3 px-4 border-top">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type your message"
-                                    id="inputMessage">
-                                <button class="btn btn-primary" id="send_button">Send</button>
-                            </div>
-                        </div>
-
                     </div>
+                    <% for(let i=0;i < chats.length; i++) {%>
+                        <a href="#" class="w-128 mt-1 shadow hover:bg-fuchsia-200"
+                            id="<%= chats[i].id%>">
+                            <div class="flex flex-row items-center my-4">
+                                <div class="px-2 text-lg" id="test">
+                                    <% if(chats[i]) { %>
+                                        <%= chats[i].name %>
+                                            <% } %>
+                                </div>
+                            </div>
+                        </a>
+                        <% } %>
                 </div>
+
+
+                <div class="flex flex-col w-full">
+                    <div class="py-4 px-4 text-lg border-0 bg-violet-300 italic font-bold mb-2 shadow">
+                        11"Б"
+                    </div>
+
+                    <div class="flex flex-col w-full grow" id="messages_container">
+                        <% for(let i = 0; i < messages.length; i++) { %>
+                            <% if(!messages[i].service) { %> 
+                                <% if(!messages[i].deleted_user) { %>
+                                        <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
+                                            <% if(messages[i].user_id == id) { %>
+                                                <div class="flex-1"></div>
+                                                <div class="bg-violet-600 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                                    <%= messages[i].text %>
+                                                </div>
+                                            <% } %> 
+                                            <% if(messages[i].user_id != id) { %>
+                                                <div class="bg-violet-400 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                                    <%= messages[i].text %>
+                                                </div>
+                                                <div class="flex-1"></div>
+                                            <% } %> 
+                                        </div>
+                                <% } %>
+                            <% } else { %>
+                                <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
+                                    <div class="flex-1"></div>
+                                    <div class="bg-violet-100 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                        <%= messages[i].text %>
+                                    </div>
+                                    <div class="flex-1"></div>
+                                </div>
+                            <% } %>   
+                        <% } %> 
+                    </div>
+
+                    <div class="bg-violet-300 py-2 px-3 w-auto grow-0">
+                        <div class="flex flex-row items-center">
+                                <input type="text" class="py-1 px-3 rounded-full w-full bg-violet-100" placeholder="Type your message" id="inputMessage">
+                                <button class="ml-3" id="send_button">Send</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-        </div>
-        </main>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit">Log Out</button>
-        </form>

@@ -4,7 +4,10 @@
   "main": "config.js",
   "scripts": {
     "test": "mocha",
-    "start": "node app.js"
+    "start": "node app.js",
+    "buildcss": "nodemon --watch views/ -x npm run build",
+    "build": "postcss styles/src.css -o styles/styles.css",
+    "production_start": "npm run build && npm run start"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/120-Ghz/SchoolChat#readme",
   "dependencies": {
+    "autoprefixer": "^10.4.4",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "chalk": "^4.1.2",
@@ -32,8 +36,11 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
+    "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
     "sequelize": "^6.12.0-alpha.1",
     "socket.io": "^4.4.1",
+    "tailwindcss": "^3.0.23",
     "utf8": "^3.0.0"
   },
   "description": "",

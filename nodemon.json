@@ -1,0 +1,4 @@
+{
+    "watch": ["views/"],
+    "ext": "ejs, css, js"
+  }
