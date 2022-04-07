@@ -13,20 +13,22 @@
         
         <div class="flex flex-col h-screen">
             <%- include('./navbar', {auth: true}); %>
-            <div class="flex flex-row bg-purple-200 main_container">
+            <div class="flex flex-row bg-gray-200 main_container">
 
-                <div class="flex flex-col items-start w-128 border-0 shadow-2xl">
-                    <div class="w-128 border-0 bg-fuchsia-300 shadow" >
-                        <div class="flex flex-row items-center my-4">
-                            <div class="px-2 text-lg font-bold italic">Чаты</div> 
-                        </div>
-                    </div>
+                <div class="flex flex-col ml-8 my-8 w-2/5 rounded-2xl shadow-2xl">
+
+                    <div class="py-4 px-4 text-base border-0 bg-gray-400 italic font-bold mb-2 shadow rounded-t-2xl">Чаты</div> 
+
+            
+                
+                <div class="flex flex-col items-center grow-0 border-0 overflow-auto">
+                    
 
                     <% for(let i=0;i < chats.length; i++) {%>
-                        <a href="#" class="w-128 mt-1 shadow hover:bg-fuchsia-200"
+                        <a href="#" class=" bg-violet-100 mb-1 shadow rounded-2xl hover:bg-fuchsia-200 chatline"
                             id="<%= chats[i].id%>">
                             <div class="flex flex-row items-center my-4">
-                                <div class="px-2 text-lg" id="test">
+                                <div class="px-4 text-base" id="test">
                                     <% if(chats[i]) { %>
                                         <%= chats[i].name %>
                                             <% } %>
@@ -35,11 +37,12 @@
                         </a>
                         <% } %>
                 </div>
+            </div>
 
 
-                    <div class ="flex flex-col overflow-hidden w-full">
+                    <div class ="flex flex-col overflow-hidden mx-8 my-8 rounded-2xl w-full grow shadow-2xl">
 
-                        <div class="py-4 px-4 text-lg border-0 bg-violet-300 italic font-bold mb-2 shadow">
+                        <div class="py-4 px-4 text-lg border-0 bg-gray-300 italic font-bold mb-2 shadow">
                             11"Б"
                         </div>
 

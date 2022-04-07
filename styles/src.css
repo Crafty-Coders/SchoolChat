@@ -2,14 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .main_container {
-    height: calc(100vh - 66px)
-  }

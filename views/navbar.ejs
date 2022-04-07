@@ -1,12 +1,12 @@
 <div class="flex flex-row w-full items-center py-4 md:justify-start bg-gradient-to-r from-fuchsia-700 to-purple-700 grow">
     <a href="/" class="ml-4 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-fuchsia-700 hover:border-fuchsia-700 shadow-lg">Главная</a>
     <div class="flex-1"></div>
-    <a href="https://gym1748v.mskobr.ru/#/" class="mr-1 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-purple-700 hover:border-purple-700 shadow-lg">Сайт школы</a>
+    <a href="https://gym1748v.mskobr.ru/#/" class="mx-1 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-purple-700 hover:border-purple-700 shadow-lg">Сайт школы</a>
     
     <% if(auth) { %>
-        <a href="https://www.mos.ru/" class="mr-1 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-purple-700 hover:border-purple-700 shadow-lg">Mos.ru</a>
+        <a href="https://www.mos.ru/" class="mx-1 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-purple-700 hover:border-purple-700 shadow-lg">Mos.ru</a>
         <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit" class="mr-4 ml-5 text-red-600 px-2 py-1 border border-solid border-red-600 rounded-lg hover:bg-red-600 hover:text-white shadow-lg">Выйти из аккаунта</button>
+            <button type="submit" class="mr-4 ml-1 text-white bg-red-600 px-2 py-1 border border-solid border-red-600 rounded-lg hover:italic hover:underline shadow-lg">Выйти из аккаунта</button>
         </form>
     <% } else { %>
         <a href="https://www.mos.ru/" class="mr-4 ml-1 text-white px-2 py-1 border border-solid border-white rounded-lg hover:bg-white hover:text-purple-700 hover:border-purple-700 shadow-lg">Mos.ru</a>

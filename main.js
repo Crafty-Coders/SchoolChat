@@ -3,8 +3,8 @@ window.onload = () => {
     const chat_id = document.getElementById('id_chat').textContent;
     const messages = document.getElementById('messages_container');
     const chat_active=document.getElementById('chat-active');
-    const autoscroller=document.getElementById('scrollblock');
-    // autoscroller.scrollIntoView()
+    const autoscroller=document.getElementById('messages_container');
+    autoscroller.scrollTo(0, autoscroller.scrollHeight)
     const socket = io();
 
 
@@ -29,7 +29,7 @@ window.onload = () => {
             <div class="flex-1"></div>
             </div>`
         }
-    //   autoscroller.scrollIntoView();
+        autoscroller.scrollTo(0, autoscroller.scrollHeight)
 
     })
 
