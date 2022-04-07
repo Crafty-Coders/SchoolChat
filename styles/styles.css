@@ -424,6 +424,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.m-0 {
+  margin: 0px;
+}
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -486,6 +489,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-12 {
   height: 3rem;
 }
+.h-72 {
+  height: 18rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -498,14 +504,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-auto {
   width: auto;
 }
+.w-96 {
+  width: 24rem;
+}
 .w-80 {
   width: 20rem;
 }
 .w-28 {
   width: 7rem;
-}
-.w-96 {
-  width: 24rem;
 }
 .w-56 {
   width: 14rem;
