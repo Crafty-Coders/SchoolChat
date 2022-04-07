@@ -8,16 +8,20 @@
             <%= chats[0].id %>
         </p>
     </div>
-    <div class="flex flex-col items-center w-full h-screen">
-        <%- include('./navbar', {auth: true}); %>
-        <div class="bg-purple-200 flex flex-col w-full h-full">
-            <div class="flex flex-row h-full">
+
+
+        
+        <div class="flex flex-col h-screen">
+            <%- include('./navbar', {auth: true}); %>
+            <div class="flex flex-row bg-purple-200 main_container">
+
                 <div class="flex flex-col items-start w-128 border-0 shadow-2xl">
                     <div class="w-128 border-0 bg-fuchsia-300 shadow" >
                         <div class="flex flex-row items-center my-4">
                             <div class="px-2 text-lg font-bold italic">Чаты</div> 
                         </div>
                     </div>
+
                     <% for(let i=0;i < chats.length; i++) {%>
                         <a href="#" class="w-128 mt-1 shadow hover:bg-fuchsia-200"
                             id="<%= chats[i].id%>">
@@ -33,51 +37,50 @@
                 </div>
 
 
-                <div class="flex flex-col w-full h-auto">
-                    <div class="py-4 px-4 text-lg border-0 bg-violet-300 italic font-bold mb-2 shadow">
-                        11"Б"
-                    </div>
+                    <div class ="flex flex-col overflow-hidden w-full">
 
-                    <div class="flex flex-col w-full overflow-scroll overflow-x-hidden grow" id="messages_container">
-                        <% for(let i = 0; i < messages.length; i++) { %>
-                            <% if(!messages[i].service) { %> 
-                                <% if(!messages[i].deleted_user) { %>
-                                        <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
-                                            <% if(messages[i].user_id == id) { %>
-                                                <div class="flex-1"></div>
-                                                <div class="bg-violet-600 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
-                                                    <%= messages[i].text %>
-                                                </div>
-                                            <% } %> 
-                                            <% if(messages[i].user_id != id) { %>
-                                                <div class="bg-violet-400 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
-                                                    <%= messages[i].text %>
-                                                </div>
-                                                <div class="flex-1"></div>
-                                            <% } %> 
+                        <div class="py-4 px-4 text-lg border-0 bg-violet-300 italic font-bold mb-2 shadow">
+                            11"Б"
+                        </div>
+
+                            <div class="flex flex-col overflow-auto w-full" id="messages_container">
+                            <% for(let i = 0; i < messages.length; i++) { %>
+                                <% if(!messages[i].service) { %> 
+                                    <% if(!messages[i].deleted_user) { %>
+                                            <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
+                                                <% if(messages[i].user_id == id) { %>
+                                                    <div class="flex-1"></div>
+                                                    <div class="bg-violet-600 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                                        <%= messages[i].text %>
+                                                    </div>
+                                                <% } %> 
+                                                <% if(messages[i].user_id != id) { %>
+                                                    <div class="bg-violet-400 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                                        <%= messages[i].text %>
+                                                    </div>
+                                                    <div class="flex-1"></div>
+                                                <% } %> 
+                                            </div>
+                                    <% } %>
+                                <% } else { %>
+                                    <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
+                                        <div class="flex-1"></div>
+                                        <div class="bg-violet-100 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+                                            <%= messages[i].text %>
                                         </div>
-                                <% } %>
-                            <% } else { %>
-                                <div id="<%= messages[i].id_msg %>" class="flex flex-row items-center">
-                                    <div class="flex-1"></div>
-                                    <div class="bg-violet-100 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
-                                        <%= messages[i].text %>
+                                        <div class="flex-1"></div>
                                     </div>
-                                    <div class="flex-1"></div>
-                                </div>
-                            <% } %>   
-                        <% } %> 
-                    </div>
+                                <% } %>   
+                            <% } %> 
+                        </div>
 
-                    <div class="bg-violet-300 h-12 py-2 px-3 w-auto grow-0">
-                        <div class="flex flex-row items-center">
-                                <input type="text" class="py-1 px-3 rounded-full w-full bg-violet-100" placeholder="Type your message" id="inputMessage">
-                                <button class="ml-3" id="send_button">Send</button>
+                        <div class="bg-violet-300 h-12 py-2 px-3 w-auto shrink">
+                            <div class="flex flex-row items-center">
+                                    <input type="text" class="py-1 px-3 rounded-full w-full bg-violet-100" placeholder="Type your message" id="inputMessage">
+                                    <button class="ml-3" id="send_button">Send</button>
+                            </div>
                         </div>
                     </div>
-
-                </div>
             </div>
-
         </div>
-    </div>
+        </div>

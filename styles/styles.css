@@ -480,12 +480,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-screen {
   height: 100vh;
 }
-.h-full {
-  height: 100%;
-}
-.h-auto {
-  height: auto;
-}
 .h-12 {
   height: 3rem;
 }
@@ -495,11 +489,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .min-h-screen {
   min-height: 100vh;
 }
-.w-full {
-  width: 100%;
-}
 .w-128 {
   width: 32rem;
+}
+.w-full {
+  width: 100%;
 }
 .w-auto {
   width: auto;
@@ -522,11 +516,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .flex-1 {
   flex: 1 1 0%;
 }
+.shrink {
+  flex-shrink: 1;
+}
 .grow {
   flex-grow: 1;
-}
-.grow-0 {
-  flex-grow: 0;
 }
 .flex-row {
   flex-direction: row;
@@ -540,14 +534,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .items-center {
   align-items: center;
 }
+.overflow-auto {
+  overflow: auto;
+}
 .overflow-hidden {
   overflow: hidden;
-}
-.overflow-scroll {
-  overflow: scroll;
-}
-.overflow-x-hidden {
-  overflow-x: hidden;
 }
 .rounded-xl {
   border-radius: 0.75rem;
@@ -717,52 +708,57 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
   }
 
-.hover\:border-fuchsia-700:hover {
+  * {
+    box-sizing: border-box;
+  }
+
+  .main_container {
+    height: calc(100vh - 66px)
+  }
+
+  .hover\:border-fuchsia-700:hover {
   --tw-border-opacity: 1;
   border-color: rgb(162 28 175 / var(--tw-border-opacity));
 }
 
-.hover\:border-purple-700:hover {
+  .hover\:border-purple-700:hover {
   --tw-border-opacity: 1;
   border-color: rgb(126 34 206 / var(--tw-border-opacity));
 }
 
-.hover\:bg-fuchsia-200:hover {
+  .hover\:bg-fuchsia-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(245 208 254 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-white:hover {
+  .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-red-600:hover {
+  .hover\:bg-red-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity));
 }
 
-.hover\:text-fuchsia-700:hover {
+  .hover\:text-fuchsia-700:hover {
   --tw-text-opacity: 1;
   color: rgb(162 28 175 / var(--tw-text-opacity));
 }
 
-.hover\:text-purple-700:hover {
+  .hover\:text-purple-700:hover {
   --tw-text-opacity: 1;
   color: rgb(126 34 206 / var(--tw-text-opacity));
 }
 
-.hover\:text-white:hover {
+  .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-@media (min-width: 768px) {
+  @media (min-width: 768px) {
 
   .md\:justify-start {
     justify-content: flex-start;
