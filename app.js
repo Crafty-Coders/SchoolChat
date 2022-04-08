@@ -59,8 +59,6 @@ app.get("/messenger", async (req, res) => {
         return
     }
     let chatsArr = await GetChats(user.id)
-    console.log(chalk.green(chatsArr[0].name))
-    console.log(chalk.red(await MessageDB.get_all_msgs_for_site(chatsArr[0].id)))
     res.render('index.ejs', {
         name: user.name,
         chats: chatsArr,
@@ -86,7 +84,7 @@ app.get('/messenger/:id', async (req, res) => {
     res.render('index.ejs', {
         name: user.name,
         chats: chatsArr,
-        chatIndex: 0,
+        chatIndex: chatIndex,
         id: user.id,
         isChat: true,
         messages: await GetMessages(req.params.id)

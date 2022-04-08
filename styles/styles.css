@@ -522,6 +522,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-56 {
   width: 14rem;
 }
+.min-w-fit {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
 .min-w-full {
   min-width: 100%;
 }
