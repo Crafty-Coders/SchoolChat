@@ -5,7 +5,11 @@
             <%= id %>
         </p>
         <p id="id_chat">
-            <%= chats[chatIndex].id || undefined %>
+            <% try { %> 
+            <%= chats[chatIndex].id %>
+            <% } catch { %>
+                -1
+                <% } %>  
         </p>
     </div>
 
