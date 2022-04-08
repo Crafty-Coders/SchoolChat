@@ -15,7 +15,7 @@
             <%- include('./navbar', {auth: true}); %>
             <div class="flex flex-row bg-gray-200 main_container">
 
-                <div class="flex flex-col ml-8 my-8 w-2/5 rounded-2xl shadow-2xl">
+                <div class="flex flex-col ml-8 my-8 w-1/4 rounded-2xl shadow-2xl">
 
                     <div class="py-4 px-4 text-base border-0 bg-gray-400 italic font-bold mb-2 shadow rounded-t-2xl">Чаты</div> 
 
@@ -25,7 +25,7 @@
                     
 
                     <% for(let i=0;i < chats.length; i++) {%>
-                        <a href="#" class=" bg-violet-100 mb-1 shadow rounded-2xl hover:bg-fuchsia-200 chatline"
+                        <a href="/messenger/<%= chats[i].id%>" class=" bg-violet-100 mb-1 shadow rounded-2xl hover:bg-fuchsia-200 chatline"
                             id="<%= chats[i].id%>">
                             <div class="flex flex-row items-center my-4">
                                 <div class="px-4 text-base" id="test">
@@ -39,14 +39,14 @@
                 </div>
             </div>
 
-
+            <% if (isChat) { %>
                     <div class ="flex flex-col overflow-hidden mx-8 my-8 rounded-2xl w-full grow shadow-2xl">
-
+                        
                         <div class="py-4 px-4 text-lg border-0 bg-gray-300 italic font-bold mb-2 shadow">
-                            11"Б"
+                            <%= chats[chatIndex].name %>
                         </div>
 
-                            <div class="flex flex-col overflow-auto w-full" id="messages_container">
+                            <div class="flex flex-col overflow-auto w-full h-full" id="messages_container">
                             <% for(let i = 0; i < messages.length; i++) { %>
                                 <% if(!messages[i].service) { %> 
                                     <% if(!messages[i].deleted_user) { %>
@@ -83,7 +83,15 @@
                                     <button class="ml-3" id="send_button">Send</button>
                             </div>
                         </div>
+                        
                     </div>
+                    <% } else { %>
+                        <div class="m-8 grow rounded-2xl shadow-2xl flex flex-col">
+                            <div class="flex-1"></div>
+                            <div class="text-3xl text-center">Выбери чат</div>
+                            <div class="flex-1"></div>
+                        </div>
+                    <% } %> 
             </div>
         </div>
         </div>

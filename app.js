@@ -47,21 +47,51 @@ let array = [{
 
 /* /////////////////// Router ///////////////////// */
 app.get('/', checkAuthenticated, async (req, res) => {
+    res.redirect("/messenger")
+});
+
+app.get("/messenger", async (req, res) => {
     let user = await req.user
 
     // функция, которая будет добывать массив чатов
+    if (!user) {
+        res.redirect("/login")
+        return
+    }
     let chatsArr = await GetChats(user.id)
     console.log(chalk.green(chatsArr[0].name))
     console.log(chalk.red(await MessageDB.get_all_msgs_for_site(chatsArr[0].id)))
     res.render('index.ejs', {
         name: user.name,
-        title: "registration",
-        greeting: "Здравствуйте, " + user.name,
         chats: chatsArr,
         id: user.id,
-        messages: await GetMessages(chatsArr[0].id)
+        isChat: false,
     })
-});
+}) 
+
+app.get('/messenger/:id', async (req, res) => {
+    let user = await req.user
+    if (!user) {
+        res.redirect("/login")
+        return
+    }
+    let chatsArr = await GetChats(user.id)
+    let chatIndex;
+    for(let i = 0; i < chatsArr.length; i++) {
+        if (chatsArr[i].id == req.params.id) {
+            chatIndex = i;
+            break;
+        }
+    }
+    res.render('index.ejs', {
+        name: user.name,
+        chats: chatsArr,
+        chatIndex: 0,
+        id: user.id,
+        isChat: true,
+        messages: await GetMessages(req.params.id)
+    })
+})
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs', {
