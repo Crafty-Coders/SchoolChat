@@ -1,0 +1,81 @@
+@import "presets/colors.scss";
+@import "presets/shadows.scss";
+
+.login {
+    min-height: 100vh;
+    min-width: 100%;
+    display: flex;
+    background-color: $purple-200;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login_container {
+    @include shadow-2xl();
+    background-color: $purple-200;
+    margin-top: 5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login_container_header {
+    font-size: xx-large;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: $purple-900;
+}
+
+.login_container_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24rem;
+    height: 18rem;
+    margin: 0;
+}
+
+@mixin login_container_form_input_block {
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+}
+
+.login_container_form_input_email {
+    @include login_container_form_input_block();
+    margin-bottom: 0.5rem;
+}
+
+.login_container_form_input_password {
+    @include login_container_form_input_block();
+}
+
+.login_container_form_input_input {
+    background-color: $purple-100;
+    border-radius: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.login_container_form_button {
+    background-color: $purple-800;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    width: 7rem;
+    color: $purple-100;
+    margin-top: 2rem;
+}
+
+.login_container_register_link {
+    text-decoration-line: underline;
+    text-underline-offset: 1px;
+    margin-bottom: 0.5rem;
+}
