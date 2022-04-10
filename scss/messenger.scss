@@ -2,12 +2,13 @@
 
 .messenger {
     @include flex-col();
-    height: 100vh;
+    height: calc(100vh - 66px);
+    width: 100%;
 }
 
 .messenger_container {
     @include flex-row();
-    height: calc(100vh - 66px);
+    height: 100%;
     background-color: $gray-200;
 }
 

@@ -3,7 +3,7 @@
 .navbar {
     @include flex-row-center();
     width: 100%;
-    flex-grow: 1;
+    flex-grow: 0;
     padding: 1rem 0;
     background: linear-gradient(90deg, $fuchsia-700, $purple-700);
 }

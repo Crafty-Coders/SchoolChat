@@ -1,12 +1,5 @@
 @import "presets/presets.scss";
 
-.login {
-    @include flex-col-center();
-    min-height: 100vh;
-    min-width: 100%;
-    background-color: $purple-200;
-}
-
 .login_container {
     @include shadow-2xl();
     @include flex-col-center();

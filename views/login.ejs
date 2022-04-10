@@ -1,29 +1,20 @@
 <%- include('./head'); %>
-    <%- include('./navbar', {auth: false}); %>
-        <% if (messages.error) { %>
-            <%= messages.error %>
-                <% } %>
-                    <div class="login">
-                        <div
-                            class="login_container">
-                            <h2 class="login_container_header">Авторизация</h2>
-                            <form action="/login" method="POST" class="login_container_form">
-                                <div class="login_container_form_input_email">
-                                    <label for="email" class="italic">Email</label>
-                                    <input type="email" id="email" name="email"
-                                        class="login_container_form_input_input" required>
-                                </div>
-                                <div class="login_container_form_input_password">
-                                    <label for="password" class="italic">Пароль</label>
-                                    <input type="password" id="password" name="password"
-                                        class="login_container_form_input_input" required>
-                                </div>
-                                <button type="submit"
-                                    class="login_container_form_button">
-                                    Войти
-                                </button>
-                            </form>
-                            <a href="/register" class="login_container_register_link">Регистрация</a>
-                        </div>
-                    </div>
-                    </div>
+<%- include('./navbar', {auth: false}); %>
+<div class="login_container">
+    <h2 class="login_container_header">Авторизация</h2>
+    <form action="/login" method="POST" class="login_container_form">
+        <div class="login_container_form_input_email">
+            <label for="email" class="italic">Email</label>
+            <input type="email" id="email" name="email" class="login_container_form_input_input" required>
+        </div>
+        <div class="login_container_form_input_password">
+            <label for="password" class="italic">Пароль</label>
+            <input type="password" id="password" name="password" class="login_container_form_input_input"
+                required>
+        </div>
+        <button type="submit" class="login_container_form_button">
+            Войти
+        </button>
+    </form>
+    <a href="/register" class="login_container_register_link">Регистрация</a>
+</div>
