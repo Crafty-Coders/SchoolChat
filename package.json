@@ -4,10 +4,9 @@
   "main": "config.js",
   "scripts": {
     "test": "mocha",
-    "start": "node app.js",
-    "buildcss": "nodemon --watch views/ -x npm run build",
-    "build": "postcss styles/src.css -o styles/styles.css && sass --watch scss/styles.scss public/styles.css",
-    "production_start": "npm run build && npm run start"
+    "start": "npm run buildcss && node app.js",
+    "buildcss": "sass scss/styles.scss public/styles.css",
+    "dev": "sass --watch scss/styles.scss public/styles.css"
   },
   "repository": {
     "type": "git",
