@@ -41,6 +41,7 @@
 
 .messenger_container_chats_list_chat {
     @include shadow();
+    color: black;
     background-color: $violet-100;
     margin-bottom: 0.25rem;
     width: calc(100% - 1.5rem);

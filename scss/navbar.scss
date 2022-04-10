@@ -53,6 +53,12 @@
 
 .navbar_logout_button {
     @include shadow-lg();
+    text-transform: none;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 100%;
+    line-height: inherit;
+    margin: 0;
     margin-right: 1rem;
     margin-left: 0.25rem;
     color: white;

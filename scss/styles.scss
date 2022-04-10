@@ -2,22 +2,32 @@
 @use "messenger.scss";
 @use "navbar.scss";
 @use "register.scss";
-@use "presets/presets.scss" as presets;
-@use "presets/colors.scss" as colors;
+@use "presets/presets.scss"as presets;
+@use "presets/colors.scss"as colors;
+
+html {
+    line-height: 1.5;
+}
 
 body {
     @include presets.flex-col-center();
     min-height: 100vh;
     min-width: 100%;
     background-color: colors.$purple-200;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
     margin: 0;
     line-height: inherit;
-  }
+}
 
 * {
-  box-sizing: border-box;
+    border: 0;
+    box-sizing: border-box;
+}
+
+form {
+    display: block;
+    margin-top: 0em;
 }
 
 a {

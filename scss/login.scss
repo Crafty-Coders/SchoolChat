@@ -43,23 +43,23 @@
 
 .login_container_form_input_input {
     background-color: $purple-100;
+    font-size: medium;
     border-radius: 0.75rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding: 0.25rem 0.5rem;
+    margin-top: 2px;
 }
 
 .login_container_form_button {
     background-color: $purple-800;
     border-radius: 0.75rem;
-    padding: 0.5rem 1rem;
-    width: 7rem;
+    font-size: medium;
+    padding: 0.75rem 1.5rem;
     color: $purple-100;
     margin-top: 2rem;
 }
 
 .login_container_register_link {
+    color: black;
     text-decoration-line: underline;
     text-underline-offset: 1px;
     margin-bottom: 0.5rem;

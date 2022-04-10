@@ -1,12 +1,5 @@
 @import "presets/presets.scss";
 
-.register {
-    @include flex-col-center();
-    min-height: 100vh;
-    min-width: 100%;
-    background-color: $purple-200;
-}
-
 .register_container {
     @include shadow-2xl();
     @include flex-col-center();
@@ -43,21 +36,25 @@
 }
 
 .register_container_input_input {
+    font-size: medium;
     background-color: $purple-100;
     border-radius: 0.75rem;
-    padding: 1px 0.5rem;
+    padding: 0.25rem 0.5rem;
+    margin-top: 2px;
 }
 
 .register_container_form_button {
     background-color: $purple-800;
     border-radius: 0.75rem;
-    padding: 0.5rem 1rem;
+    font-size: medium;
+    padding: 0.75rem 1.5rem;
     color: $purple-100;
     margin-top: 2rem;
     margin-bottom: 2.5rem;
 }
 
 .register_container_login_link {
+    color: black;
     text-decoration-line: underline;
     text-underline-offset: 1px;
     margin-bottom: 0.5rem;
