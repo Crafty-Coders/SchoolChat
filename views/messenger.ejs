@@ -15,24 +15,24 @@
 
 
         
-        <div class="flex flex-col h-screen">
+        <div class="messenger">
             <%- include('./navbar', {auth: true}); %>
-            <div class="flex flex-row bg-gray-200 main_container">
+            <div class="messenger_container">
 
-                <div class="flex flex-col ml-8 my-8 w-1/4 rounded-2xl shadow-2xl min-w-fit">
+                <div class="messenger_container_chats">
 
-                    <div class="py-4 px-4 text-base border-0 bg-gray-400 italic font-bold mb-2 shadow rounded-t-2xl">Чаты</div> 
+                    <div class="messenger_container_chats_header">Чаты</div> 
 
             
                 
-                <div class="flex flex-col items-center grow-0 border-0 overflow-auto">
+                <div class="messenger_container_chats_list">
                     
 
                     <% for(let i=0;i < chats.length; i++) {%>
-                        <a href="/messenger/<%= chats[i].id%>" class=" bg-violet-100 mb-1 shadow rounded-2xl hover:bg-fuchsia-200 chatline min-w-full"
+                        <a href="/messenger/<%= chats[i].id%>" class="messenger_container_chats_list_chat"
                             id="<%= chats[i].id%>">
-                            <div class="flex flex-row items-center my-4">
-                                <div class="px-4 text-base" id="test">
+                            <div class="messenger_container_chats_list_chat_container">
+                                <div class="messenger_container_chats_list_chat_container_text">
                                     <% if(chats[i]) { %>
                                         <%= chats[i].name %>
                                             <% } %>

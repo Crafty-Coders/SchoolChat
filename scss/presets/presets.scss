@@ -1,0 +1,22 @@
+@import "colors.scss";
+@import "shadows.scss";
+
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;    
+}
+
+@mixin flex-col-center {
+    @include flex-col();
+    align-items: center;
+}
+
+@mixin flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flex-row-center {
+    @include flex-row();
+    align-items: center;
+}

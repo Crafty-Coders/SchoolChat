@@ -1,0 +1,61 @@
+@import "presets/presets.scss";
+
+.messenger {
+    @include flex-col();
+    height: 100vh;
+}
+
+.messenger_container {
+    @include flex-row();
+    height: calc(100vh - 66px);
+    background-color: $gray-200;
+}
+
+.messenger_container_chats {
+    @include shadow-2xl();
+    @include flex-col();
+    margin-left: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 25%;
+    border-radius: 1rem;
+    min-width: fit-content;
+}
+
+.messenger_container_chats_header {
+    @include shadow();
+    padding: 1rem;
+    background-color: $gray-400;
+    font-style: italic;
+    font-weight: bold;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.messenger_container_chats_list {
+    @include flex-col-center();
+    flex-grow: 0;
+    overflow: auto;
+}
+
+.messenger_container_chats_list_chat {
+    @include shadow();
+    background-color: $violet-100;
+    margin-bottom: 0.25rem;
+    width: calc(100% - 1.5rem);
+    border-radius: 1rem;
+    min-width: 100%; // fix
+}
+
+.messenger_container_chats_list_chat:hover {
+    background-color: $fuchsia-200;
+}
+
+.messenger_container_chats_list_chat_container {
+    @include flex-row-center();
+    margin: 1rem 0;
+}
+
+.messenger_container_chats_list_chat_container_text {
+    padding: 0 1rem;
+}

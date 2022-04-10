@@ -1,23 +1,18 @@
-@import "presets/colors.scss";
-@import "presets/shadows.scss";
+@import "presets/presets.scss";
 
 .register {
+    @include flex-col-center();
     min-height: 100vh;
     min-width: 100%;
     background-color: $purple-200;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .register_container {
     @include shadow-2xl();
+    @include flex-col-center();
     margin-top: 5rem;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .register_container_header {
@@ -29,15 +24,12 @@
 }
 
 .register_container_form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-col-center();
     width: 24rem;
 }
 
 @mixin register_container_input {
-    display: flex;
-    flex-direction: column;
+    @include flex-col();
     width: 20rem;
 }
 

@@ -1,24 +1,21 @@
-@import "presets/colors.scss";
-@import "presets/shadows.scss";
+@import "presets/presets.scss";
 
 .navbar {
-    display: flex;
-    flex-direction: row;
+    @include flex-row-center();
     width: 100%;
-    align-items: center;
     flex-grow: 1;
     padding: 1rem 0;
     background: linear-gradient(90deg, $fuchsia-700, $purple-700);
 }
 
 @mixin navbar_link {
+    @include shadow-lg();
     color: white;
     padding: 0.25rem 0.5rem;
     border: 1px;
     border-style: solid;
     border-color: white;
     border-radius: 0.5rem;
-    @include shadow-lg();
 }
 
 .navbar_link_left {

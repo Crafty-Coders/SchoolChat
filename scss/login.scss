@@ -1,17 +1,15 @@
-@import "presets/colors.scss";
-@import "presets/shadows.scss";
+@import "presets/presets.scss";
 
 .login {
+    @include flex-col-center();
     min-height: 100vh;
     min-width: 100%;
-    display: flex;
     background-color: $purple-200;
-    flex-direction: column;
-    align-items: center;
 }
 
 .login_container {
     @include shadow-2xl();
+    @include flex-col-center();
     background-color: $purple-200;
     margin-top: 5rem;
     padding-top: 1rem;
@@ -19,9 +17,6 @@
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     border-radius: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .login_container_header {
@@ -33,17 +28,14 @@
 }
 
 .login_container_form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex-col-center();
     width: 24rem;
     height: 18rem;
     margin: 0;
 }
 
 @mixin login_container_form_input_block {
-    display: flex;
-    flex-direction: column;
+    @include flex-col();
     width: 20rem;
 }
 
