@@ -98,3 +98,53 @@
     background-color: $violet-600;
 }
 
+.messenger_container_chat_messages {
+    @include flex-col();
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.messenger_container_chat_message_container_left {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-400;
+}
+
+.messenger_container_chat_message_container_center {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-100;
+}
+
+.messenger_container_chat_bottombar {
+    @include flex-row-center();
+    background-color: $violet-300;
+    height: 3rem;
+    padding: 0.5rem 0.75rem;
+    width: auto;
+    flex-shrink: 1;
+}
+
+.messenger_container_chat_bottombar_input {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    width: 100%;
+    background-color: $violet-100;
+}
+
+.messenger_container_chat_bottombar_sendbutton {
+    margin-left: 0.75rem;
+}
+
+.messenger_container_chat_placeholder {
+    @include shadow-2xl();
+    @include flex-col-center();
+    margin: 2rem;
+    flex-grow: 1;
+    border-radius: 1rem;
+    width: 100%;
+}
+
+.messenger_container_chat_placeholder_text {
+    font-size: xx-large;
+    text-align: center;
+}
