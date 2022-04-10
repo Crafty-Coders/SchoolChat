@@ -28,18 +28,18 @@
     width: 24rem;
 }
 
-@mixin register_container_input {
+@mixin _register_container_input {
     @include flex-col();
     width: 20rem;
 }
 
 .register_container_input-generic {
-    @include register_container_input();
+    @include _register_container_input();
     margin-bottom: 0.5rem;
 }
 
 .register_container_input-last {
-    @include register_container_input();
+    @include _register_container_input();
 }
 
 .register_container_input_input {

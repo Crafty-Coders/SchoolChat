@@ -1,3 +1,8 @@
+@use "login.scss";
+@use "messenger.scss";
+@use "navbar.scss";
+@use "register.scss";
+
 body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
@@ -13,8 +18,4 @@ body {
 
 .spacer {
     flex: 1 1 0%;
-}
-
-.chatline {
-  width: calc(100% - 1.5rem)
 }

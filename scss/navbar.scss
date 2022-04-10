@@ -8,7 +8,7 @@
     background: linear-gradient(90deg, $fuchsia-700, $purple-700);
 }
 
-@mixin navbar_link {
+@mixin _navbar_link {
     @include shadow-lg();
     color: white;
     padding: 0.25rem 0.5rem;
@@ -19,7 +19,7 @@
 }
 
 .navbar_link_left {
-    @include navbar_link();
+    @include _navbar_link();
     margin-left: 1rem;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .navbar_link_middle {
-    @include navbar_link();
+    @include _navbar_link();
     margin: 0 0.25rem;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .navbar_link_right {
-    @include navbar_link();
+    @include _navbar_link();
     margin-right: 1rem;
 }
 

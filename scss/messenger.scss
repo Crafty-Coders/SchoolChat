@@ -59,3 +59,42 @@
 .messenger_container_chats_list_chat_container_text {
     padding: 0 1rem;
 }
+
+.messenger_container_chat {
+    @include flex-col();
+    @include shadow-2xl();
+    overflow: hidden;
+    margin: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.messenger_container_chat_header {
+    @include shadow();
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: large;
+    font-style: italic;
+    font-weight: bolder;
+    background-color: $gray-300;
+}
+
+.messenger_container_chat_message_container {
+    @include flex-row-center();
+}
+
+@mixin _messenger_container_chat_message_container_message {
+    @include shadow();
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 0.75rem;
+}
+
+.messenger_container_chat_message_container_right {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-600;
+}
+
