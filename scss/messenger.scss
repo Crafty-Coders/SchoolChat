@@ -131,10 +131,14 @@
     border-radius: 9999px;
     width: 100%;
     background-color: $violet-100;
+    outline: none;
 }
 
 .messenger_container_chat_bottombar_sendbutton {
     margin-left: 0.75rem;
+    background-color: $violet-300;
+    border: 0;
+    cursor: pointer;
 }
 
 .messenger_container_chat_placeholder {
