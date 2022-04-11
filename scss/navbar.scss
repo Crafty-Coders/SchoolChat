@@ -1,0 +1,76 @@
+@import "presets/presets.scss";
+
+.navbar {
+    @include flex-row-center();
+    width: 100%;
+    flex-grow: 0;
+    padding: 1rem 0;
+    background: linear-gradient(90deg, $fuchsia-700, $purple-700);
+}
+
+@mixin _navbar_link {
+    @include shadow-lg();
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border: 1px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 0.5rem;
+}
+
+.navbar_link_left {
+    @include _navbar_link();
+    margin-left: 1rem;
+}
+
+.navbar_link_left:hover {
+    color: $fuchsia-700;
+    border-color: $fuchsia-700;
+    background-color: white;
+}
+
+.navbar_link_middle {
+    @include _navbar_link();
+    margin: 0 0.25rem;
+}
+
+.navbar_link_middle:hover {
+    color: $purple-700;
+    border-color: $purple-700;
+    background-color: white;
+}
+
+.navbar_link_right {
+    @include _navbar_link();
+    margin-right: 1rem;
+}
+
+.navbar_link_right:hover {
+    color: $purple-700;
+    border-color: $purple-700;
+    background-color: white;
+}
+
+.navbar_logout_button {
+    @include shadow-lg();
+    text-transform: none;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 100%;
+    line-height: inherit;
+    margin: 0;
+    margin-right: 1rem;
+    margin-left: 0.25rem;
+    color: white;
+    background-color: $red-600;
+    padding: 0.25rem 0.5rem;
+    border: 1px;
+    border-style: solid;
+    border-color: $red-600;
+    border-radius: 0.5rem;
+}
+
+.navbar_logout_button:hover {
+    text-decoration: underline;
+}
+

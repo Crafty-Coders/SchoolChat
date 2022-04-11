@@ -1,20 +1,15 @@
 const express = require('express')
 const app = express()
-// const bcrypt = require('bcrypt');
 const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
 const ChatUserDB = require('./DB/Tables/Chat-User')
 const { AuthDB, MessageDB } = require('./DB/DB_main')
-const chalk = require('chalk')
 const bcrypt = require('bcrypt')
-
-
+const sass = require('node-sass-middleware')
 const initializePassport = require('./passport-config');
-const { count } = require('console');
-const { resolveObjectURL } = require('buffer');
-const { Auth, Message } = require('./DB/DB_init');
+
 initializePassport(
     passport,
     FindUserEmail,
@@ -28,6 +23,10 @@ app.set("view engine", "ejs")
 
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
+app.use(sass({
+    src: __dirname + '/scss',
+    dest: __dirname + '/public',
+}))
 app.use(express.static(__dirname));
 app.use(session({
     secret: "aaaaaaa",
@@ -39,12 +38,6 @@ app.use(passport.session())
 app.use(methodOverride('_method'));
 
 
-const clients = [];
-let array = [{
-    text: "test message",
-    date: Date.now()
-}];
-
 /* /////////////////// Router ///////////////////// */
 app.get('/', checkAuthenticated, async (req, res) => {
     res.redirect("/messenger")
@@ -52,14 +45,12 @@ app.get('/', checkAuthenticated, async (req, res) => {
 
 app.get("/messenger", async (req, res) => {
     let user = await req.user
-
-    // функция, которая будет добывать массив чатов
     if (!user) {
         res.redirect("/login")
         return
     }
     let chatsArr = await GetChats(user.id)
-    res.render('index.ejs', {
+    res.render('messenger.ejs', {
         name: user.name,
         chats: chatsArr,
         id: user.id,
@@ -81,7 +72,7 @@ app.get('/messenger/:id', async (req, res) => {
             break;
         }
     }
-    res.render('index.ejs', {
+    res.render('messenger.ejs', {
         name: user.name,
         chats: chatsArr,
         chatIndex: chatIndex,

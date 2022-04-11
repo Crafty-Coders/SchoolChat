@@ -4,10 +4,9 @@
   "main": "config.js",
   "scripts": {
     "test": "mocha",
-    "start": "node app.js",
-    "buildcss": "nodemon --watch views/ -x npm run build",
-    "build": "postcss styles/src.css -o styles/styles.css",
-    "production_start": "npm run build && npm run start"
+    "start": "npm run buildcss && node app.js",
+    "buildcss": "sass scss/styles.scss public/styles.css",
+    "dev": "sass --watch scss/styles.scss public/styles.css"
   },
   "repository": {
     "type": "git",
@@ -33,6 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "method-override": "^3.0.0",
+    "node-sass": "^7.0.1",
+    "node-sass-middleware": "^1.0.1",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",

@@ -1,38 +1,36 @@
 <%- include('./head'); %>
     <%- include('./navbar', {auth: false}); %>
-        <div class="min-h-screen min-w-full bg-purple-200 flex flex-col items-center">
             <div
-                class="mt-20 border-0 py-4 px-6 shadow-2xl rounded-2xl flex flex-col items-center">
-                <h2 class="text-4xl font-semibold text-center mb-10 text-purple-900">Регистрация</h2>
-                <form action="/register" method="POST" class="flex flex-col items-center w-96">
-                    <div class="flex flex-col mb-2 w-80">
+                class="register_container">
+                <h2 class="register_container_header">Регистрация</h2>
+                <form action="/register" method="POST" class="register_container_form">
+                    <div class="register_container_input-generic">
                         <label for="name" class="italic">Имя</label>
-                        <input type="text" id="name" name="name" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="text" id="name" name="name" class="register_container_input_input" required>
                     </div>
-                    <div class="flex flex-col mb-2 w-80">
+                    <div class="register_container_input-generic">
                         <label for="surname" class="italic">Фамилия</label>
-                        <input type="text" id="surname" name="surname" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="text" id="surname" name="surname" class="register_container_input_input" required>
                     </div>
-                    <div class="flex flex-col mb-2 w-80">
+                    <div class="register_container_input-generic">
                         <label for="code" class="italic">Код Верификации</label>
-                        <input type="text" id="code" name="code" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="text" id="code" name="code" class="register_container_input_input" required>
                     </div>
-                    <div class="flex flex-col mb-2 w-80">
+                    <div class="register_container_input-generic">
                         <label for="phone_number" class="italic">Телефон</label>
-                        <input type="text" id="phone_number" name="phone_number" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="text" id="phone_number" name="phone_number" class="register_container_input_input" required>
                     </div>
-                    <div class="flex flex-col mb-2 w-80">
+                    <div class="register_container_input-generic">
                         <label for="email" class="italic">Email</label>
-                        <input type="email" id="email" name="email" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="email" id="email" name="email" class="register_container_input_input" required>
                     </div>
-                    <div class="flex flex-col w-80">
+                    <div class="register_container_input-last">
                         <label for="password" class="italic">Пароль</label>
-                        <input type="password" id="password" name="password" class="border-1 border-purple-800 bg-purple-100 rounded-xl px-2 py-px" required>
+                        <input type="password" id="password" name="password" class="register_container_input_input" required>
                     </div>
                     <button type="submit"
-                        class="bg-purple-800 border-0 rounded-xl py-2 px-4 w-56 text-purple-100 mt-8 mb-10">Зарегистрироваться</button>
+                        class="register_container_form_button">Зарегистрироваться</button>
                 </form>
-                <a href="/login" class="underline underline-offset-1">Уже зарегестрированы? Войти</a>
+                <a href="/login" class="register_container_login_link">Уже зарегестрированы? Войти</a>
             </div>
-        </div>
         </div>

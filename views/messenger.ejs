@@ -1,0 +1,102 @@
+<%- include('./head'); %>
+
+    <div style="display: none;">
+        <p id="id_user">
+            <%= id %>
+        </p>
+        <p id="id_chat">
+            <% try { %>
+                <%= chats[chatIndex].id %>
+                    <% } catch { %>
+                        -1
+                        <% } %>
+        </p>
+    </div>
+
+
+    <%- include('./navbar', {auth: true}); %>
+        <div class="messenger">
+
+            <div class="messenger_container">
+
+                <div class="messenger_container_chats">
+
+                    <div class="messenger_container_chats_header">Чаты</div>
+
+
+
+                    <div class="messenger_container_chats_list">
+
+
+                        <% for(let i=0;i < chats.length; i++) {%>
+                            <a href="/messenger/<%= chats[i].id%>" class="messenger_container_chats_list_chat"
+                                id="<%= chats[i].id%>">
+                                <div class="messenger_container_chats_list_chat_container">
+                                    <div class="messenger_container_chats_list_chat_container_text">
+                                        <% if(chats[i]) { %>
+                                            <%= chats[i].name %>
+                                                <% } %>
+                                    </div>
+                                </div>
+                            </a>
+                            <% } %>
+                    </div>
+                </div>
+
+                <% if (isChat) { %>
+                    <div class="messenger_container_chat">
+
+                        <div class="messenger_container_chat_header">
+                            <%= chats[chatIndex].name %>
+                        </div>
+
+                        <div class="messenger_container_chat_messages" id="messages_container">
+                            <% for(let i=0; i < messages.length; i++) { %>
+                                <% if(!messages[i].service) { %>
+                                    <% if(!messages[i].deleted_user) { %>
+                                        <div id="<%= messages[i].id_msg %>"
+                                            class="messenger_container_chat_message_container">
+                                            <% if(messages[i].user_id==id) { %>
+                                                <div class="spacer"></div>
+                                                <div class="messenger_container_chat_message_container_right">
+                                                    <%= messages[i].text %>
+                                                </div>
+                                                <% } %>
+                                                    <% if(messages[i].user_id !=id) { %>
+                                                        <div class="messenger_container_chat_message_container_left">
+                                                            <%= messages[i].text %>
+                                                        </div>
+                                                        <div class="spacer"></div>
+                                                        <% } %>
+                                        </div>
+                                        <% } %>
+                                            <% } else { %>
+                                                <div id="<%= messages[i].id_msg %>"
+                                                    class="messenger_container_chat_message_container">
+                                                    <div class="spacer"></div>
+                                                    <div class="messenger_container_chat_message_container_center">
+                                                        <%= messages[i].text %>
+                                                    </div>
+                                                    <div class="spacer"></div>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                        </div>
+
+                        <div class="messenger_container_chat_bottombar">
+                            <input type="text" class="messenger_container_chat_bottombar_input"
+                                placeholder="Type your message" id="inputMessage">
+                            <button class="messenger_container_chat_bottombar_sendbutton" id="send_button">Send</button>
+                        </div>
+
+                    </div>
+                    <% } else { %>
+                        <div class="messenger_container_chat_placeholder">
+                            <div class="spacer"></div>
+                            <div class="messenger_container_chat_placeholder_text">Выбери чат</div>
+                            <div class="spacer"></div>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+        </div>

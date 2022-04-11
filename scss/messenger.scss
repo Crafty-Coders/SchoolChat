@@ -1,0 +1,156 @@
+@import "presets/presets.scss";
+
+.messenger {
+    @include flex-col();
+    height: calc(100vh - 66px);
+    width: 100%;
+}
+
+.messenger_container {
+    @include flex-row();
+    height: 100%;
+    background-color: $gray-200;
+}
+
+.messenger_container_chats {
+    @include shadow-2xl();
+    @include flex-col();
+    margin-left: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 25%;
+    border-radius: 1rem;
+    min-width: fit-content;
+}
+
+.messenger_container_chats_header {
+    @include shadow();
+    padding: 1rem;
+    background-color: $gray-400;
+    font-style: italic;
+    font-weight: bold;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.messenger_container_chats_list {
+    @include flex-col-center();
+    flex-grow: 0;
+    overflow: auto;
+}
+
+.messenger_container_chats_list_chat {
+    @include shadow();
+    color: black;
+    background-color: $violet-100;
+    margin-bottom: 0.25rem;
+    width: calc(100% - 1.5rem);
+    border-radius: 1rem;
+    min-width: 100%; // fix
+}
+
+.messenger_container_chats_list_chat:hover {
+    background-color: $fuchsia-200;
+}
+
+.messenger_container_chats_list_chat_container {
+    @include flex-row-center();
+    margin: 1rem 0;
+}
+
+.messenger_container_chats_list_chat_container_text {
+    padding: 0 1rem;
+}
+
+.messenger_container_chat {
+    @include flex-col();
+    @include shadow-2xl();
+    overflow: hidden;
+    margin: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.messenger_container_chat_header {
+    @include shadow();
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: large;
+    font-style: italic;
+    font-weight: bolder;
+    background-color: $gray-300;
+}
+
+.messenger_container_chat_message_container {
+    @include flex-row-center();
+}
+
+@mixin _messenger_container_chat_message_container_message {
+    @include shadow();
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 0.75rem;
+}
+
+.messenger_container_chat_message_container_right {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-600;
+}
+
+.messenger_container_chat_messages {
+    @include flex-col();
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.messenger_container_chat_message_container_left {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-400;
+}
+
+.messenger_container_chat_message_container_center {
+    @include _messenger_container_chat_message_container_message();
+    background-color: $violet-100;
+}
+
+.messenger_container_chat_bottombar {
+    @include flex-row-center();
+    background-color: $violet-300;
+    height: 3rem;
+    padding: 0.5rem 0.75rem;
+    width: auto;
+    flex-shrink: 1;
+}
+
+.messenger_container_chat_bottombar_input {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    width: 100%;
+    background-color: $violet-100;
+    outline: none;
+}
+
+.messenger_container_chat_bottombar_sendbutton {
+    margin-left: 0.75rem;
+    background-color: $violet-300;
+    border: 0;
+    cursor: pointer;
+}
+
+.messenger_container_chat_placeholder {
+    @include shadow-2xl();
+    @include flex-col-center();
+    margin: 2rem;
+    flex-grow: 1;
+    border-radius: 1rem;
+    width: 100%;
+}
+
+.messenger_container_chat_placeholder_text {
+    font-size: xx-large;
+    text-align: center;
+}
