@@ -2,8 +2,8 @@ window.onload = () => {
     const user_id = document.getElementById('id_user').textContent;
     const chat_id = document.getElementById('id_chat').textContent;
     const messages = document.getElementById('messages_container');
-    const chat_active=document.getElementById('chat-active');
-    const autoscroller=document.getElementById('messages_container');
+    const chat_active = document.getElementById('chat-active');
+    const autoscroller = document.getElementById('messages_container');
     autoscroller.scrollTo(0, autoscroller.scrollHeight)
     const socket = io();
 
@@ -13,20 +13,20 @@ window.onload = () => {
         let newmessagefromserver = data["data"]
         console.log(newmessagefromserver);
         if (user_id === newmessagefromserver.user_id) {
-            messages.innerHTML += 
-            `<div id='${newmessagefromserver.id}' class="flex flex-row items-center">
-            <div class="flex-1"></div>
-            <div class="bg-violet-600 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+            messages.innerHTML +=
+                `<div id='${newmessagefromserver.id}' class="messenger_container_chat_message_container">
+            <div class="spacer"></div>
+            <div class="messenger_container_chat_message_container_right">
                 ${newmessagefromserver.text}
             </div>
             </div>`
         } else {
-            messages.innerHTML += 
-            `<div id='${newmessagefromserver.id}' class="flex flex-row items-center">
-            <div class="bg-violet-400 px-3 py-1 mb-1 mx-2 rounded-xl shadow-lg">
+            messages.innerHTML +=
+                `<div id='${newmessagefromserver.id}' class="messenger_container_chat_message_container">
+            <div class="messenger_container_chat_message_container_left">
                 ${newmessagefromserver.text}
             </div>
-            <div class="flex-1"></div>
+            <div class="spacer"></div>
             </div>`
         }
         autoscroller.scrollTo(0, autoscroller.scrollHeight)
@@ -56,13 +56,16 @@ window.onload = () => {
 
 
     let counterr = 0;
-    function chatlink(){
-        let bbb=chat_active.textContent
-        
+    function chatlink() {
+        let bbb = chat_active.textContent
+
     }
 
     function messageleave() {
         let inputMessage = document.getElementById('inputMessage')
+        if (inputMessage.value.length == 0) {
+            return;
+        }
         let newmsgdata = {
             chat_id: chat_id,
             user_id: user_id,
