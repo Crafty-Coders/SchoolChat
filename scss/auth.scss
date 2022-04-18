@@ -1,67 +1,59 @@
 @import "presets/presets.scss";
 
-.login_container {
-    @include shadow-2xl();
+.auth_container {
     @include flex-col-center();
-    background-color: $purple-200;
     margin-top: 5rem;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 1rem 1.5rem;
     border-radius: 1rem;
+    min-width: 24rem;
+    max-width: 40rem;
+    width: 80%;
+    box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.2);
 }
 
-.login_container_header {
+.container_header {
     font-size: xx-large;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2.5rem;
     color: $purple-900;
 }
 
-.login_container_form {
+.container_form {
     @include flex-col-center();
-    width: 24rem;
-    height: 18rem;
-    margin: 0;
+    width: 100%;
 }
 
-@mixin _login_container_form_input_block {
+.container_input {
     @include flex-col();
-    width: 20rem;
-}
-
-.login_container_form_input_email {
-    @include _login_container_form_input_block();
+    width: 90%;
     margin-bottom: 0.5rem;
 }
 
-.login_container_form_input_password {
-    @include _login_container_form_input_block();
-}
-
-.login_container_form_input_input {
-    background-color: $purple-100;
+.input_form {
+    width: 100%;
     font-size: medium;
+    background-color: $purple-100;
     border-radius: 0.75rem;
     padding: 0.25rem 0.5rem;
     margin-top: 2px;
     outline: none;
 }
 
-.login_container_form_button {
+.form_submit_button {
     background-color: $purple-800;
     border-radius: 0.75rem;
     font-size: medium;
     padding: 0.75rem 1.5rem;
     color: $purple-100;
     margin-top: 2rem;
+    margin-bottom: 2.5rem;
 }
 
-.login_container_register_link {
+.form_link_button {
     color: black;
     text-decoration-line: underline;
     text-underline-offset: 1px;
     margin-bottom: 0.5rem;
 }
+
