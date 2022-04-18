@@ -1,36 +1,36 @@
 <%- include('./head'); %>
     <%- include('./navbar', {auth: false}); %>
             <div
-                class="register_container">
-                <h2 class="register_container_header">Регистрация</h2>
-                <form action="/register" method="POST" class="register_container_form">
-                    <div class="register_container_input-generic">
+                class="auth_container">
+                <h2 class="container_header">Регистрация</h2>
+                <form action="/register" method="POST" class="container_form">
+                    <div class="container_input">
                         <label for="name" class="italic">Имя</label>
-                        <input type="text" id="name" name="name" class="register_container_input_input" required>
+                        <input type="text" id="name" name="name" class="input_form" required>
                     </div>
-                    <div class="register_container_input-generic">
+                    <div class="container_input">
                         <label for="surname" class="italic">Фамилия</label>
-                        <input type="text" id="surname" name="surname" class="register_container_input_input" required>
+                        <input type="text" id="surname" name="surname" class="input_form" required>
                     </div>
-                    <div class="register_container_input-generic">
+                    <div class="container_input">
                         <label for="code" class="italic">Код Верификации</label>
-                        <input type="text" id="code" name="code" class="register_container_input_input" required>
+                        <input type="text" id="code" name="code" class="input_form" required>
                     </div>
-                    <div class="register_container_input-generic">
+                    <div class="container_input">
                         <label for="phone_number" class="italic">Телефон</label>
-                        <input type="text" id="phone_number" name="phone_number" class="register_container_input_input" required>
+                        <input type="text" id="phone_number" name="phone_number" class="input_form" required>
                     </div>
-                    <div class="register_container_input-generic">
+                    <div class="container_input">
                         <label for="email" class="italic">Email</label>
-                        <input type="email" id="email" name="email" class="register_container_input_input" required>
+                        <input type="email" id="email" name="email" class="input_form" required>
                     </div>
-                    <div class="register_container_input-last">
+                    <div class="container_input">
                         <label for="password" class="italic">Пароль</label>
-                        <input type="password" id="password" name="password" class="register_container_input_input" required>
+                        <input type="password" id="password" name="password" class="input_form" required>
                     </div>
                     <button type="submit"
-                        class="register_container_form_button">Зарегистрироваться</button>
+                        class="form_submit_button">Зарегистрироваться</button>
                 </form>
-                <a href="/login" class="register_container_login_link">Уже зарегестрированы? Войти</a>
+                <a href="/login" class="form_link_button">Уже зарегестрированы? Войти</a>
             </div>
         </div>

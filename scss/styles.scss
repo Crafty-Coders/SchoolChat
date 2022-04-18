@@ -1,7 +1,6 @@
-@use "login.scss";
 @use "messenger.scss";
 @use "navbar.scss";
-@use "register.scss";
+@use "auth.scss";
 @use "presets/presets.scss"as presets;
 @use "presets/colors.scss"as colors;
 
@@ -15,7 +14,6 @@ body {
     min-width: 100%;
     background-color: colors.$purple-200;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    overflow: hidden;
     margin: 0;
     line-height: inherit;
 }
