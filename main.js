@@ -63,6 +63,9 @@ window.onload = () => {
 
     function messageleave() {
         let inputMessage = document.getElementById('inputMessage')
+        if (inputMessage.value.length == 0) {
+            return;
+        }
         let newmsgdata = {
             chat_id: chat_id,
             user_id: user_id,
