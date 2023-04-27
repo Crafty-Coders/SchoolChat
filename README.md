@@ -1,7 +1,7 @@
 # SchoolChat
 Backend and website of SchoolChat messenger
 
-## Config.json
+## config.json
 ```
 {
     "DB_URI": ""
